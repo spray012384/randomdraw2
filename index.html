@@ -1,190 +1,61 @@
-<!DOCTYPE html><html lang="ko">
+<!-- Version: 1.0.2 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판</title>
+  <meta charset="UTF-8">
+  <title>뽑기판 설정</title>
   <style>
     body {
       font-family: sans-serif;
       padding: 20px;
-      max-width: 600px;
+      max-width: 500px;
       margin: auto;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 30px;
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
     }
-    input[type="text"], input[type="number"] {
+    input {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
-      box-sizing: border-box;
-    }
-    .button-group, .end-options {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
     }
     button {
+      margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
-      cursor: pointer;
     }
-    .board {
-      margin-top: 30px;
-      display: grid;
-      gap: 5px;
+    .version {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 12px;
+      color: gray;
     }
-    .cell {
-      background-color: #eee;
-      width: 100%;
-      aspect-ratio: 1/1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-    }
-    .hidden { background-color: #ccc; color: transparent; }
-    .revealed { background-color: #fff; color: #000; }
-    .disabled { pointer-events: none; opacity: 0.5; }
-    .manual-win { background-color: gold !important; }
   </style>
 </head>
 <body>
-  <h1>뽑기판 설정</h1><label for="main-title">뽑기판 제목</label> <input type="text" id="main-title" placeholder="예: 럭키 드로우!" />
+  <h2>메인 타이틀</h2>
+  <input type="text" id="title" placeholder="예: 오늘의 럭키 박스" />  <h2>상품 안내</h2>
+  <input type="text" id="info" placeholder="예: 당첨 시 커피 쿠폰 증정!" />  <h2>행 / 열</h2>
+  <label>행 (Row)</label>
+  <input type="number" id="rows" min="1" max="10" value="3" />
+  <label>열 (Column)</label>
+  <input type="number" id="cols" min="1" max="10" value="3" />  <h2>당첨 개수</h2>
+  <input type="number" id="win" min="1" max="10" value="1" /><button onclick="startGame()">시작하기</button>
 
-<label for="item-info">상품 안내 문구</label> <input type="text" id="item-info" placeholder="예: 당첨 상품은 치킨 쿠폰!" />
+  <div class="version">Version 1.0.2</div>  <script>
+    function startGame() {
+      const title = encodeURIComponent(document.getElementById('title').value);
+      const info = encodeURIComponent(document.getElementById('info').value);
+      const rows = document.getElementById('rows').value;
+      const cols = document.getElementById('cols').value;
+      const win = document.getElementById('win').value;
 
-<label for="rows">행 개수</label> <input type="number" id="rows" min="1" max="10" value="3" />
-
-<label for="cols">열 개수</label> <input type="number" id="cols" min="1" max="10" value="3" />
-
-<label for="win-count">당첨 개수</label> <input type="number" id="win-count" min="1" value="1" />
-
-  <label>
-    <input type="checkbox" id="manual-set" /> 당첨 위치 직접 설정
-  </label>  <div class="button-group">
-    <button id="clear-selection">위치 초기화</button>
-    <button id="start-btn">시작하기</button>
-    <button id="preview-btn">미리보기</button>
-  </div>  <div id="board-container"></div>  <div class="end-options" id="end-options">
-    <button id="reset-btn">다시하기</button>
-    <button id="config-btn">설정하기</button>
-  </div>  <script>
-    const boardContainer = document.getElementById("board-container");
-    const endOptions = document.getElementById("end-options");
-    const manualSet = document.getElementById("manual-set");
-    const clearBtn = document.getElementById("clear-selection");
-
-    let manualWinIndexes = new Set();
-    let gameEnded = false;
-
-    function buildEditableBoard(rows, cols) {
-      boardContainer.innerHTML = "";
-      boardContainer.className = "board";
-      boardContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-      for (let i = 0; i < rows * cols; i++) {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.textContent = i + 1;
-        cell.dataset.index = i;
-
-        cell.addEventListener("click", () => {
-          if (!manualSet.checked || gameEnded) return;
-          if (manualWinIndexes.has(i)) {
-            manualWinIndexes.delete(i);
-            cell.classList.remove("manual-win");
-          } else {
-            manualWinIndexes.add(i);
-            cell.classList.add("manual-win");
-          }
-        });
-
-        boardContainer.appendChild(cell);
-      }
+      const url = `game.html?title=${title}&info=${info}&rows=${rows}&cols=${cols}&win=${win}`;
+      window.open(url, '_blank');
     }
-
-    function createGameBoard(rows, cols, winCount) {
-      boardContainer.innerHTML = "";
-      boardContainer.className = "board";
-      boardContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-      const total = rows * cols;
-      let winIndexes = new Set();
-
-      if (manualSet.checked && manualWinIndexes.size > 0) {
-        winIndexes = manualWinIndexes;
-      } else {
-        while (winIndexes.size < winCount) {
-          winIndexes.add(Math.floor(Math.random() * total));
-        }
-      }
-
-      for (let i = 0; i < total; i++) {
-        const cell = document.createElement("div");
-        cell.className = "cell hidden";
-        cell.dataset.index = i;
-        cell.dataset.type = winIndexes.has(i) ? "win" : "lose";
-
-        cell.addEventListener("click", () => {
-          if (gameEnded || cell.classList.contains("revealed")) return;
-
-          cell.classList.remove("hidden");
-          cell.classList.add("revealed");
-          cell.textContent = cell.dataset.type === "win" ? "당첨!" : "꽝";
-
-          if (cell.dataset.type === "win") {
-            gameEnded = true;
-            endOptions.style.display = "flex";
-            disableBoard();
-          }
-        });
-
-        boardContainer.appendChild(cell);
-      }
-    }
-
-    function disableBoard() {
-      document.querySelectorAll(".cell").forEach(cell => cell.classList.add("disabled"));
-    }
-
-    document.getElementById("start-btn").addEventListener("click", () => {
-      const rows = +document.getElementById("rows").value;
-      const cols = +document.getElementById("cols").value;
-      const winCount = +document.getElementById("win-count").value;
-      gameEnded = false;
-      endOptions.style.display = "none";
-      createGameBoard(rows, cols, winCount);
-    });
-
-    document.getElementById("preview-btn").addEventListener("click", () => {
-      const rows = +document.getElementById("rows").value;
-      const cols = +document.getElementById("cols").value;
-      manualWinIndexes.clear();
-      gameEnded = false;
-      endOptions.style.display = "none";
-      buildEditableBoard(rows, cols);
-    });
-
-    document.getElementById("reset-btn").addEventListener("click", () => {
-      document.getElementById("start-btn").click();
-    });
-
-    document.getElementById("config-btn").addEventListener("click", () => {
-      boardContainer.innerHTML = "";
-      endOptions.style.display = "none";
-      gameEnded = false;
-    });
-
-    clearBtn.addEventListener("click", () => {
-      manualWinIndexes.clear();
-      document.querySelectorAll(".manual-win").forEach(el => el.classList.remove("manual-win"));
-    });
   </script></body>
 </html>
