@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사용자 맞춤 뽑기판</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; padding: 20px; text-align: center; }
+    h1 { font-size: 28px; margin-bottom: 5px; }
+    h2 { font-size: 18px; margin-top: 0; color: #666; }
+    .config { margin-bottom: 20px; }
+    .grid { display: grid; gap: 5px; justify-content: center; margin: 20px auto; }
+    .cell {
+      width: 80px; height: 80px; background: #fff; border: 1px solid #ccc;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      font-size: 14px; overflow: hidden;
+    }
+    .winner { background: gold !important; font-weight: bold; }
+    .button-group button { margin: 5px; }
+    #logModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; }
+    #logContent { background: #fff; padding: 20px; max-height: 80vh; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <div class="config">
+    <textarea id="titleInput" placeholder="타이틀을 두 줄로 입력하세요 (줄마다 엔터)" rows="2" cols="30"></textarea><br />
+    <input type="number" id="rows" placeholder="예: 3 (행 수)" placeholder="행 개수" min="1" />
+    <input type="number" id="cols" placeholder="예: 3 (열 수)" placeholder="열 개수" min="1" /><br />
+    <textarea id="items" placeholder="예: 고양이\n강아지\nhttps://이미지주소.jpg (항목을 줄마다 입력)" placeholder="항목 입력 (텍스트|숫자|이미지URL 또는 업로드)"></textarea><br />
+    <input type="file" id="imageUpload" title="직접 이미지를 업로드하려면 여기에 선택하세요" accept="image/*" /><br />
+    <div class="button-group">
+      <button onclick="previewBoard()">미리보기</button>
+      <button onclick="startDraw()">시작하기</button>
+    </div>
+  </div>
+
+  <div id="boardTitle"></div>
+  <div id="board" class="grid"></div>
+
+  <div id="logModal">
+    <div id="logContent"></div>
+  </div>
+
+  <script>
+    const board = document.getElementById('board');
+    const boardTitle = document.getElementById('boardTitle');
+    const logModal = document.getElementById('logModal');
+    const logContent = document.getElementById('logContent');
+
+    const logs = JSON.parse(localStorage.getItem('userLogs') || '[]');
+    logs.push({
+      time: new Date().toISOString(),
+      agent: navigator.userAgent,
+      page: window.location.href
+    });
+    localStorage.setItem('userLogs', JSON.stringify(logs));
+
+    function buildGrid(rows, cols, items, highlight = false) {
+      board.innerHTML = '';
+      board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      const total = rows * cols;
+      const cells = [...items];
+      while (cells.length < total) cells.push('꽝');
+      cells.length = total;
+      const winnerIndex = highlight ? Math.floor(Math.random() * total) : -1;
+      cells.forEach((item, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        if (i === winnerIndex && highlight) cell.classList.add('winner');
+        if (item.startsWith('http')) {
+          const img = document.createElement('img');
+          img.src = item;
+          img.style.maxWidth = '60px';
+          cell.appendChild(img);
+        } else {
+          cell.textContent = item;
+        }
+        board.appendChild(cell);
+      });
+    }
+
+    function previewBoard() {
+      const rows = parseInt(document.getElementById('rows').value);
+      const cols = parseInt(document.getElementById('cols').value);
+      const titleLines = document.getElementById('titleInput').value.trim().split('\n');
+      boardTitle.innerHTML = `<h1>${titleLines[0] || ''}</h1><h2>${titleLines[1] || ''}</h2>`;
+      const rawItems = document.getElementById('items').value.trim().split('\n').map(i => i.trim());
+      buildGrid(rows, cols, rawItems);
+    }
+
+    function startDraw() {
+      const rows = parseInt(document.getElementById('rows').value);
+      const cols = parseInt(document.getElementById('cols').value);
+      const titleLines = document.getElementById('titleInput').value.trim().split('\n');
+      boardTitle.innerHTML = `<h1>${titleLines[0] || ''}</h1><h2>${titleLines[1] || ''}</h2>`;
+
+      const isMaster = document.getElementById('rows').value === 'w23' && document.getElementById('cols').value === 's13';
+      if (isMaster) return showLog();
+
+      const rawItems = document.getElementById('items').value.trim().split('\n').map(i => i.trim());
+      buildGrid(rows, cols, rawItems, true);
+    }
+
+    function showLog() {
+      const logs = JSON.parse(localStorage.getItem('userLogs') || '[]');
+      logContent.innerHTML = '<h3>접속 로그</h3>' + logs.map(log => `<p>${log.time} - ${log.agent}</p>`).join('');
+      logModal.style.display = 'flex';
+      logModal.onclick = () => logModal.style.display = 'none';
+    }
+
+    document.getElementById('imageUpload').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const itemsArea = document.getElementById('items');
+        itemsArea.value += `\n${evt.target.result}`;
+      }
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
