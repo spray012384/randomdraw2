@@ -1,149 +1,125 @@
-<!-- 버전: 1.7.0 -->
-import React, { useState } from 'react';
+<!-- 버전: 1.6.9 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>뽑기판 설정</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      width: 120px;
+      font-weight: bold;
+    }
+    .form-group input,
+    .form-group select {
+      flex: 1;
+      padding: 8px;
+    }
+    .section-title {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+    .button-group {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .button-group button {
+      width: 100px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .start-button {
+      background-color: #007bff;
+    }
+    .save-button {
+      background-color: #28a745;
+    }
+    .reset-button {
+      background-color: #6c757d;
+    }
+    .version-info {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>뽑기판 설정</h1>
 
-function LuckyBoardSettings() {
-  const [title, setTitle] = useState('럭키보드');
-  const [description, setDescription] = useState('');
-  const [cols, setCols] = useState(3);
-  const [rows, setRows] = useState(3);
-  const [winCount, setWinCount] = useState(1);
-  const [winType, setWinType] = useState('basic');
-  const [cellType, setCellType] = useState('basic');
+  <div class="form-group">
+    <label>메인 타이틀</label>
+    <input type="text" placeholder="예: 럭키드로우 이벤트"/>
+  </div>
 
-  return (
-    <div style={{ backgroundColor: '#f5f5f5', padding: '20px', fontFamily: 'sans-serif' }}>
-      <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>뽑기판 설정</h2>
+  <div class="form-group">
+    <label>상품 안내</label>
+    <input type="text" placeholder="예: 당첨 시 경품이 제공됩니다"/>
+  </div>
 
-      <div style={{ marginBottom: '10px' }}>
-        <label>메인 타이틀</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={{ marginLeft: '10px' }}
-        />
-      </div>
+  <div class="form-group">
+    <label>가로 칸 수</label>
+    <input type="number" min="1" max="10" value="3"/>
+  </div>
 
-      <div style={{ marginBottom: '10px' }}>
-        <label>상품 안내</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          style={{ marginLeft: '10px' }}
-        />
-      </div>
+  <div class="form-group">
+    <label>세로 칸 수</label>
+    <input type="number" min="1" max="10" value="3"/>
+  </div>
 
-      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>크기 설정</h3>
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-        <label>가로
-          <input
-            type="number"
-            value={cols}
-            min={1}
-            max={10}
-            onChange={(e) => setCols(Number(e.target.value))}
-            style={{ marginLeft: '5px', width: '50px' }}
-          />
-        </label>
-        <label>세로
-          <input
-            type="number"
-            value={rows}
-            min={1}
-            max={10}
-            onChange={(e) => setRows(Number(e.target.value))}
-            style={{ marginLeft: '5px', width: '50px' }}
-          />
-        </label>
-        <label>당첨 개수
-          <input
-            type="number"
-            value={winCount}
-            min={1}
-            max={cols * rows - 1}
-            onChange={(e) => setWinCount(Number(e.target.value))}
-            style={{ marginLeft: '5px', width: '50px' }}
-          />
-        </label>
-      </div>
+  <div class="form-group">
+    <label>당첨 개수</label>
+    <input type="number" min="1" value="1"/>
+  </div>
 
-      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>당첨 방식 선택</h3>
-      <div style={{ marginBottom: '10px' }}>
-        <label>
-          <input
-            type="radio"
-            name="winType"
-            value="basic"
-            checked={winType === 'basic'}
-            onChange={() => setWinType('basic')}
-          />
-          기본 (당첨/꽝)
-        </label>
-        <label style={{ marginLeft: '20px' }}>
-          <input
-            type="radio"
-            name="winType"
-            value="custom"
-            checked={winType === 'custom'}
-            onChange={() => setWinType('custom')}
-          />
-          직접 텍스트 입력
-        </label>
-      </div>
+  <div class="section-title">당첨 방식</div>
+  <div class="form-group">
+    <label>선택</label>
+    <select>
+      <option value="basic">기본 (당첨/꽝)</option>
+      <option value="text">텍스트 입력</option>
+    </select>
+  </div>
 
-      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>셀 설정</h3>
-      <div style={{ marginBottom: '20px' }}>
-        <label>
-          <input
-            type="radio"
-            name="cellType"
-            value="basic"
-            checked={cellType === 'basic'}
-            onChange={() => setCellType('basic')}
-          />
-          기본
-        </label>
-        <label style={{ marginLeft: '20px' }}>
-          <input
-            type="radio"
-            name="cellType"
-            value="text"
-            checked={cellType === 'text'}
-            onChange={() => setCellType('text')}
-          />
-          텍스트 직접 입력
-        </label>
-        <label style={{ marginLeft: '20px' }}>
-          <input
-            type="radio"
-            name="cellType"
-            value="image"
-            checked={cellType === 'image'}
-            onChange={() => setCellType('image')}
-          />
-          이미지 업로드
-        </label>
-      </div>
+  <div class="section-title">셀 UI 설정</div>
+  <div class="form-group">
+    <label>선택</label>
+    <select>
+      <option value="default">기본</option>
+      <option value="text">텍스트 직접 입력</option>
+      <option value="image">이미지 업로드</option>
+    </select>
+  </div>
 
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <button style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 16px', border: 'none' }}>
-          시작하기
-        </button>
-        <button style={{ backgroundColor: '#28a745', color: 'white', padding: '8px 16px', border: 'none' }}>
-          저장하기
-        </button>
-        <button style={{ backgroundColor: '#6c757d', color: 'white', padding: '8px 16px', border: 'none' }}>
-          초기화
-        </button>
-      </div>
+  <div class="button-group">
+    <button class="start-button">시작하기</button>
+    <button class="save-button">저장하기</button>
+    <button class="reset-button">초기화</button>
+  </div>
 
-      <div style={{ marginTop: '40px', fontSize: '12px', color: '#777' }}>
-        버전: 1.7.0
-      </div>
-    </div>
-  );
-}
-
-export default LuckyBoardSettings;
-<!-- 버전: 1.7.0 -->
+  <div class="version-info">버전: 1.6.9</div>
+</body>
+</html>
+<!-- 버전: 1.6.9 -->
