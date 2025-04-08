@@ -1,139 +1,113 @@
-<!-- version 1.2.7 --><!DOCTYPE html><html lang="ko">
+<!-- Version: 1.2.6 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <title>뽑기판 설정</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>사용자 맞춤 뽑기판</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f5f5f5;
+      font-family: sans-serif;
       margin: 0;
       padding: 20px;
     }
     h1 {
-      text-align: center;
       font-size: 24px;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .input-group {
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
     label {
       display: block;
-      margin-bottom: 6px;
+      margin-top: 15px;
       font-weight: bold;
     }
-    input[type="number"], input[type="text"], select {
+    input[type="text"], input[type="number"] {
       width: 100%;
       padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      margin-top: 5px;
+      box-sizing: border-box;
     }
-    .warning-text {
-      color: red;
-      font-size: 0.9em;
-      margin-top: 4px;
+    .section {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
     }
-    .button-group {
-      display: flex;
-      justify-content: space-between;
+    .radio-group {
+      margin-top: 10px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .preview-board {
       margin-top: 20px;
+      display: grid;
+      gap: 5px;
+      justify-content: center;
+    }
+    .preview-cell {
+      background: #f0f0f0;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
     }
     button {
-      flex: 1;
-      padding: 10px;
-      margin: 0 5px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
+      padding: 10px 20px;
+      margin-right: 10px;
+      margin-top: 20px;
     }
-    .start-btn {
-      background-color: #007bff;
-      color: white;
+    .version {
+      margin-top: 30px;
+      font-size: 12px;
+      color: gray;
+      text-align: center;
     }
-    .gray-btn {
-      background-color: #ccc;
-      color: black;
+    .image-upload {
+      margin-top: 10px;
+    }
+    .thumbnail {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="mainTitle">뽑기판 세팅</h1><div class="input-group">
-  <label for="rows">세로</label>
-  <input type="number" id="rows" min="1" max="10" />
-  <div id="rowWarning" class="warning-text"></div>
-</div>
-
-<div class="input-group">
-  <label for="cols">가로</label>
-  <input type="number" id="cols" min="1" max="10" />
-  <div id="colWarning" class="warning-text"></div>
-</div>
-
-<div class="input-group">
-  <label for="winCount">당첨 개수</label>
-  <input type="number" id="winCount" min="1" />
-  <div id="winCountWarning" class="warning-text"></div>
-</div>
-
-<div class="input-group">
-  <label for="winType">당첨 방식 선택</label>
-  <select id="winType">
-    <option value="basic">꽝/당첨</option>
-    <option value="custom">직접 텍스트 입력</option>
-  </select>
-</div>
-
-<div class="input-group">
-  <label for="cellUI">셀 UI 설정</label>
-  <select id="cellUI">
-    <option value="basic">기본</option>
-    <option value="text">텍스트 입력</option>
-    <option value="image">이미지 업로드</option>
-  </select>
-</div>
-
-<div class="button-group">
-  <button class="start-btn">시작하기</button>
-  <button class="gray-btn">저장하기</button>
-  <button class="gray-btn">초기화</button>
-</div>
-
-  </div>  <script>
-    const rowsInput = document.getElementById("rows");
-    const colsInput = document.getElementById("cols");
-    const winCountInput = document.getElementById("winCount");
-    const rowWarning = document.getElementById("rowWarning");
-    const colWarning = document.getElementById("colWarning");
-    const winCountWarning = document.getElementById("winCountWarning");
-
-    function checkInputs() {
-      const rows = parseInt(rowsInput.value || 0);
-      const cols = parseInt(colsInput.value || 0);
-      const total = rows * cols;
-      const winCount = parseInt(winCountInput.value || 0);
-
-      rowWarning.textContent = rows > 10 ? "세로 값은 10을 초과할 수 없습니다." : "";
-      colWarning.textContent = cols > 10 ? "가로 값은 10을 초과할 수 없습니다." : "";
-
-      if (winCount > total - 1) {
-        winCountWarning.textContent = `당첨 개수는 ${total}개를 초과할 수 없습니다.`;
-      } else {
-        winCountWarning.textContent = "";
-      }
-    }
-
-    rowsInput.addEventListener("input", checkInputs);
-    colsInput.addEventListener("input", checkInputs);
-    winCountInput.addEventListener("input", checkInputs);
-  </script></body>
+  <h1>뽑기판 설정</h1>
+  <div class="section">
+    <label>메인 타이틀</label>
+    <input type="text" id="mainTitle" placeholder="예: 신년맞이 경품 이벤트" />
+  </div>
+  <div class="section">
+    <label>당첨 방식 선택</label>
+    <div class="radio-group">
+      <label><input type="radio" name="winType" value="basic" checked /> 꽝 / 당첨</label>
+      <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
+    </div>
+    <div id="customWinInputs"></div>
+  </div>
+  <div class="section">
+    <label>가로 / 세로 / 당첨 개수</label>
+    <input type="number" id="cols" placeholder="가로 (예: 3)" min="1" />
+    <input type="number" id="rows" placeholder="세로 (예: 3)" min="1" />
+    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
+  </div>
+  <div class="section">
+    <label>셀 UI 설정</label>
+    <div class="radio-group">
+      <label><input type="radio" name="cellUi" value="default" checked /> 기본</label>
+      <label><input type="radio" name="cellUi" value="text" /> 셀에 텍스트 입력</label>
+      <label><input type="radio" name="cellUi" value="image" /> 셀에 이미지 업로드</label>
+    </div>
+    <div id="cellImageUpload" class="image-upload" style="display: none;"></div>
+  </div>
+  <button onclick="startGame()" style="background-color: #007bff; color: white; border: none; border-radius: 5px;">시작하기</button>
+  <button onclick="saveSettings()" style="background-color: #ccc; color: black; border: none; border-radius: 5px;">저장하기</button>
+  <button onclick="location.reload()" style="background-color: #ccc; color: black; border: none; border-radius: 5px;">초기화</button>  <div class="version">Version 1.2.6</div>
+  <script>
+    // 이전 버전 스크립트 내용
+  </script>
+</body>
 </html>
