@@ -1,8 +1,8 @@
-<!-- 버전: 1.4.1 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.4.3 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판 설정 v1.4.1</title>
+  <title>뽑기판 설정 v1.4.3</title>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -14,8 +14,8 @@
   </div>  <!-- 판 크기 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
     <h2 class="text-xl font-semibold">판 크기 및 당첨 개수</h2>
     <div class="grid grid-cols-3 gap-4">
-      <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" placeholder="세로" class="border p-2 rounded" />
-      <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" placeholder="가로" class="border p-2 rounded" />
+      <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" placeholder="세로" class="border p-2 rounded w-full" />
+      <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" placeholder="가로" class="border p-2 rounded w-full" />
       <div>
         <input type="number" :max="maxWinners" min="1" x-model.number="winners" placeholder="당첨 개수" class="w-full border p-2 rounded" />
         <p class="text-sm text-gray-500 mt-1">최대: {{ maxWinners }}</p>
@@ -34,11 +34,11 @@
       <option value="text">텍스트 직접 입력</option>
       <option value="image">이미지 업로드</option>
     </select>
-  </div>  <!-- 버튼 -->  <div class="flex justify-between mt-6 space-x-2">
-    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="startGame()">시작하기</button>
-    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" @click="saveSettings()">저장하기</button>
-    <button class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" @click="reset()">초기화하기</button>
-  </div>  <script>
+  </div>  <!-- 버튼 -->  <div class="flex justify-between mt-6 gap-4">
+    <button class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="startGame()">시작하기</button>
+    <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" @click="saveSettings()">저장하기</button>
+    <button class="flex-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" @click="reset()">초기화</button>
+  </div>  <!-- 버전 텍스트 -->  <p class="text-center text-gray-500 text-sm mt-8">버전: 1.4.3</p>  <script>
     document.addEventListener('alpine:init', () => {
       Alpine.data('lotteryApp', () => ({
         mainTitle: '',
@@ -48,6 +48,13 @@
         winners: 1,
         winMode: 'default',
         cellUI: 'basic',
+
+        init() {
+          const saved = JSON.parse(localStorage.getItem('lottery-settings'));
+          if (saved) {
+            Object.assign(this, saved);
+          }
+        },
 
         get maxWinners() {
           return Math.max(1, this.rows * this.cols - 1);
@@ -65,8 +72,8 @@
         },
 
         saveSettings() {
+          localStorage.setItem('lottery-settings', JSON.stringify(this.collectSettings()));
           alert('설정이 저장되었습니다!');
-          console.log(this.collectSettings());
         },
 
         reset() {
@@ -77,6 +84,7 @@
           this.winners = 1;
           this.winMode = 'default';
           this.cellUI = 'basic';
+          localStorage.removeItem('lottery-settings');
         },
 
         collectSettings() {
