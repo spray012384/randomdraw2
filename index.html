@@ -1,131 +1,85 @@
-<!-- 버전: 1.6.8 -->
-<!DOCTYPE html>
-<html lang="ko">
+<!-- 버전: 1.6.9 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>뽑기판 설정</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3fdf8;
       padding: 20px;
-      background: #f2f2f2;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .form-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      width: 120px;
-      font-weight: bold;
-    }
-    .form-group input,
-    .form-group select {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    .section {
+      background-color: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
     .section-title {
-      margin-top: 30px;
-      background-color: #e0e0e0;
-      padding: 10px;
-      border-radius: 8px;
       font-weight: bold;
+      margin-bottom: 10px;
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 6px 8px;
       border: 1px solid #ccc;
+      border-radius: 6px;
+      width: calc(100% - 130px);
+      max-width: 250px;
     }
-    .button-group {
-      margin-top: 40px;
-      display: flex;
-      justify-content: space-between;
+    .radio-group {
+      margin: 8px 0;
     }
-    .button-group button {
-      flex: 1;
-      margin: 0 5px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .start-button {
-      background-color: #007bff;
-    }
-    .save-button {
-      background-color: #28a745;
-    }
-    .reset-button {
-      background-color: #6c757d;
-    }
-    .version-info {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 12px;
-      color: #666;
+    .radio-group label {
+      width: auto;
+      margin-right: 20px;
     }
   </style>
 </head>
-<body>
-  <h1>뽑기판 설정</h1>
-
-  <div class="form-group">
-    <label>메인 타이틀</label>
-    <input type="text" placeholder="예: 럭키드로우 이벤트"/>
-  </div>
-
-  <div class="form-group">
-    <label>상품 안내</label>
-    <input type="text" placeholder="예: 당첨 시 경품이 제공됩니다"/>
-  </div>
-
-  <div class="form-group">
-    <label>가로 칸 수</label>
-    <input type="number" min="1" max="10" value="3"/>
-  </div>
-
-  <div class="form-group">
-    <label>세로 칸 수</label>
-    <input type="number" min="1" max="10" value="3"/>
-  </div>
-
-  <div class="form-group">
-    <label>당첨 개수</label>
-    <input type="number" min="1" value="1"/>
-  </div>
-
-  <div class="section-title">당첨 방식</div>
-  <div class="form-group">
-    <label>선택</label>
-    <select>
-      <option value="basic">기본 (당첨/꽝)</option>
-      <option value="text">텍스트 입력</option>
-    </select>
-  </div>
-
-  <div class="section-title">셀 UI 설정</div>
-  <div class="form-group">
-    <label>선택</label>
-    <select>
-      <option value="default">기본</option>
-      <option value="text">텍스트 직접 입력</option>
-      <option value="image">이미지 업로드</option>
-    </select>
-  </div>
-
-  <div class="button-group">
-    <button class="start-button">시작하기</button>
-    <button class="save-button">저장하기</button>
-    <button class="reset-button">초기화</button>
-  </div>
-
-  <div class="version-info">버전: 1.6.8</div>
-</body>
+<body>  <div class="section">
+    <div class="section-title">타이틀 설정</div>
+    <div>
+      <label>메인 타이틀:</label>
+      <input type="text" placeholder="예: 시그뽑, 댄스뽑기">
+    </div>
+    <div style="margin-top: 10px;">
+      <label>당첨 내용:</label>
+      <input type="text" value="세팅에 따라 자동으로 입력됩니다." disabled>
+    </div>
+  </div>  <div class="section">
+    <div class="section-title">가로 / 세로 / 당첨개수</div>
+    <div style="margin-bottom: 8px;">
+      <label>가로</label>
+      <input type="number" placeholder="10개 이하로">
+    </div>
+    <div style="margin-bottom: 8px;">
+      <label>세로</label>
+      <input type="number" placeholder="10개 이하로">
+    </div>
+    <div>
+      <label>당첨개수</label>
+      <input type="number" placeholder="전체 카드보다 작게 입력">
+    </div>
+  </div>  <div class="section">
+    <div class="section-title">당첨 방식 선택</div>
+    <div class="radio-group">
+      <label><input type="radio" name="winner-type" checked> 기본 (꽝/당첨)</label>
+      <label><input type="radio" name="winner-type"> 직접 텍스트 입력</label>
+    </div>
+  </div>  <div class="section">
+    <div class="section-title">셀 설정</div>
+    <div class="radio-group">
+      <label><input type="radio" name="cell-type" checked> 기본</label>
+      <label><input type="radio" name="cell-type"> 텍스트 직접 입력</label>
+      <label><input type="radio" name="cell-type"> 이미지 업로드</label>
+    </div>
+  </div>  <div style="text-align: right; font-size: 12px; color: #888;">
+    버전: 1.6.9
+  </div><!-- 버전: 1.6.9 --></body>
 </html>
-<!-- 버전: 1.6.8 -->
