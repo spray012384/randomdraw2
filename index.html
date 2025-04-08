@@ -1,5 +1,4 @@
-<!-- settings.html - Version 1.2.1 --><!DOCTYPE html><html lang="ko">
-<head>
+<!-- Version: 1.2.1 --><!DOCTYPE html><html lang="ko"><head>
   <meta charset="UTF-8" />
   <title>뽑기판 설정</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,23 +51,16 @@
       justify-content: center;
       font-size: 14px;
     }
-    .button-group {
-      margin-top: 20px;
-    }
-    .btn {
+    button {
       padding: 10px 20px;
       margin-right: 10px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
+      margin-top: 20px;
     }
-    .btn.primary {
+    .start-btn {
       background-color: #007bff;
       color: white;
-    }
-    .btn:hover {
-      opacity: 0.9;
+      border: none;
+      border-radius: 5px;
     }
     .version {
       margin-top: 30px;
@@ -92,14 +84,6 @@
   <div class="section">
     <label>메인 타이틀</label>
     <input type="text" id="mainTitle" placeholder="예: 신년맞이 경품 이벤트" />
-    <label id="itemLabel" style="display: none">상품 안내</label>
-    <input type="text" id="itemInfo" placeholder="예: 스타벅스 기프티콘, 치킨 쿠폰 등" readonly style="display: none" />
-  </div>
-  <div class="section">
-    <label>행 / 열 / 당첨 개수</label>
-    <input type="number" id="rows" placeholder="행 (예: 3)" min="1" max="10" />
-    <input type="number" id="cols" placeholder="열 (예: 3)" min="1" max="10" />
-    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
   </div>
   <div class="section">
     <label>당첨 방식 선택</label>
@@ -108,6 +92,13 @@
       <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
     </div>
     <div id="customWinInputs"></div>
+    <input type="text" id="itemInfo" placeholder="예: 스타벅스 기프티콘, 치킨 쿠폰 등" readonly style="display:none;" />
+  </div>
+  <div class="section">
+    <label>가로 / 세로 / 당첨 개수</label>
+    <input type="number" id="rows" placeholder="가로 (예: 3)" min="1" />
+    <input type="number" id="cols" placeholder="세로 (예: 3)" min="1" />
+    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
   </div>
   <div class="section">
     <label>셀 UI 설정</label>
@@ -117,162 +108,158 @@
       <label><input type="radio" name="cellUi" value="image" /> 셀에 이미지 업로드</label>
     </div>
     <div id="cellImageUpload" class="image-upload" style="display: none;"></div>
-  </div>
-  <div class="button-group">
-    <button class="btn primary" onclick="startGame()">시작하기</button>
-    <button class="btn" onclick="saveSettings()">저장하기</button>
-    <button class="btn" onclick="resetForm()">초기화</button>
-  </div>
+  </div><button onclick="saveSettings()">저장하기</button> <button class="start-btn" onclick="startGame()">시작하기</button> <button onclick="location.reload()">초기화</button>
+
   <div id="preview" class="preview-board"></div>
-  <div class="version">Version 1.2.1</div>
-  <script>
+  <div class="version">Version 1.2.1</div>  <script>
     const winInputsDiv = document.getElementById("customWinInputs");
     const itemInfoInput = document.getElementById("itemInfo");
-    const itemLabel = document.getElementById("itemLabel");
-    const imageUploadDiv = document.getElementById("cellImageUpload");document.querySelectorAll("input[name='winType']").forEach(radio => {
-  radio.addEventListener("change", () => {
-    renderCustomWinInputs();
-    const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
-    itemInfoInput.style.display = isCustom ? 'block' : 'none';
-    itemLabel.style.display = isCustom ? 'block' : 'none';
-  });
-});
+    const imageUploadDiv = document.getElementById("cellImageUpload");
 
-document.querySelectorAll("input[name='cellUi']").forEach(radio => {
-  radio.addEventListener("change", () => {
-    if (document.querySelector("input[name='cellUi']:checked").value === 'image') {
+    document.querySelectorAll("input[name='winType']").forEach(radio => {
+      radio.addEventListener("change", () => {
+        const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
+        itemInfoInput.style.display = isCustom ? 'block' : 'none';
+        renderCustomWinInputs();
+      });
+    });
+
+    document.querySelectorAll("input[name='cellUi']").forEach(radio => {
+      radio.addEventListener("change", () => {
+        if (document.querySelector("input[name='cellUi']:checked").value === 'image') {
+          renderImageUploadInputs();
+          imageUploadDiv.style.display = 'block';
+        } else {
+          imageUploadDiv.innerHTML = '';
+          imageUploadDiv.style.display = 'none';
+        }
+      });
+    });
+
+    document.getElementById("rows").addEventListener("input", validateGrid);
+    document.getElementById("cols").addEventListener("input", validateGrid);
+    document.getElementById("winCount").addEventListener("input", validateWinCount);
+
+    function validateGrid() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      if (rows > 10 || cols > 10) {
+        showCustomAlert("가로, 세로는 최대 10까지 입력할 수 있습니다.");
+        if (rows > 10) document.getElementById("rows").value = 10;
+        if (cols > 10) document.getElementById("cols").value = 10;
+      }
+      generatePreview();
       renderImageUploadInputs();
-      imageUploadDiv.style.display = 'block';
-    } else {
+    }
+
+    function validateWinCount() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      const winCountInput = document.getElementById("winCount");
+      if (rows > 0 && cols > 0) {
+        const total = rows * cols;
+        const maxCount = total - 1;
+        const winCount = parseInt(winCountInput.value || 0);
+        if (winCount >= total) {
+          showCustomAlert(`당첨 개수는 ${total}개(가로 ${rows} × 세로 ${cols})를 초과할 수 없습니다.`);
+          winCountInput.value = maxCount;
+        }
+      }
+      renderCustomWinInputs();
+    }
+
+    function renderCustomWinInputs() {
+      const count = parseInt(document.getElementById("winCount").value || 0);
+      const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
+      winInputsDiv.innerHTML = '';
+      if (isCustom && count > 0) {
+        const items = [];
+        for (let i = 0; i < count; i++) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = `상품 ${i + 1}`;
+          input.oninput = updateItemInfo;
+          winInputsDiv.appendChild(input);
+          items.push(input);
+        }
+      } else {
+        itemInfoInput.value = '';
+      }
+    }
+
+    function updateItemInfo() {
+      const values = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value).filter(v => v);
+      itemInfoInput.value = values.join(', ');
+    }
+
+    function renderImageUploadInputs() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      const total = rows * cols;
       imageUploadDiv.innerHTML = '';
-      imageUploadDiv.style.display = 'none';
+      for (let i = 0; i < total; i++) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => showThumbnail(e, i);
+        imageUploadDiv.appendChild(input);
+      }
     }
-  });
-});
 
-document.getElementById("rows").addEventListener("input", limitInput);
-document.getElementById("cols").addEventListener("input", limitInput);
-document.getElementById("winCount").addEventListener("input", renderCustomWinInputs);
-
-function limitInput(e) {
-  if (parseInt(e.target.value) > 10) {
-    alert("행과 열의 최대값은 10입니다.");
-    e.target.value = 10;
-  }
-  renderImageUploadInputs();
-  generatePreview();
-}
-
-function renderCustomWinInputs() {
-  const count = parseInt(document.getElementById("winCount").value || 0);
-  const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
-  winInputsDiv.innerHTML = '';
-  if (isCustom && count > 0) {
-    for (let i = 0; i < count; i++) {
-      const input = document.createElement("input");
-      input.type = "text";
-      input.placeholder = `상품 ${i + 1}`;
-      input.oninput = updateItemInfo;
-      winInputsDiv.appendChild(input);
+    function showThumbnail(event, index) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.className = "thumbnail";
+        event.target.insertAdjacentElement('afterend', img);
+      };
+      reader.readAsDataURL(file);
     }
-  } else {
-    itemInfoInput.value = '';
-  }
-}
 
-function updateItemInfo() {
-  const values = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value).filter(v => v);
-  itemInfoInput.value = values.join(', ');
-}
+    function generatePreview() {
+      const rows = parseInt(document.getElementById("rows").value || 3);
+      const cols = parseInt(document.getElementById("cols").value || 3);
+      const board = document.getElementById("preview");
+      board.innerHTML = '';
+      board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      const total = rows * cols;
+      for (let i = 0; i < total; i++) {
+        const cell = document.createElement("div");
+        cell.className = "preview-cell";
+        cell.textContent = i + 1;
+        board.appendChild(cell);
+      }
+    }
 
-function renderImageUploadInputs() {
-  const rows = parseInt(document.getElementById("rows").value || 0);
-  const cols = parseInt(document.getElementById("cols").value || 0);
-  const total = rows * cols;
-  imageUploadDiv.innerHTML = '';
-  for (let i = 0; i < total; i++) {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = (e) => showThumbnail(e, i);
-    imageUploadDiv.appendChild(input);
-  }
-}
+    function startGame() {
+      const settings = {
+        title: document.getElementById("mainTitle").value,
+        itemInfo: document.getElementById("itemInfo").value,
+        rows: parseInt(document.getElementById("rows").value),
+        cols: parseInt(document.getElementById("cols").value),
+        winCount: parseInt(document.getElementById("winCount").value),
+        winType: document.querySelector("input[name='winType']:checked").value,
+        cellUi: document.querySelector("input[name='cellUi']:checked").value
+      };
+      const winTexts = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value);
+      const winTextParam = encodeURIComponent(JSON.stringify(winTexts));
+      const url = `game.html?settings=${encodeURIComponent(JSON.stringify(settings))}&wtexts=${winTextParam}`;
+      window.open(url, '_blank');
+    }
 
-function showThumbnail(event, index) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = document.createElement("img");
-    img.src = e.target.result;
-    img.className = "thumbnail";
-    event.target.insertAdjacentElement('afterend', img);
-  };
-  reader.readAsDataURL(file);
-}
+    function saveSettings() {
+      showCustomAlert("설정이 저장되었습니다.");
+    }
 
-function generatePreview() {
-  const rows = parseInt(document.getElementById("rows").value || 3);
-  const cols = parseInt(document.getElementById("cols").value || 3);
-  const board = document.getElementById("preview");
-  board.innerHTML = '';
-  board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  const total = rows * cols;
-  for (let i = 0; i < total; i++) {
-    const cell = document.createElement("div");
-    cell.className = "preview-cell";
-    cell.textContent = i + 1;
-    board.appendChild(cell);
-  }
-}
+    function showCustomAlert(msg) {
+      alert(msg);
+    }
 
-function startGame() {
-  const settings = {
-    title: document.getElementById("mainTitle").value,
-    itemInfo: document.getElementById("itemInfo").value,
-    rows: parseInt(document.getElementById("rows").value),
-    cols: parseInt(document.getElementById("cols").value),
-    winCount: parseInt(document.getElementById("winCount").value),
-    winType: document.querySelector("input[name='winType']:checked").value,
-    cellUi: document.querySelector("input[name='cellUi']:checked").value
-  };
-  const winTexts = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value);
-  const winTextParam = encodeURIComponent(JSON.stringify(winTexts));
-  const url = `game.html?settings=${encodeURIComponent(JSON.stringify(settings))}&wtexts=${winTextParam}`;
-  window.open(url, '_blank');
-}
-
-function saveSettings() {
-  const settings = {
-    title: document.getElementById("mainTitle").value,
-    itemInfo: document.getElementById("itemInfo").value,
-    rows: document.getElementById("rows").value,
-    cols: document.getElementById("cols").value,
-    winCount: document.getElementById("winCount").value,
-    winType: document.querySelector("input[name='winType']:checked").value,
-    cellUi: document.querySelector("input[name='cellUi']:checked").value
-  };
-  localStorage.setItem("lottoSettings", JSON.stringify(settings));
-  alert("설정이 저장되었습니다!");
-}
-
-function resetForm() {
-  document.getElementById("mainTitle").value = '';
-  document.getElementById("itemInfo").value = '';
-  document.getElementById("rows").value = '';
-  document.getElementById("cols").value = '';
-  document.getElementById("winCount").value = '';
-  document.querySelector("input[name='winType'][value='basic']").checked = true;
-  document.querySelector("input[name='cellUi'][value='default']").checked = true;
-  winInputsDiv.innerHTML = '';
-  imageUploadDiv.innerHTML = '';
-  imageUploadDiv.style.display = 'none';
-  itemInfoInput.style.display = 'none';
-  itemLabel.style.display = 'none';
-  document.getElementById("preview").innerHTML = '';
-}
-
-  </script>
-</body>
+    window.addEventListener("DOMContentLoaded", () => {
+      generatePreview();
+    });
+  </script></body>
 </html>
