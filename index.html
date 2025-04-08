@@ -1,108 +1,110 @@
-<!-- 버전: 1.5.3 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.5.4 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>뽑기판 설정</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-    h2 {
-      text-align: center;
-    }
-    .box {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    fieldset {
-      border: none;
-      padding: 0;
-    }
-    legend {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .radio-list {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .button-group {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007bff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h2>뽑기 설정</h2>  <div class="box">
-    <label>타이틀 설정</label>
-    <label for="mainTitle">메인 타이틀</label>
-    <input type="text" id="mainTitle" placeholder="예: 시그뽑, 댄스뽑기, 방셀뽑기 등등..."><label for="subTitle">당첨 내용</label>
-<input type="text" id="subTitle" placeholder="세팅에 따라 자동으로 입력됩니다." disabled>
+<body class="bg-gray-50 p-4">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <h1 class="text-center text-2xl font-bold">뽑기 설정</h1><!-- 타이틀 설정 -->
+<div class="bg-white rounded-xl shadow p-4 space-y-2">
+  <p class="font-bold">타이틀 설정</p>
+  <div class="flex items-center space-x-2">
+    <label class="font-bold">메인 타이틀:</label>
+    <input id="mainTitle" type="text" placeholder="예: 시그뽑, 댄스뽑기" class="flex-1 p-2 border rounded" />
+  </div>
+  <div class="flex items-center space-x-2">
+    <label class="font-bold">당첨 내용:</label>
+    <input id="subTitle" type="text" value="세팅에 따라 자동으로 입력됩니다." disabled class="flex-1 p-2 border rounded bg-gray-100 text-gray-500" />
+  </div>
+</div>
 
-  </div>  <div class="box">
-    <label>가로 / 세로 / 당첨개수</label>
-    <label for="cols">가로</label>
-    <input type="number" id="cols" placeholder="10개 이하로"><label for="rows">세로</label>
-<input type="number" id="rows" placeholder="10개 이하로">
+<!-- 가로/세로/당첨개수 설정 -->
+<div class="bg-white rounded-xl shadow p-4 space-y-2">
+  <p class="font-bold">가로 / 세로 / 당첨개수</p>
+  <div class="space-y-2">
+    <div class="flex items-center space-x-2">
+      <label class="font-bold w-24">가로</label>
+      <input id="cols" type="number" min="1" max="10" placeholder="10개 이하로" class="flex-1 p-2 border rounded" />
+    </div>
+    <div class="flex items-center space-x-2">
+      <label class="font-bold w-24">세로</label>
+      <input id="rows" type="number" min="1" max="10" placeholder="10개 이하로" class="flex-1 p-2 border rounded" />
+    </div>
+    <div class="flex items-center space-x-2">
+      <label class="font-bold w-24">당첨개수</label>
+      <input id="winCount" type="number" placeholder="전체 카드보다 작게 입력" class="flex-1 p-2 border rounded" />
+    </div>
+  </div>
+</div>
 
-<label for="winners">당첨개수</label>
-<input type="number" id="winners" placeholder="전체 카드보다 작게 입력">
+<!-- 당첨 방식 선택 -->
+<div class="bg-white rounded-xl shadow p-4">
+  <p class="font-bold mb-2">당첨 방식 선택</p>
+  <div class="space-y-1">
+    <label><input type="radio" name="winType" value="default" /> 기본 (꽝/당첨)</label><br />
+    <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
+  </div>
+</div>
 
-  </div>  <div class="box">
-    <fieldset>
-      <legend>당첨 방식 선택</legend>
-      <div class="radio-list">
-        <label><input type="radio" name="winType" value="basic" checked> 기본 (꽝/당첨)</label>
-        <label><input type="radio" name="winType" value="custom"> 직접 텍스트 입력</label>
-      </div>
-    </fieldset>
-  </div>  <div class="box">
-    <fieldset>
-      <legend>셀 설정</legend>
-      <div class="radio-list">
-        <label><input type="radio" name="cellStyle" value="default" checked> 기본</label>
-        <label><input type="radio" name="cellStyle" value="text"> 텍스트 직접 입력</label>
-        <label><input type="radio" name="cellStyle" value="image"> 이미지 업로드</label>
-      </div>
-    </fieldset>
-  </div>  <div class="button-group">
-    <button id="startBtn">시작하기</button>
-    <button id="saveBtn">저장하기</button>
-    <button id="resetBtn">초기화</button>
-  </div>  <p style="text-align: center; margin-top: 30px; color: #888;">버전: 1.5.3</p>
-</body>
+<!-- 셀 설정 -->
+<div class="bg-white rounded-xl shadow p-4">
+  <p class="font-bold mb-2">셀 설정</p>
+  <div class="space-y-1">
+    <label><input type="radio" name="cellUI" value="basic" /> 기본</label><br />
+    <label><input type="radio" name="cellUI" value="text" /> 텍스트 직접 입력</label><br />
+    <label><input type="radio" name="cellUI" value="image" /> 이미지 업로드</label>
+  </div>
+</div>
+
+<!-- 버튼 영역 -->
+<div class="flex justify-between">
+  <button id="startBtn" class="w-1/3 py-2 rounded text-white bg-blue-500 disabled:opacity-50" disabled>시작하기</button>
+  <button id="saveBtn" class="w-1/3 py-2 rounded text-white bg-green-500 disabled:opacity-50" disabled>저장하기</button>
+  <button id="resetBtn" class="w-1/3 py-2 rounded text-white bg-gray-400">초기화</button>
+</div>
+
+<p class="text-center text-sm text-gray-500 mt-4">버전: 1.5.4</p>
+
+  </div>  <script>
+    const mainTitle = document.getElementById('mainTitle');
+    const cols = document.getElementById('cols');
+    const rows = document.getElementById('rows');
+    const winCount = document.getElementById('winCount');
+    const startBtn = document.getElementById('startBtn');
+    const saveBtn = document.getElementById('saveBtn');
+
+    const radioNames = ['winType', 'cellUI'];
+
+    function isValid() {
+      const colVal = parseInt(cols.value);
+      const rowVal = parseInt(rows.value);
+      const winVal = parseInt(winCount.value);
+
+      const hasWinType = [...document.getElementsByName('winType')].some(r => r.checked);
+      const hasCellUI = [...document.getElementsByName('cellUI')].some(r => r.checked);
+
+      return (
+        mainTitle.value.trim() !== '' &&
+        colVal > 0 && colVal <= 10 &&
+        rowVal > 0 && rowVal <= 10 &&
+        winVal > 0 && winVal < (colVal * rowVal) &&
+        hasWinType &&
+        hasCellUI
+      );
+    }
+
+    function updateButtonState() {
+      const enable = isValid();
+      startBtn.disabled = !enable;
+      saveBtn.disabled = !enable;
+    }
+
+    [mainTitle, cols, rows, winCount].forEach(input => input.addEventListener('input', updateButtonState));
+    radioNames.forEach(name => {
+      document.getElementsByName(name).forEach(r => r.addEventListener('change', updateButtonState));
+    });
+  </script></body>
 </html>
-<!-- 버전: 1.5.3 -->
+<!-- 버전: 1.5.4 -->
