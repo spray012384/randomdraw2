@@ -3,107 +3,152 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>뽑기판 설정</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f3fef6;
+      padding: 20px;
+    }
+    .section {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      width: 110px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group input[disabled] {
+      background-color: #f0f0f0;
+    }
+    .radio-group {
+      margin-left: 110px;
+    }
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    #startButton {
+      background-color: #007bff;
+    }
+    #saveButton {
+      background-color: #28a745;
+    }
+    #resetButton {
+      background-color: #6c757d;
+    }
+    button:disabled {
+      background-color: #ccc !important;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 p-4">
-  <div class="max-w-3xl mx-auto space-y-6">
-    <h1 class="text-center text-2xl font-bold">뽑기 설정</h1><!-- 타이틀 설정 -->
-<div class="bg-white rounded-xl shadow p-4 space-y-2">
-  <p class="font-bold">타이틀 설정</p>
-  <div class="flex items-center space-x-2">
-    <label class="font-bold">메인 타이틀:</label>
-    <input id="mainTitle" type="text" placeholder="예: 시그뽑, 댄스뽑기" class="flex-1 p-2 border rounded" />
-  </div>
-  <div class="flex items-center space-x-2">
-    <label class="font-bold">당첨 내용:</label>
-    <input id="subTitle" type="text" value="세팅에 따라 자동으로 입력됩니다." disabled class="flex-1 p-2 border rounded bg-gray-100 text-gray-500" />
-  </div>
-</div>
-
-<!-- 가로/세로/당첨개수 설정 -->
-<div class="bg-white rounded-xl shadow p-4 space-y-2">
-  <p class="font-bold">가로 / 세로 / 당첨개수</p>
-  <div class="space-y-2">
-    <div class="flex items-center space-x-2">
-      <label class="font-bold w-24">가로</label>
-      <input id="cols" type="number" min="1" max="10" placeholder="10개 이하로" class="flex-1 p-2 border rounded" />
+<body>
+  <div class="section">
+    <div class="section-title">타이틀 설정</div>
+    <div class="form-group">
+      <label for="mainTitle">메인 타이틀:</label>
+      <input type="text" id="mainTitle" placeholder="예: 시그뽑, 댄스뽑기" />
     </div>
-    <div class="flex items-center space-x-2">
-      <label class="font-bold w-24">세로</label>
-      <input id="rows" type="number" min="1" max="10" placeholder="10개 이하로" class="flex-1 p-2 border rounded" />
+    <div class="form-group">
+      <label for="rewardText">당첨 내용:</label>
+      <input type="text" id="rewardText" value="세팅에 따라 자동으로 입력됩니다." disabled />
     </div>
-    <div class="flex items-center space-x-2">
-      <label class="font-bold w-24">당첨개수</label>
-      <input id="winCount" type="number" placeholder="전체 카드보다 작게 입력" class="flex-1 p-2 border rounded" />
+  </div>  <div class="section">
+    <div class="section-title">가로 / 세로 / 당첨개수</div>
+    <div class="form-group">
+      <label for="cols">가로</label>
+      <input type="number" id="cols" placeholder="10개 이하로" />
     </div>
-  </div>
-</div>
-
-<!-- 당첨 방식 선택 -->
-<div class="bg-white rounded-xl shadow p-4">
-  <p class="font-bold mb-2">당첨 방식 선택</p>
-  <div class="space-y-1">
-    <label><input type="radio" name="winType" value="default" /> 기본 (꽝/당첨)</label><br />
-    <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
-  </div>
-</div>
-
-<!-- 셀 설정 -->
-<div class="bg-white rounded-xl shadow p-4">
-  <p class="font-bold mb-2">셀 설정</p>
-  <div class="space-y-1">
-    <label><input type="radio" name="cellUI" value="basic" /> 기본</label><br />
-    <label><input type="radio" name="cellUI" value="text" /> 텍스트 직접 입력</label><br />
-    <label><input type="radio" name="cellUI" value="image" /> 이미지 업로드</label>
-  </div>
-</div>
-
-<!-- 버튼 영역 -->
-<div class="flex justify-between">
-  <button id="startBtn" class="w-1/3 py-2 rounded text-white bg-blue-500 disabled:opacity-50" disabled>시작하기</button>
-  <button id="saveBtn" class="w-1/3 py-2 rounded text-white bg-green-500 disabled:opacity-50" disabled>저장하기</button>
-  <button id="resetBtn" class="w-1/3 py-2 rounded text-white bg-gray-400">초기화</button>
-</div>
-
-<p class="text-center text-sm text-gray-500 mt-4">버전: 1.5.4</p>
-
+    <div class="form-group">
+      <label for="rows">세로</label>
+      <input type="number" id="rows" placeholder="10개 이하로" />
+    </div>
+    <div class="form-group">
+      <label for="winners">당첨개수</label>
+      <input type="number" id="winners" placeholder="전체 카드보다 작게 입력" />
+    </div>
+  </div>  <div class="section">
+    <div class="section-title">당첨 방식 선택</div>
+    <div class="radio-group">
+      <div class="radio-list">
+        <label><input type="radio" name="mode" value="default" checked /> 기본 (꽝/당첨)</label>
+        <label><input type="radio" name="mode" value="custom" /> 직접 텍스트 입력</label>
+      </div>
+    </div>
+  </div>  <div class="section">
+    <div class="section-title">셀 설정</div>
+    <div class="radio-group">
+      <div class="radio-list">
+        <label><input type="radio" name="cellMode" value="default" checked /> 기본</label>
+        <label><input type="radio" name="cellMode" value="text" /> 텍스트 직접 입력</label>
+        <label><input type="radio" name="cellMode" value="image" /> 이미지 업로드</label>
+      </div>
+    </div>
+  </div>  <div class="button-group">
+    <button id="startButton" disabled>시작하기</button>
+    <button id="saveButton" disabled>저장하기</button>
+    <button id="resetButton">초기화</button>
   </div>  <script>
-    const mainTitle = document.getElementById('mainTitle');
-    const cols = document.getElementById('cols');
-    const rows = document.getElementById('rows');
-    const winCount = document.getElementById('winCount');
-    const startBtn = document.getElementById('startBtn');
-    const saveBtn = document.getElementById('saveBtn');
+    const mainTitle = document.getElementById("mainTitle");
+    const cols = document.getElementById("cols");
+    const rows = document.getElementById("rows");
+    const winners = document.getElementById("winners");
+    const startButton = document.getElementById("startButton");
+    const saveButton = document.getElementById("saveButton");
 
-    const radioNames = ['winType', 'cellUI'];
-
-    function isValid() {
-      const colVal = parseInt(cols.value);
-      const rowVal = parseInt(rows.value);
-      const winVal = parseInt(winCount.value);
-
-      const hasWinType = [...document.getElementsByName('winType')].some(r => r.checked);
-      const hasCellUI = [...document.getElementsByName('cellUI')].some(r => r.checked);
-
-      return (
-        mainTitle.value.trim() !== '' &&
-        colVal > 0 && colVal <= 10 &&
-        rowVal > 0 && rowVal <= 10 &&
-        winVal > 0 && winVal < (colVal * rowVal) &&
-        hasWinType &&
-        hasCellUI
-      );
+    function checkInputs() {
+      if (
+        mainTitle.value.trim() !== "" &&
+        cols.value > 0 &&
+        rows.value > 0 &&
+        winners.value > 0 &&
+        winners.value < cols.value * rows.value
+      ) {
+        startButton.disabled = false;
+        saveButton.disabled = false;
+      } else {
+        startButton.disabled = true;
+        saveButton.disabled = true;
+      }
     }
 
-    function updateButtonState() {
-      const enable = isValid();
-      startBtn.disabled = !enable;
-      saveBtn.disabled = !enable;
-    }
-
-    [mainTitle, cols, rows, winCount].forEach(input => input.addEventListener('input', updateButtonState));
-    radioNames.forEach(name => {
-      document.getElementsByName(name).forEach(r => r.addEventListener('change', updateButtonState));
+    [mainTitle, cols, rows, winners].forEach(input => {
+      input.addEventListener("input", checkInputs);
     });
   </script></body>
 </html>
