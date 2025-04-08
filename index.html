@@ -4,44 +4,111 @@
   <title>뽑기판 설정</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: sans-serif; margin: 0; padding: 20px; }
-    h1, .subtitle { font-size: 24px; margin-bottom: 10px; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input[type="text"], input[type="number"] {
-      width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #fafafa;
     }
-    .section { margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
-    .radio-group label { font-weight: normal; display: inline-block; margin-right: 10px; }
-    .preview-board { margin-top: 20px; display: grid; gap: 5px; justify-content: center; }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+    .radio-group {
+      margin-top: 10px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 15px;
+      font-size: 15px;
+    }
+    .preview-board {
+      margin-top: 20px;
+      display: grid;
+      gap: 5px;
+      justify-content: center;
+    }
     .preview-cell {
-      background: #f0f0f0; width: 60px; height: 60px;
-      display: flex; align-items: center; justify-content: center;
+      background: #f0f0f0;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border-radius: 6px;
     }
     button {
-      padding: 10px 20px; margin-right: 10px; margin-top: 20px;
-      border: none; border-radius: 5px; cursor: pointer;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 20px;
+      margin-right: 10px;
+      cursor: pointer;
     }
-    .start-btn { background-color: #007bff; color: white; }
-    .gray-btn { background-color: #ccc; color: black; }
-    .version { margin-top: 30px; font-size: 12px; color: gray; text-align: center; }
-    .image-upload { margin-top: 10px; }
-    .thumbnail { width: 40px; height: 40px; object-fit: cover; margin-right: 5px; }
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-secondary {
+      background-color: #ccc;
+      color: black;
+    }
+    .version {
+      margin-top: 30px;
+      font-size: 12px;
+      color: gray;
+      text-align: center;
+    }
+    .image-upload {
+      margin-top: 10px;
+    }
+    .thumbnail {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      margin-right: 5px;
+    }
+    .sub-title {
+      margin-top: 10px;
+      color: #888;
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
   <h1>뽑기판 설정</h1>  <div class="section">
     <label>메인 타이틀</label>
     <input type="text" id="mainTitle" placeholder="예: 신년맞이 경품 이벤트" />
-    <div id="subtitleSection" style="display:none;">
-      <label class="subtitle">서브 타이틀</label>
-      <input type="text" id="itemInfo" readonly />
-    </div>
+    <div id="subTitle" class="sub-title" style="display: none;"></div>
   </div>  <div class="section">
     <label>가로 / 세로 / 당첨 개수</label>
-    <input type="number" id="cols" placeholder="가로 (예: 3)" min="1" max="10" />
-    <input type="number" id="rows" placeholder="세로 (예: 3)" min="1" max="10" />
+    <input type="number" id="rows" placeholder="가로 (예: 3)" min="1" max="10" />
+    <input type="number" id="cols" placeholder="세로 (예: 3)" min="1" max="10" />
     <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
-    <div id="countMsg" style="color: red; display: none;"></div>
   </div>  <div class="section">
     <label>당첨 방식 선택</label>
     <div class="radio-group">
@@ -49,83 +116,109 @@
       <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
     </div>
     <div id="customWinInputs"></div>
+    <label style="margin-top: 15px; display: none;" id="itemLabel">상품 안내</label>
+    <input type="text" id="itemInfo" readonly style="display: none;" />
   </div>  <div class="section">
     <label>셀 UI 설정</label>
     <div class="radio-group">
       <label><input type="radio" name="cellUi" value="default" checked /> 기본</label>
-      <label><input type="radio" name="cellUi" value="text" /> 텍스트 입력</label>
-      <label><input type="radio" name="cellUi" value="image" /> 이미지 업로드</label>
+      <label><input type="radio" name="cellUi" value="text" /> 셀에 텍스트 입력</label>
+      <label><input type="radio" name="cellUi" value="image" /> 셀에 이미지 업로드</label>
     </div>
     <div id="cellImageUpload" class="image-upload" style="display: none;"></div>
-  </div>  <div id="preview" class="preview-board"></div><button class="start-btn" onclick="startGame()">시작하기</button> <button class="gray-btn">저장하기</button> <button class="gray-btn" onclick="location.reload()">초기화</button>
+  </div>  <div id="preview" class="preview-board"></div><button class="btn-primary" onclick="startGame()">시작하기</button> <button class="btn-secondary">저장하기</button> <button class="btn-secondary" onclick="location.reload()">초기화</button>
 
   <div class="version">Version 1.3.1</div>  <script>
-    const get = id => document.getElementById(id);
-    const winInputsDiv = get("customWinInputs");
-    const itemInfoInput = get("itemInfo");
+    const winInputsDiv = document.getElementById("customWinInputs");
+    const itemInfoInput = document.getElementById("itemInfo");
+    const itemLabel = document.getElementById("itemLabel");
+    const imageUploadDiv = document.getElementById("cellImageUpload");
+    const winCountInput = document.getElementById("winCount");
+    const subTitle = document.getElementById("subTitle");
 
-    document.querySelectorAll("input[name='winType']").forEach(r => {
-      r.addEventListener("change", () => {
-        const isCustom = r.value === "custom";
-        get("subtitleSection").style.display = isCustom ? 'block' : 'none';
+    document.querySelectorAll("input[name='winType']").forEach(radio => {
+      radio.addEventListener("change", () => {
         renderCustomWinInputs();
+        const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
+        itemInfoInput.style.display = isCustom ? 'block' : 'none';
+        itemLabel.style.display = isCustom ? 'block' : 'none';
+        subTitle.style.display = isCustom ? 'block' : 'none';
       });
-    });
-
-    ["rows", "cols", "winCount"].forEach(id => {
-      get(id).addEventListener("input", validateInputs);
     });
 
     document.querySelectorAll("input[name='cellUi']").forEach(radio => {
       radio.addEventListener("change", () => {
-        const type = document.querySelector("input[name='cellUi']:checked").value;
-        const uploadDiv = get("cellImageUpload");
-        uploadDiv.style.display = type === 'image' ? 'block' : 'none';
-        if (type === 'image') renderImageUploadInputs();
-        else uploadDiv.innerHTML = '';
+        if (document.querySelector("input[name='cellUi']:checked").value === 'image') {
+          renderImageUploadInputs();
+          imageUploadDiv.style.display = 'block';
+        } else {
+          imageUploadDiv.innerHTML = '';
+          imageUploadDiv.style.display = 'none';
+        }
       });
     });
 
+    winCountInput.addEventListener("input", validateWinCount);
+    document.getElementById("rows").addEventListener("input", validateWinCount);
+    document.getElementById("cols").addEventListener("input", validateWinCount);
+
     function renderCustomWinInputs() {
-      const count = parseInt(get("winCount").value || 0);
+      const count = parseInt(winCountInput.value || 0);
       const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
       winInputsDiv.innerHTML = '';
       if (isCustom && count > 0) {
+        const items = [];
         for (let i = 0; i < count; i++) {
           const input = document.createElement("input");
           input.type = "text";
           input.placeholder = `상품 ${i + 1}`;
           input.oninput = updateItemInfo;
           winInputsDiv.appendChild(input);
+          items.push(input);
         }
-      } else itemInfoInput.value = '';
+        updateItemInfo();
+      } else {
+        itemInfoInput.value = '';
+        subTitle.textContent = '';
+      }
     }
 
     function updateItemInfo() {
       const values = Array.from(winInputsDiv.querySelectorAll("input"))
         .map(i => i.value).filter(v => v);
       itemInfoInput.value = values.join(', ');
+      subTitle.textContent = values.length > 0 ? `상품: ${values.join(', ')}` : '';
     }
 
-    function renderImageUploadInputs() {
-      const rows = parseInt(get("rows").value || 0);
-      const cols = parseInt(get("cols").value || 0);
-      const uploadDiv = get("cellImageUpload");
-      uploadDiv.innerHTML = '';
-      for (let i = 0; i < rows * cols; i++) {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.onchange = e => showThumbnail(e);
-        uploadDiv.appendChild(input);
+    function validateWinCount() {
+      const row = parseInt(document.getElementById("rows").value || 0);
+      const col = parseInt(document.getElementById("cols").value || 0);
+      const max = row * col - 1;
+      if (winCountInput.value > max) {
+        alert(`당첨 개수는 ${row * col}개를 초과할 수 없습니다.`);
+        winCountInput.value = max;
       }
     }
 
-    function showThumbnail(event) {
+    function renderImageUploadInputs() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      const total = rows * cols;
+      imageUploadDiv.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => showThumbnail(e, i);
+        imageUploadDiv.appendChild(input);
+      }
+    }
+
+    function showThumbnail(event, index) {
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         const img = document.createElement("img");
         img.src = e.target.result;
         img.className = "thumbnail";
@@ -134,51 +227,19 @@
       reader.readAsDataURL(file);
     }
 
-    function validateInputs() {
-      const rows = parseInt(get("rows").value || 0);
-      const cols = parseInt(get("cols").value || 0);
-      const count = parseInt(get("winCount").value || 0);
-      const msg = get("countMsg");
-      const max = rows * cols - 1;
-
-      if (count > rows * cols) {
-        msg.style.display = 'block';
-        msg.textContent = `당첨갯수는 ${rows * cols}개를 초과할 수 없습니다.`;
-      } else if (count > max) {
-        msg.style.display = 'block';
-        msg.textContent = `당첨갯수는 ${max}개를 초과할 수 없습니다.`;
-      } else msg.style.display = 'none';
-
-      renderCustomWinInputs();
-      generatePreview();
-    }
-
-    function generatePreview() {
-      const rows = parseInt(get("rows").value || 3);
-      const cols = parseInt(get("cols").value || 3);
-      const board = get("preview");
-      board.innerHTML = '';
-      board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-      for (let i = 0; i < rows * cols; i++) {
-        const cell = document.createElement("div");
-        cell.className = "preview-cell";
-        cell.textContent = i + 1;
-        board.appendChild(cell);
-      }
-    }
-
     function startGame() {
       const settings = {
-        title: get("mainTitle").value,
-        itemInfo: get("itemInfo").value,
-        rows: parseInt(get("rows").value),
-        cols: parseInt(get("cols").value),
-        winCount: parseInt(get("winCount").value),
+        title: document.getElementById("mainTitle").value,
+        itemInfo: document.getElementById("itemInfo").value,
+        rows: parseInt(document.getElementById("rows").value),
+        cols: parseInt(document.getElementById("cols").value),
+        winCount: parseInt(document.getElementById("winCount").value),
         winType: document.querySelector("input[name='winType']:checked").value,
         cellUi: document.querySelector("input[name='cellUi']:checked").value
       };
       const winTexts = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value);
-      const url = `game.html?settings=${encodeURIComponent(JSON.stringify(settings))}&wtexts=${encodeURIComponent(JSON.stringify(winTexts))}`;
+      const winTextParam = encodeURIComponent(JSON.stringify(winTexts));
+      const url = `game.html?settings=${encodeURIComponent(JSON.stringify(settings))}&wtexts=${winTextParam}`;
       window.open(url, '_blank');
     }
   </script></body>
