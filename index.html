@@ -1,4 +1,4 @@
-<!-- 버전: 1.7.1 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.7.2 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,12 @@
       max-width: 800px;
       margin: auto;
     }
+    .main-header {
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 30px;
+    }
     .title {
       font-size: 24px;
       font-weight: bold;
@@ -19,20 +25,15 @@
     }
     .row {
       display: flex;
-      flex-wrap: nowrap;
       align-items: center;
       margin-bottom: 10px;
     }
     .row label {
       width: 120px;
-      flex-shrink: 0;
-      margin-right: 10px;
     }
     .row input, .row select {
       flex: 1;
-      min-width: 0;
       padding: 5px;
-      box-sizing: border-box;
     }
     .section-title {
       font-size: 18px;
@@ -41,6 +42,10 @@
       font-weight: bold;
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
+    }
+    .line {
+      border-bottom: 1px solid #ccc;
+      margin: 10px 0 20px 0;
     }
     .buttons {
       display: flex;
@@ -69,14 +74,17 @@
 </head>
 <body>
   <div class="container">
-    <div class="title">뽑기판 설정</div>
-    <div class="row">
-      <label>메인 타이틀</label>
-      <input type="text" placeholder="예: 행운의 룰렛!">
-    </div><div class="row">
+    <div class="main-header">랜덤 뽑기</div>
+    <div class="title">뽑기판 설정</div><div class="row">
+  <label>메인 타이틀</label>
+  <input type="text" placeholder="예: 행운의 룰렛!">
+</div>
+
+<div class="row">
   <label>상품 안내</label>
   <input type="text" placeholder="예: 치킨, 커피, 꽝 등">
 </div>
+<div class="line"></div>
 
 <div class="row">
   <label>가로 칸 수</label>
@@ -94,6 +102,7 @@
 </div>
 
 <div class="section-title">당첨 방식</div>
+<div class="line"></div>
 <div class="row">
   <label>방식 선택</label>
   <select>
@@ -118,9 +127,9 @@
   <button class="reset-btn">초기화</button>
 </div>
 
-<div class="version-text">버전: 1.7.1</div>
+<div class="version-text">버전: 1.7.2</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.1 -->
+<!-- 버전: 1.7.2 -->
