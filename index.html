@@ -1,130 +1,137 @@
-<!-- 버전: 1.4.6 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.4.8 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판 설정 v1.4.6</title>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>뽑기판 설정</title>
+  <style>
+    body {
+      font-family: 'Arial';
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h2 {
+      margin-top: 30px;
+    }
+    .box {
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+    .field {
+      margin-bottom: 15px;
+    }
+    .field label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .field input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .button-row {
+      display: flex;
+      gap: 10px;
+    }
+    .button-row button {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    .button-row button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .hint {
+      font-size: 0.9em;
+      color: gray;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 p-6" x-data="lotteryApp">
-  <h1 class="text-3xl font-bold text-center mb-6">뽑기판 설정</h1>  <!-- 타이틀 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
-    <h2 class="text-xl font-semibold">타이틀 설정</h2>
-    <input type="text" x-model="mainTitle" placeholder="메인 타이틀" class="w-full border p-2 rounded" />
-    <input type="text" x-model="subTitle" placeholder="서브 타이틀" class="w-full border p-2 rounded" />
-  </div>  <!-- 가로 / 세로 / 당첨개수 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
-    <h2 class="text-xl font-semibold">가로 / 세로 / 당첨개수</h2>
-    <div class="space-y-3">
-      <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" placeholder="가로" class="w-full border p-2 rounded" />
-      <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" placeholder="세로" class="w-full border p-2 rounded" />
-      <div>
-        <input type="number" :max="maxWinners" min="1" x-model.number="winners" placeholder="당첨 개수" class="w-full border p-2 rounded" />
-        <p class="text-sm text-gray-500 mt-1">최대: {{ maxWinners }}</p>
-      </div>
+<body>  <div class="box">
+    <h2>타이틀 설정</h2>
+    <div class="field">
+      <label for="mainTitle">메인 타이틀</label>
+      <input type="text" id="mainTitle" placeholder="예) 경신뽑기">
     </div>
-  </div>  <!-- 당첨 방식 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
-    <h2 class="text-xl font-semibold">당첨 방식 설정</h2>
-    <select x-model="winMode" class="w-full border p-2 rounded">
-      <option value="default">기본 (꽝/당첨)</option>
-      <option value="text">직접 텍스트 입력</option>
-    </select>
-    <template x-if="winMode === 'text'">
-      <input type="text" x-model="customWinText" placeholder="당첨 시 표시할 텍스트" class="w-full border p-2 rounded" />
-    </template>
-  </div>  <!-- 셀 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
-    <h2 class="text-xl font-semibold">셀 설정</h2>
-    <select x-model="cellUI" class="w-full border p-2 rounded">
-      <option value="basic">기본</option>
-      <option value="text">텍스트 직접 입력</option>
-      <option value="image">이미지 업로드</option>
-    </select>
-    <template x-if="cellUI === 'text'">
-      <textarea x-model="cellTexts" placeholder="쉼표로 구분된 텍스트 입력 (예: 사과,바나나,딸기)" class="w-full border p-2 rounded"></textarea>
-    </template>
-    <template x-if="cellUI === 'image'">
-      <textarea x-model="cellImages" placeholder="쉼표로 구분된 이미지 URL 입력" class="w-full border p-2 rounded"></textarea>
-    </template>
-  </div>  <!-- 버튼 -->  <div class="flex justify-between mt-6 gap-4">
-    <button class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50" @click="startGame()" :disabled="!isValid">시작하기</button>
-    <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50" @click="saveSettings()" :disabled="!isValid">저장하기</button>
-    <button class="flex-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" @click="reset()">초기화</button>
-  </div>  <!-- 버전 텍스트 -->  <p class="text-center text-gray-500 text-sm mt-8">버전: 1.4.6</p>  <script>
-    document.addEventListener('alpine:init', () => {
-      Alpine.data('lotteryApp', () => ({
-        mainTitle: '',
-        subTitle: '',
-        rows: 3,
-        cols: 3,
-        winners: 1,
-        winMode: 'default',
-        customWinText: '',
-        cellUI: 'basic',
-        cellTexts: '',
-        cellImages: '',
+    <div class="field">
+      <label for="prizeGuide">당첨 내용 <span class="hint">(지움으로 입력)</span></label>
+      <input type="text" id="prizeGuide" placeholder="예) 스타벅스 쿠폰, 꽝, 커피 등">
+    </div>
+  </div>  <div class="box">
+    <h2>가로 / 세로 / 당첨 개수</h2>
+    <div class="field">
+      <label for="cols">가로 (최대 10)</label>
+      <input type="number" id="cols" min="1" max="10">
+    </div>
+    <div class="field">
+      <label for="rows">세로 (최대 10)</label>
+      <input type="number" id="rows" min="1" max="10">
+    </div>
+    <div class="field">
+      <label for="winnerCount">당첨 개수 <span class="hint">(가로 × 세로 - 1 이하)</span></label>
+      <input type="number" id="winnerCount" min="1">
+    </div>
+  </div>  <div class="button-row">
+    <button id="startBtn" disabled>시작하기</button>
+    <button id="saveBtn" disabled>저장하기</button>
+    <button id="resetBtn">초기화</button>
+  </div>  <script>
+    const mainTitle = document.getElementById('mainTitle');
+    const prizeGuide = document.getElementById('prizeGuide');
+    const cols = document.getElementById('cols');
+    const rows = document.getElementById('rows');
+    const winnerCount = document.getElementById('winnerCount');
+    const startBtn = document.getElementById('startBtn');
+    const saveBtn = document.getElementById('saveBtn');
 
-        init() {
-          const saved = JSON.parse(localStorage.getItem('lottery-settings'));
-          if (saved) {
-            Object.assign(this, saved);
-          }
-        },
+    function validateInputs() {
+      const c = parseInt(cols.value);
+      const r = parseInt(rows.value);
+      const w = parseInt(winnerCount.value);
+      const isValid = mainTitle.value && prizeGuide.value && c && r && w && (w <= c * r - 1);
+      startBtn.disabled = !isValid;
+      saveBtn.disabled = !isValid;
+    }
 
-        get maxWinners() {
-          return Math.max(1, this.rows * this.cols - 1);
-        },
-
-        get isValid() {
-          return this.mainTitle.trim() !== '' &&
-                 this.subTitle.trim() !== '' &&
-                 this.rows > 0 && this.cols > 0 &&
-                 this.winners > 0 && this.winners <= this.maxWinners;
-        },
-
-        validateWinners() {
-          if (this.winners > this.maxWinners) {
-            this.winners = this.maxWinners;
-          }
-        },
-
-        startGame() {
-          const settings = this.collectSettings();
-          window.open('game.html?data=' + encodeURIComponent(JSON.stringify(settings)), '_blank');
-        },
-
-        saveSettings() {
-          localStorage.setItem('lottery-settings', JSON.stringify(this.collectSettings()));
-          alert('설정이 저장되었습니다!');
-        },
-
-        reset() {
-          this.mainTitle = '';
-          this.subTitle = '';
-          this.rows = 3;
-          this.cols = 3;
-          this.winners = 1;
-          this.winMode = 'default';
-          this.customWinText = '';
-          this.cellUI = 'basic';
-          this.cellTexts = '';
-          this.cellImages = '';
-          localStorage.removeItem('lottery-settings');
-        },
-
-        collectSettings() {
-          return {
-            mainTitle: this.mainTitle,
-            subTitle: this.subTitle,
-            rows: this.rows,
-            cols: this.cols,
-            winners: this.winners,
-            winMode: this.winMode,
-            customWinText: this.customWinText,
-            cellUI: this.cellUI,
-            cellTexts: this.cellTexts,
-            cellImages: this.cellImages
-          };
-        }
-      }));
+    [mainTitle, prizeGuide, cols, rows, winnerCount].forEach(input => {
+      input.addEventListener('input', validateInputs);
     });
-  </script></body>
-</html>
-<!-- 버전: 1.4.6 -->
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      localStorage.clear();
+      location.reload();
+    });
+
+    window.addEventListener('load', () => {
+      const saved = JSON.parse(localStorage.getItem('settings'));
+      if (saved) {
+        mainTitle.value = saved.mainTitle;
+        prizeGuide.value = saved.prizeGuide;
+        cols.value = saved.cols;
+        rows.value = saved.rows;
+        winnerCount.value = saved.winnerCount;
+        validateInputs();
+      }
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const settings = {
+        mainTitle: mainTitle.value,
+        prizeGuide: prizeGuide.value,
+        cols: cols.value,
+        rows: rows.value,
+        winnerCount: winnerCount.value
+      };
+      localStorage.setItem('settings', JSON.stringify(settings));
+      alert('세팅값이 저장되었습니다!');
+    });
+  </script><!-- 버전: 1.4.8 -->
