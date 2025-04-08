@@ -1,94 +1,93 @@
-// version: 1.3.5
 
-<!DOCTYPE html><html lang="ko"><head>
+<!DOCTYPE html><html lang="ko">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판 설정</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>뽑기판 설정 - v1.3.6</title>
   <style>
-    .selected {
-      @apply bg-blue-500 text-white;
-    }
+    body { font-family: sans-serif; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea, button { margin-top: 5px; padding: 5px; }
+    .cell-grid { display: grid; gap: 5px; margin-top: 10px; }
+    .cell { border: 1px solid #ccc; padding: 10px; text-align: center; cursor: pointer; }
+    .selected { background-color: #ffe08c; }
   </style>
-</head><body class="bg-gray-100 p-4">
-  <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-2xl font-bold mb-4">뽑기판 설정</h1><!-- 메인 타이틀 -->
-<label class="block font-semibold mb-1" for="mainTitle">메인 타이틀:</label>
-<input type="text" id="mainTitle" class="w-full mb-2 p-2 border rounded" placeholder="예: 신년맞이 경품 이벤트">
+</head>
+<body>
+  <h1>뽑기판 설정 (v1.3.6)</h1><label>메인 타이틀 <input type="text" id="mainTitle" placeholder="예: 럭키 드로우!" /> </label>
 
-<!-- 서브 타이틀 -->
-<div id="subTitle" class="text-sm text-gray-600 mb-4"></div>
+<label>상품 안내 <textarea id="prizeGuide" placeholder="상품 설명을 입력하세요..."></textarea> </label>
 
-<!-- 가로 -->
-<label class="block font-semibold mb-1" for="rows">가로:</label>
-<input type="number" id="rows" class="w-full mb-2 p-2 border rounded" placeholder="예: 3" min="1" max="10">
-<p id="rowLimitMsg" class="text-red-500 text-sm mb-2 hidden">가로는 10 이하만 입력할 수 있어요.</p>
+<label>행 개수 <input type="number" id="rowCount" value="3" min="1" /> </label>
 
-<!-- 세로 -->
-<label class="block font-semibold mb-1" for="cols">세로:</label>
-<input type="number" id="cols" class="w-full mb-2 p-2 border rounded" placeholder="예: 3" min="1" max="10">
-<p id="colLimitMsg" class="text-red-500 text-sm mb-2 hidden">세로는 10 이하만 입력할 수 있어요.</p>
+<label>열 개수 <input type="number" id="colCount" value="3" min="1" /> </label>
 
-<!-- 당첨 개수 -->
-<label class="block font-semibold mb-1" for="winnerCount">당첨 개수:</label>
-<input type="number" id="winnerCount" class="w-full mb-2 p-2 border rounded" placeholder="예: 2">
+<label>당첨 개수 <input type="number" id="winCount" value="1" min="1" /> </label>
 
-<!-- 당첨 방식 선택 -->
-<label class="block font-semibold mb-1" for="winnerType">당첨 방식 선택:</label>
-<select id="winnerType" class="w-full mb-4 p-2 border rounded">
-  <option value="default">꽝/당첨</option>
-  <option value="custom">직접 텍스트 입력</option>
-</select>
+<label>당첨 방식 <select id="winMode"> <option value="basic">기본 (꽝/당첨)</option> <option value="customText">직접 텍스트 입력</option> </select> </label>
 
-<!-- 셀 UI 설정 -->
-<label class="block font-semibold mb-1" for="cellUi">셀 UI 설정:</label>
-<select id="cellUi" class="w-full mb-4 p-2 border rounded">
-  <option value="basic">기본</option>
-  <option value="text">셀에 텍스트 입력</option>
-  <option value="image">셀에 이미지 업로드</option>
-</select>
+<label>셀 UI 설정 <select id="cellUIMode"> <option value="basic">기본</option> <option value="text">텍스트 입력</option> <option value="image">이미지 입력</option> </select> </label>
 
-<!-- 설정값 미리보기 -->
-<div id="preview" class="bg-gray-50 p-2 text-sm text-gray-700 border rounded mb-4"></div>
+<button onclick="generateGrid()">미리보기</button> <button onclick="startGame()">시작하기</button>
 
-<!-- 버튼 영역 -->
-<div class="flex justify-between">
-  <button class="bg-blue-500 text-white px-4 py-2 rounded">시작하기</button>
-  <button class="bg-gray-300 text-black px-4 py-2 rounded">저장하기</button>
-  <button class="bg-gray-300 text-black px-4 py-2 rounded">초기화</button>
-</div>
+  <h3>당첨 위치 설정</h3>
+  <div id="cellContainer" class="cell-grid"></div>
+  <button onclick="resetWinners()">위치 초기화</button>  <script>
+    let selectedWinners = new Set();
 
-  </div>  <script>
-    const rows = document.getElementById('rows');
-    const cols = document.getElementById('cols');
-    const winnerCount = document.getElementById('winnerCount');
-    const winnerType = document.getElementById('winnerType');
-    const subTitle = document.getElementById('subTitle');
-    const preview = document.getElementById('preview');
-    const rowLimitMsg = document.getElementById('rowLimitMsg');
-    const colLimitMsg = document.getElementById('colLimitMsg');
+    function generateGrid() {
+      const rows = parseInt(document.getElementById('rowCount').value);
+      const cols = parseInt(document.getElementById('colCount').value);
+      const container = document.getElementById('cellContainer');
+      container.innerHTML = '';
+      container.style.gridTemplateColumns = `repeat(${cols}, 80px)`;
+      selectedWinners.clear();
 
-    function updateSubTitle() {
-      const count = parseInt(winnerCount.value);
-      if (winnerType.value === 'default') {
-        subTitle.textContent = `당첨 ${count}개`;
-      } else {
-        const texts = Array.from({ length: count }, (_, i) => `텍스트${i + 1}`);
-        subTitle.textContent = texts.join(', ');
+      for (let i = 0; i < rows * cols; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = i + 1;
+        cell.onclick = () => toggleWinner(cell, i);
+        container.appendChild(cell);
       }
     }
 
-    function checkLimit(input, msgElement) {
-      const value = parseInt(input.value);
-      if (value > 10) {
-        msgElement.classList.remove('hidden');
+    function toggleWinner(cell, index) {
+      const winCount = parseInt(document.getElementById('winCount').value);
+      if (selectedWinners.has(index)) {
+        selectedWinners.delete(index);
+        cell.classList.remove('selected');
       } else {
-        msgElement.classList.add('hidden');
+        if (selectedWinners.size >= winCount) {
+          alert('당첨 개수를 초과했습니다.');
+          return;
+        }
+        selectedWinners.add(index);
+        cell.classList.add('selected');
       }
     }
 
-    rows.addEventListener('input', () => checkLimit(rows, rowLimitMsg));
-    cols.addEventListener('input', () => checkLimit(cols, colLimitMsg));
-    winnerCount.addEventListener('input', updateSubTitle);
-    winnerType.addEventListener('change', updateSubTitle);
-  </script></body></html>
+    function resetWinners() {
+      const container = document.getElementById('cellContainer');
+      Array.from(container.children).forEach(cell => cell.classList.remove('selected'));
+      selectedWinners.clear();
+    }
+
+    function startGame() {
+      const settings = {
+        title: document.getElementById('mainTitle').value,
+        guide: document.getElementById('prizeGuide').value,
+        rows: parseInt(document.getElementById('rowCount').value),
+        cols: parseInt(document.getElementById('colCount').value),
+        winCount: parseInt(document.getElementById('winCount').value),
+        winMode: document.getElementById('winMode').value,
+        cellUIMode: document.getElementById('cellUIMode').value,
+        winners: Array.from(selectedWinners)
+      };
+
+      const gameWindow = window.open('', '_blank');
+      gameWindow.document.write(`<pre>${JSON.stringify(settings, null, 2)}</pre>`);}
+
+  </script>
+</body>
+</html>
