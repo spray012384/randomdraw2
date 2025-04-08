@@ -1,100 +1,149 @@
-<!-- 버전: 1.7.0 -->import React, { useState } from "react";
+<!-- 버전: 1.7.0 -->
+import React, { useState } from 'react';
 
-export default function BingoSettings() { const [title, setTitle] = useState(""); const [productInfo, setProductInfo] = useState(""); const [rows, setRows] = useState(3); const [cols, setCols] = useState(3); const [winners, setWinners] = useState(1); const [winMode, setWinMode] = useState("default"); const [cellType, setCellType] = useState("default");
+function LuckyBoardSettings() {
+  const [title, setTitle] = useState('럭키보드');
+  const [description, setDescription] = useState('');
+  const [cols, setCols] = useState(3);
+  const [rows, setRows] = useState(3);
+  const [winCount, setWinCount] = useState(1);
+  const [winType, setWinType] = useState('basic');
+  const [cellType, setCellType] = useState('basic');
 
-return ( <div className="p-6 max-w-xl mx-auto space-y-6"> <div className="text-center text-2xl font-bold">뽑기판 설정</div>
+  return (
+    <div style={{ backgroundColor: '#f5f5f5', padding: '20px', fontFamily: 'sans-serif' }}>
+      <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>뽑기판 설정</h2>
 
-<div className="space-y-4">
-    <div>
-      <div className="text-lg font-semibold mb-1">메인 타이틀</div>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full border rounded p-2"
-        placeholder="예: 행운의 룰렛!"
-      />
-    </div>
-
-    <div>
-      <div className="text-lg font-semibold mb-1">상품 안내</div>
-      <input
-        type="text"
-        value={productInfo}
-        onChange={(e) => setProductInfo(e.target.value)}
-        className="w-full border rounded p-2"
-        placeholder="예: 커피 쿠폰, 영화 티켓 등"
-      />
-    </div>
-
-    <div>
-      <div className="text-lg font-semibold mb-1">가로 / 세로 / 당첨 개수</div>
-      <div className="flex space-x-2">
+      <div style={{ marginBottom: '10px' }}>
+        <label>메인 타이틀</label>
         <input
-          type="number"
-          value={cols}
-          onChange={(e) => setCols(Number(e.target.value))}
-          className="w-1/3 border rounded p-2"
-          placeholder="가로"
-          min={1}
-          max={10}
-        />
-        <input
-          type="number"
-          value={rows}
-          onChange={(e) => setRows(Number(e.target.value))}
-          className="w-1/3 border rounded p-2"
-          placeholder="세로"
-          min={1}
-          max={10}
-        />
-        <input
-          type="number"
-          value={winners}
-          onChange={(e) => setWinners(Number(e.target.value))}
-          className="w-1/3 border rounded p-2"
-          placeholder="당첨 개수"
-          min={1}
-          max={rows * cols - 1}
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          style={{ marginLeft: '10px' }}
         />
       </div>
+
+      <div style={{ marginBottom: '10px' }}>
+        <label>상품 안내</label>
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          style={{ marginLeft: '10px' }}
+        />
+      </div>
+
+      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>크기 설정</h3>
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+        <label>가로
+          <input
+            type="number"
+            value={cols}
+            min={1}
+            max={10}
+            onChange={(e) => setCols(Number(e.target.value))}
+            style={{ marginLeft: '5px', width: '50px' }}
+          />
+        </label>
+        <label>세로
+          <input
+            type="number"
+            value={rows}
+            min={1}
+            max={10}
+            onChange={(e) => setRows(Number(e.target.value))}
+            style={{ marginLeft: '5px', width: '50px' }}
+          />
+        </label>
+        <label>당첨 개수
+          <input
+            type="number"
+            value={winCount}
+            min={1}
+            max={cols * rows - 1}
+            onChange={(e) => setWinCount(Number(e.target.value))}
+            style={{ marginLeft: '5px', width: '50px' }}
+          />
+        </label>
+      </div>
+
+      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>당첨 방식 선택</h3>
+      <div style={{ marginBottom: '10px' }}>
+        <label>
+          <input
+            type="radio"
+            name="winType"
+            value="basic"
+            checked={winType === 'basic'}
+            onChange={() => setWinType('basic')}
+          />
+          기본 (당첨/꽝)
+        </label>
+        <label style={{ marginLeft: '20px' }}>
+          <input
+            type="radio"
+            name="winType"
+            value="custom"
+            checked={winType === 'custom'}
+            onChange={() => setWinType('custom')}
+          />
+          직접 텍스트 입력
+        </label>
+      </div>
+
+      <h3 style={{ fontSize: '20px', marginTop: '20px' }}>셀 설정</h3>
+      <div style={{ marginBottom: '20px' }}>
+        <label>
+          <input
+            type="radio"
+            name="cellType"
+            value="basic"
+            checked={cellType === 'basic'}
+            onChange={() => setCellType('basic')}
+          />
+          기본
+        </label>
+        <label style={{ marginLeft: '20px' }}>
+          <input
+            type="radio"
+            name="cellType"
+            value="text"
+            checked={cellType === 'text'}
+            onChange={() => setCellType('text')}
+          />
+          텍스트 직접 입력
+        </label>
+        <label style={{ marginLeft: '20px' }}>
+          <input
+            type="radio"
+            name="cellType"
+            value="image"
+            checked={cellType === 'image'}
+            onChange={() => setCellType('image')}
+          />
+          이미지 업로드
+        </label>
+      </div>
+
+      <div style={{ display: 'flex', gap: '10px' }}>
+        <button style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 16px', border: 'none' }}>
+          시작하기
+        </button>
+        <button style={{ backgroundColor: '#28a745', color: 'white', padding: '8px 16px', border: 'none' }}>
+          저장하기
+        </button>
+        <button style={{ backgroundColor: '#6c757d', color: 'white', padding: '8px 16px', border: 'none' }}>
+          초기화
+        </button>
+      </div>
+
+      <div style={{ marginTop: '40px', fontSize: '12px', color: '#777' }}>
+        버전: 1.7.0
+      </div>
     </div>
+  );
+}
 
-    <div>
-      <div className="text-lg font-semibold mb-1">당첨 방식 선택</div>
-      <select
-        value={winMode}
-        onChange={(e) => setWinMode(e.target.value)}
-        className="w-full border rounded p-2"
-      >
-        <option value="default">기본 (당첨/꽝)</option>
-        <option value="custom">직접 입력</option>
-      </select>
-    </div>
-
-    <div>
-      <div className="text-lg font-semibold mb-1">셀 UI 설정</div>
-      <select
-        value={cellType}
-        onChange={(e) => setCellType(e.target.value)}
-        className="w-full border rounded p-2"
-      >
-        <option value="default">기본</option>
-        <option value="text">직접 텍스트 입력</option>
-        <option value="image">이미지 업로드</option>
-      </select>
-    </div>
-  </div>
-
-  <div className="flex justify-between pt-6">
-    <button className="bg-blue-500 text-white rounded px-4 py-2 w-1/3">시작하기</button>
-    <button className="bg-green-500 text-white rounded px-4 py-2 w-1/3">저장하기</button>
-    <button className="bg-gray-400 text-white rounded px-4 py-2 w-1/3">초기화하기</button>
-  </div>
-
-  <div className="text-right text-sm text-gray-400 mt-4">버전: 1.7.0</div>
-</div>
-
-); }
-
+export default LuckyBoardSettings;
 <!-- 버전: 1.7.0 -->
