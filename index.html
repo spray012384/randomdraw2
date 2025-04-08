@@ -1,93 +1,120 @@
-
-<!DOCTYPE html><html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판 설정 - v1.3.6</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea, button { margin-top: 5px; padding: 5px; }
-    .cell-grid { display: grid; gap: 5px; margin-top: 10px; }
-    .cell { border: 1px solid #ccc; padding: 10px; text-align: center; cursor: pointer; }
-    .selected { background-color: #ffe08c; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>뽑기판 설정 v1.3.9</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>뽑기판 설정 (v1.3.6)</h1><label>메인 타이틀 <input type="text" id="mainTitle" placeholder="예: 럭키 드로우!" /> </label>
+<body class="bg-gray-100 p-6" x-data="lotteryApp">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-xl space-y-4">
+    <h1 class="text-3xl font-bold text-center">뽑기판 설정</h1>
 
-<label>상품 안내 <textarea id="prizeGuide" placeholder="상품 설명을 입력하세요..."></textarea> </label>
+    <div>
+      <label class="block font-semibold mb-1">메인 타이틀</label>
+      <input type="text" x-model="mainTitle" class="w-full border p-2 rounded"/>
+    </div>
 
-<label>행 개수 <input type="number" id="rowCount" value="3" min="1" /> </label>
+    <div>
+      <label class="block font-semibold mb-1">서브 타이틀</label>
+      <input type="text" x-model="subTitle" class="w-full border p-2 rounded"/>
+    </div>
 
-<label>열 개수 <input type="number" id="colCount" value="3" min="1" /> </label>
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-1">세로 (행)</label>
+        <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" class="w-full border p-2 rounded"/>
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">가로 (열)</label>
+        <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" class="w-full border p-2 rounded"/>
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">당첨 개수</label>
+        <input type="number" :max="maxWinners" min="1" x-model.number="winners" class="w-full border p-2 rounded"/>
+        <p class="text-sm text-gray-500 mt-1">최대: {{ maxWinners }}</p>
+      </div>
+    </div>
 
-<label>당첨 개수 <input type="number" id="winCount" value="1" min="1" /> </label>
+    <div>
+      <label class="block font-semibold mb-1">당첨 방식</label>
+      <select x-model="winMode" class="w-full border p-2 rounded">
+        <option value="default">기본 (꽝/당첨)</option>
+        <option value="text">직접 텍스트 입력</option>
+      </select>
+    </div>
 
-<label>당첨 방식 <select id="winMode"> <option value="basic">기본 (꽝/당첨)</option> <option value="customText">직접 텍스트 입력</option> </select> </label>
+    <div>
+      <label class="block font-semibold mb-1">셀 UI 설정</label>
+      <select x-model="cellUI" class="w-full border p-2 rounded">
+        <option value="basic">기본</option>
+        <option value="text">텍스트 직접 입력</option>
+        <option value="image">이미지 업로드</option>
+      </select>
+    </div>
 
-<label>셀 UI 설정 <select id="cellUIMode"> <option value="basic">기본</option> <option value="text">텍스트 입력</option> <option value="image">이미지 입력</option> </select> </label>
+    <div class="flex justify-between mt-6 space-x-2">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="startGame()">시작하기</button>
+      <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" @click="saveSettings()">저장하기</button>
+      <button class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" @click="reset()">초기화하기</button>
+    </div>
+  </div>
 
-<button onclick="generateGrid()">미리보기</button> <button onclick="startGame()">시작하기</button>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('lotteryApp', () => ({
+        mainTitle: '',
+        subTitle: '',
+        rows: 3,
+        cols: 3,
+        winners: 1,
+        winMode: 'default',
+        cellUI: 'basic',
 
-  <h3>당첨 위치 설정</h3>
-  <div id="cellContainer" class="cell-grid"></div>
-  <button onclick="resetWinners()">위치 초기화</button>  <script>
-    let selectedWinners = new Set();
+        get maxWinners() {
+          return Math.max(1, this.rows * this.cols - 1);
+        },
 
-    function generateGrid() {
-      const rows = parseInt(document.getElementById('rowCount').value);
-      const cols = parseInt(document.getElementById('colCount').value);
-      const container = document.getElementById('cellContainer');
-      container.innerHTML = '';
-      container.style.gridTemplateColumns = `repeat(${cols}, 80px)`;
-      selectedWinners.clear();
+        validateWinners() {
+          if (this.winners > this.maxWinners) {
+            this.winners = this.maxWinners;
+          }
+        },
 
-      for (let i = 0; i < rows * cols; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.textContent = i + 1;
-        cell.onclick = () => toggleWinner(cell, i);
-        container.appendChild(cell);
-      }
-    }
+        startGame() {
+          const settings = this.collectSettings();
+          window.open('game.html?data=' + encodeURIComponent(JSON.stringify(settings)), '_blank');
+        },
 
-    function toggleWinner(cell, index) {
-      const winCount = parseInt(document.getElementById('winCount').value);
-      if (selectedWinners.has(index)) {
-        selectedWinners.delete(index);
-        cell.classList.remove('selected');
-      } else {
-        if (selectedWinners.size >= winCount) {
-          alert('당첨 개수를 초과했습니다.');
-          return;
+        saveSettings() {
+          alert('설정이 저장되었습니다!');
+          console.log(this.collectSettings());
+        },
+
+        reset() {
+          this.mainTitle = '';
+          this.subTitle = '';
+          this.rows = 3;
+          this.cols = 3;
+          this.winners = 1;
+          this.winMode = 'default';
+          this.cellUI = 'basic';
+        },
+
+        collectSettings() {
+          return {
+            mainTitle: this.mainTitle,
+            subTitle: this.subTitle,
+            rows: this.rows,
+            cols: this.cols,
+            winners: this.winners,
+            winMode: this.winMode,
+            cellUI: this.cellUI
+          };
         }
-        selectedWinners.add(index);
-        cell.classList.add('selected');
-      }
-    }
-
-    function resetWinners() {
-      const container = document.getElementById('cellContainer');
-      Array.from(container.children).forEach(cell => cell.classList.remove('selected'));
-      selectedWinners.clear();
-    }
-
-    function startGame() {
-      const settings = {
-        title: document.getElementById('mainTitle').value,
-        guide: document.getElementById('prizeGuide').value,
-        rows: parseInt(document.getElementById('rowCount').value),
-        cols: parseInt(document.getElementById('colCount').value),
-        winCount: parseInt(document.getElementById('winCount').value),
-        winMode: document.getElementById('winMode').value,
-        cellUIMode: document.getElementById('cellUIMode').value,
-        winners: Array.from(selectedWinners)
-      };
-
-      const gameWindow = window.open('', '_blank');
-      gameWindow.document.write(`<pre>${JSON.stringify(settings, null, 2)}</pre>`);}
-
+      }));
+    });
   </script>
 </body>
 </html>
