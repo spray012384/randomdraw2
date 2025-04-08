@@ -1,153 +1,94 @@
-<!-- version: 1.3.4 --><!-- index.html --><!DOCTYPE html><html lang="ko">
-<head>
+// version: 1.3.5
+
+<!DOCTYPE html><html lang="ko"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>사용자 설정 뽑기판</title>
+  <title>뽑기판 설정</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f4f4f4;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: bold;
-    }
-    input, select, button, textarea {
-      padding: 8px;
-      font-size: 14px;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-    .button-group button {
-      width: auto;
-      margin-right: 10px;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-    .primary {
-      background-color: #007bff;
-      color: white;
-    }
-    .secondary {
-      background-color: #ccc;
-      color: black;
-    }
-    .preview-box {
-      margin-top: 30px;
-      padding: 15px;
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .error {
-      color: red;
-      font-size: 13px;
-      margin-top: -8px;
-      margin-bottom: 10px;
+    .selected {
+      @apply bg-blue-500 text-white;
     }
   </style>
-</head>
-<body>
-  <h1 id="mainTitle">뽑기판 설정</h1>
-  <div class="subtitle" id="subTitle"></div><label for="rows">가로:</label> <input type="number" id="rows" min="1" max="10" />
+</head><body class="bg-gray-100 p-4">
+  <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">뽑기판 설정</h1><!-- 메인 타이틀 -->
+<label class="block font-semibold mb-1" for="mainTitle">메인 타이틀:</label>
+<input type="text" id="mainTitle" class="w-full mb-2 p-2 border rounded" placeholder="예: 신년맞이 경품 이벤트">
 
-  <div class="error" id="rowError"></div><label for="cols">세로:</label> <input type="number" id="cols" min="1" max="10" />
+<!-- 서브 타이틀 -->
+<div id="subTitle" class="text-sm text-gray-600 mb-4"></div>
 
-  <div class="error" id="colError"></div><label for="winners">당첨 개수:</label> <input type="number" id="winners" min="1" />
+<!-- 가로 -->
+<label class="block font-semibold mb-1" for="rows">가로:</label>
+<input type="number" id="rows" class="w-full mb-2 p-2 border rounded" placeholder="예: 3" min="1" max="10">
+<p id="rowLimitMsg" class="text-red-500 text-sm mb-2 hidden">가로는 10 이하만 입력할 수 있어요.</p>
 
-  <div class="error" id="winnerError"></div><label for="mode">당첨 방식 선택:</label> <select id="mode"> <option value="basic">꽝/당첨</option> <option value="custom">직접 텍스트 입력</option> </select>
+<!-- 세로 -->
+<label class="block font-semibold mb-1" for="cols">세로:</label>
+<input type="number" id="cols" class="w-full mb-2 p-2 border rounded" placeholder="예: 3" min="1" max="10">
+<p id="colLimitMsg" class="text-red-500 text-sm mb-2 hidden">세로는 10 이하만 입력할 수 있어요.</p>
 
-  <div id="textInputsContainer" style="display:none;"></div><label for="cellUI">셀 UI 설정:</label> <select id="cellUI"> <option value="default">기본</option> <option value="text">텍스트 입력</option> <option value="image">이미지 업로드</option> </select>
+<!-- 당첨 개수 -->
+<label class="block font-semibold mb-1" for="winnerCount">당첨 개수:</label>
+<input type="number" id="winnerCount" class="w-full mb-2 p-2 border rounded" placeholder="예: 2">
 
-  <div class="button-group">
-    <button class="primary" onclick="startGame()">시작하기</button>
-    <button class="secondary" onclick="saveSettings()">저장하기</button>
-    <button class="secondary" onclick="resetSettings()">초기화</button>
-  </div>  <div class="preview-box" id="preview"></div>  <script>
-    const rowsInput = document.getElementById('rows');
-    const colsInput = document.getElementById('cols');
-    const winnersInput = document.getElementById('winners');
-    const modeSelect = document.getElementById('mode');
+<!-- 당첨 방식 선택 -->
+<label class="block font-semibold mb-1" for="winnerType">당첨 방식 선택:</label>
+<select id="winnerType" class="w-full mb-4 p-2 border rounded">
+  <option value="default">꽝/당첨</option>
+  <option value="custom">직접 텍스트 입력</option>
+</select>
+
+<!-- 셀 UI 설정 -->
+<label class="block font-semibold mb-1" for="cellUi">셀 UI 설정:</label>
+<select id="cellUi" class="w-full mb-4 p-2 border rounded">
+  <option value="basic">기본</option>
+  <option value="text">셀에 텍스트 입력</option>
+  <option value="image">셀에 이미지 업로드</option>
+</select>
+
+<!-- 설정값 미리보기 -->
+<div id="preview" class="bg-gray-50 p-2 text-sm text-gray-700 border rounded mb-4"></div>
+
+<!-- 버튼 영역 -->
+<div class="flex justify-between">
+  <button class="bg-blue-500 text-white px-4 py-2 rounded">시작하기</button>
+  <button class="bg-gray-300 text-black px-4 py-2 rounded">저장하기</button>
+  <button class="bg-gray-300 text-black px-4 py-2 rounded">초기화</button>
+</div>
+
+  </div>  <script>
+    const rows = document.getElementById('rows');
+    const cols = document.getElementById('cols');
+    const winnerCount = document.getElementById('winnerCount');
+    const winnerType = document.getElementById('winnerType');
     const subTitle = document.getElementById('subTitle');
     const preview = document.getElementById('preview');
-    const textInputsContainer = document.getElementById('textInputsContainer');
-
-    function updateErrors() {
-      const rows = parseInt(rowsInput.value);
-      const cols = parseInt(colsInput.value);
-      const winners = parseInt(winnersInput.value);
-      const maxCells = rows * cols;
-
-      document.getElementById('rowError').textContent = rows > 10 ? '가로는 10 이하로 입력해주세요.' : '';
-      document.getElementById('colError').textContent = cols > 10 ? '세로는 10 이하로 입력해주세요.' : '';
-      document.getElementById('winnerError').textContent = winners > (maxCells - 1) ? `당첨개수는 ${maxCells}개를 초과할 수 없습니다.` : '';
-    }
+    const rowLimitMsg = document.getElementById('rowLimitMsg');
+    const colLimitMsg = document.getElementById('colLimitMsg');
 
     function updateSubTitle() {
-      const mode = modeSelect.value;
-      const winners = parseInt(winnersInput.value);
-      if (mode === 'basic') {
-        subTitle.textContent = `당첨 ${winners}개`;
+      const count = parseInt(winnerCount.value);
+      if (winnerType.value === 'default') {
+        subTitle.textContent = `당첨 ${count}개`;
       } else {
-        const texts = document.querySelectorAll('.custom-text');
-        const values = Array.from(texts).map(t => t.value).filter(Boolean);
-        subTitle.textContent = values.join(', ');
+        const texts = Array.from({ length: count }, (_, i) => `텍스트${i + 1}`);
+        subTitle.textContent = texts.join(', ');
       }
     }
 
-    function updateTextInputs() {
-      const count = parseInt(winnersInput.value);
-      textInputsContainer.innerHTML = '';
-      if (modeSelect.value === 'custom') {
-        for (let i = 0; i < count; i++) {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.className = 'custom-text';
-          input.placeholder = `텍스트 ${i + 1}`;
-          input.oninput = updateSubTitle;
-          textInputsContainer.appendChild(input);
-        }
-        textInputsContainer.style.display = 'block';
+    function checkLimit(input, msgElement) {
+      const value = parseInt(input.value);
+      if (value > 10) {
+        msgElement.classList.remove('hidden');
       } else {
-        textInputsContainer.style.display = 'none';
+        msgElement.classList.add('hidden');
       }
     }
 
-    rowsInput.addEventListener('input', () => { updateErrors(); updateSubTitle(); });
-    colsInput.addEventListener('input', () => { updateErrors(); updateSubTitle(); });
-    winnersInput.addEventListener('input', () => { updateErrors(); updateTextInputs(); updateSubTitle(); });
-    modeSelect.addEventListener('change', () => { updateTextInputs(); updateSubTitle(); });
-
-    function startGame() {
-      preview.textContent = '게임이 시작됩니다!';
-    }
-
-    function saveSettings() {
-      preview.textContent = '설정이 저장되었습니다.';
-    }
-
-    function resetSettings() {
-      rowsInput.value = '';
-      colsInput.value = '';
-      winnersInput.value = '';
-      modeSelect.value = 'basic';
-      textInputsContainer.innerHTML = '';
-      textInputsContainer.style.display = 'none';
-      subTitle.textContent = '';
-      preview.textContent = '';
-    }
-  </script></body>
-</html>
+    rows.addEventListener('input', () => checkLimit(rows, rowLimitMsg));
+    cols.addEventListener('input', () => checkLimit(cols, colLimitMsg));
+    winnerCount.addEventListener('input', updateSubTitle);
+    winnerType.addEventListener('change', updateSubTitle);
+  </script></body></html>
