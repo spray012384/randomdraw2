@@ -1,113 +1,103 @@
-<!-- Version: 1.0.1 -->
+<!-- Version: 1.2.0 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>뽑기판 게임</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>뽑기 게임</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
       font-family: sans-serif;
-      padding: 20px;
-      text-align: center;
+      background: #fefefe;
     }
     h1 {
       font-size: 24px;
-      margin-bottom: 5px;
-    }
-    .sub {
-      font-size: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     .board {
       display: grid;
       gap: 5px;
-      justify-content: center;
+      margin-top: 20px;
     }
     .cell {
-      background-color: #eee;
       width: 80px;
       height: 80px;
+      background: #eee;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
-      user-select: none;
+      border: 1px solid #ccc;
     }
-    .hidden { background-color: #ccc; color: transparent; }
-    .revealed { background-color: #fff; color: #000; }
-    .disabled { pointer-events: none; opacity: 0.6; }
-    .end-options {
-      margin-top: 20px;
-      display: none;
+    .cell.revealed {
+      background: #ffeb3b;
+      font-weight: bold;
     }
-    .end-options button {
-      margin: 5px;
+    .controls {
+      margin-top: 30px;
+    }
+    .controls button {
       padding: 10px 20px;
+      margin: 0 10px;
     }
     .version {
       margin-top: 30px;
       font-size: 12px;
       color: gray;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1 id="main-title"></h1>
-  <div class="sub" id="item-info"></div>
-  <div id="board" class="board"></div>
+  <h1 id="gameTitle">게임 시작!</h1>
+  <div class="board" id="gameBoard"></div>  <div class="controls">
+    <button onclick="window.close()">종료하기</button>
+  </div>  <div class="version">Version 1.2.0</div>  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const settings = JSON.parse(decodeURIComponent(urlParams.get('settings')));
+    const winTexts = JSON.parse(decodeURIComponent(urlParams.get('wtexts')) || '[]');
 
-  <div class="end-options" id="end-options">
-    <button onclick="location.reload()">다시하기</button>
-    <button onclick="window.close()">설정으로 돌아가기</button>
-  </div>
+    const board = document.getElementById("gameBoard");
+    const title = document.getElementById("gameTitle");
+    const total = settings.rows * settings.cols;
+    const winIndexes = new Set();
 
-  <div class="version">Version 1.0.1</div>
+    title.textContent = settings.title || "뽑기 게임";
+    board.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`;
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const title = params.get('title') || '뽑기 게임';
-    const info = params.get('info') || '';
-    const rows = parseInt(params.get('rows')) || 3;
-    const cols = parseInt(params.get('cols')) || 3;
-    const winCount = parseInt(params.get('win')) || 1;
-
-    document.getElementById("main-title").textContent = title;
-    document.getElementById("item-info").textContent = info;
-
-    const board = document.getElementById("board");
-    board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-    const total = rows * cols;
-    const winSet = new Set();
-    let ended = false;
-
-    while (winSet.size < winCount) {
-      winSet.add(Math.floor(Math.random() * total));
+    // 랜덤 당첨 인덱스
+    while (winIndexes.size < settings.winCount) {
+      winIndexes.add(Math.floor(Math.random() * total));
     }
 
     for (let i = 0; i < total; i++) {
       const cell = document.createElement("div");
-      cell.className = "cell hidden";
-      cell.dataset.type = winSet.has(i) ? "win" : "lose";
-
-      cell.addEventListener("click", () => {
-        if (ended || cell.classList.contains("revealed")) return;
-        cell.classList.remove("hidden");
-        cell.classList.add("revealed");
-        cell.textContent = cell.dataset.type === "win" ? "당첨!" : "꽝";
-
-        if (cell.dataset.type === "win") {
-          ended = true;
-          document.querySelectorAll('.cell').forEach(c => c.classList.add("disabled"));
-          document.getElementById("end-options").style.display = "block";
-        }
-      });
-
+      cell.className = "cell";
+      cell.textContent = "?";
+      cell.addEventListener("click", () => reveal(cell, i));
       board.appendChild(cell);
     }
-  </script>
-</body>
+
+    let gameEnded = false;
+
+    function reveal(cell, index) {
+      if (gameEnded || cell.classList.contains("revealed")) return;
+      cell.classList.add("revealed");
+      if (winIndexes.has(index)) {
+        const label = settings.winType === "custom" ? (winTexts.shift() || "당첨") : "당첨";
+        cell.textContent = label;
+        gameEnded = true;
+        alert("축하합니다! 당첨입니다!");
+      } else {
+        cell.textContent = "꽝";
+      }
+    }
+  </script></body>
 </html>
