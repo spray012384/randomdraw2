@@ -1,60 +1,208 @@
-<!-- Version: 1.0.2 --><!DOCTYPE html><html lang="ko">
+<!-- Version: 1.2.0 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>뽑기판 설정</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: sans-serif;
+      margin: 0;
       padding: 20px;
-      max-width: 500px;
-      margin: auto;
     }
-    h2 {
-      font-size: 20px;
-      margin-top: 30px;
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
     }
-    input {
+    input[type="text"], input[type="number"] {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .section {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+    }
+    .radio-group {
+      margin-top: 10px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .preview-board {
+      margin-top: 20px;
+      display: grid;
+      gap: 5px;
+      justify-content: center;
+    }
+    .preview-cell {
+      background: #f0f0f0;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
     }
     button {
-      margin-top: 20px;
       padding: 10px 20px;
-      font-size: 16px;
+      margin-right: 10px;
+      margin-top: 20px;
     }
     .version {
-      text-align: center;
-      margin-top: 40px;
+      margin-top: 30px;
       font-size: 12px;
       color: gray;
+      text-align: center;
+    }
+    .image-upload {
+      margin-top: 10px;
+    }
+    .thumbnail {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
-  <h2>메인 타이틀</h2>
-  <input type="text" id="title" placeholder="예: 오늘의 럭키 박스" />  <h2>상품 안내</h2>
-  <input type="text" id="info" placeholder="예: 당첨 시 커피 쿠폰 증정!" />  <h2>행 / 열</h2>
-  <label>행 (Row)</label>
-  <input type="number" id="rows" min="1" max="10" value="3" />
-  <label>열 (Column)</label>
-  <input type="number" id="cols" min="1" max="10" value="3" />  <h2>당첨 개수</h2>
-  <input type="number" id="win" min="1" max="10" value="1" /><button onclick="startGame()">시작하기</button>
+  <h1>뽑기판 설정</h1>  <div class="section">
+    <label>메인 타이틀</label>
+    <input type="text" id="mainTitle" placeholder="예: 신년맞이 경품 이벤트" /><label>상품 안내</label>
+<input type="text" id="itemInfo" placeholder="예: 스타벅스 기프티콘, 치킨 쿠폰 등" readonly />
 
-  <div class="version">Version 1.0.2</div>  <script>
+  </div>  <div class="section">
+    <label>행 / 열 / 당첨 개수</label>
+    <input type="number" id="rows" placeholder="행 (예: 3)" min="1" />
+    <input type="number" id="cols" placeholder="열 (예: 3)" min="1" />
+    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
+  </div>  <div class="section">
+    <label>당첨 방식 선택</label>
+    <div class="radio-group">
+      <label><input type="radio" name="winType" value="basic" checked /> 꽝 / 당첨</label>
+      <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
+    </div>
+    <div id="customWinInputs"></div>
+  </div>  <div class="section">
+    <label>셀 UI 설정</label>
+    <div class="radio-group">
+      <label><input type="radio" name="cellUi" value="default" checked /> 기본</label>
+      <label><input type="radio" name="cellUi" value="text" /> 셀에 텍스트 입력</label>
+      <label><input type="radio" name="cellUi" value="image" /> 셀에 이미지 업로드</label>
+    </div>
+    <div id="cellImageUpload" class="image-upload" style="display: none;"></div>
+  </div><button onclick="generatePreview()">미리보기</button> <button onclick="startGame()">시작하기</button> <button onclick="location.reload()">초기화</button>
+
+  <div id="preview" class="preview-board"></div>  <div class="version">Version 1.2.0</div>  <script>
+    const winInputsDiv = document.getElementById("customWinInputs");
+    const itemInfoInput = document.getElementById("itemInfo");
+    const imageUploadDiv = document.getElementById("cellImageUpload");
+
+    document.querySelectorAll("input[name='winType']").forEach(radio => {
+      radio.addEventListener("change", renderCustomWinInputs);
+    });
+
+    document.querySelectorAll("input[name='cellUi']").forEach(radio => {
+      radio.addEventListener("change", () => {
+        if (document.querySelector("input[name='cellUi']:checked").value === 'image') {
+          renderImageUploadInputs();
+          imageUploadDiv.style.display = 'block';
+        } else {
+          imageUploadDiv.innerHTML = '';
+          imageUploadDiv.style.display = 'none';
+        }
+      });
+    });
+
+    function renderCustomWinInputs() {
+      const count = parseInt(document.getElementById("winCount").value || 0);
+      const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
+      winInputsDiv.innerHTML = '';
+      if (isCustom && count > 0) {
+        const items = [];
+        for (let i = 0; i < count; i++) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = `상품 ${i + 1}`;
+          input.oninput = updateItemInfo;
+          winInputsDiv.appendChild(input);
+          items.push(input);
+        }
+      } else {
+        itemInfoInput.value = '';
+      }
+    }
+
+    function updateItemInfo() {
+      const values = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value).filter(v => v);
+      itemInfoInput.value = values.join(', ');
+    }
+
+    function renderImageUploadInputs() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      const total = rows * cols;
+      imageUploadDiv.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => showThumbnail(e, i);
+        imageUploadDiv.appendChild(input);
+      }
+    }
+
+    function showThumbnail(event, index) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.className = "thumbnail";
+        event.target.insertAdjacentElement('afterend', img);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function generatePreview() {
+      const rows = parseInt(document.getElementById("rows").value || 3);
+      const cols = parseInt(document.getElementById("cols").value || 3);
+      const board = document.getElementById("preview");
+      board.innerHTML = '';
+      board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      const total = rows * cols;
+
+      for (let i = 0; i < total; i++) {
+        const cell = document.createElement("div");
+        cell.className = "preview-cell";
+        cell.textContent = i + 1;
+        board.appendChild(cell);
+      }
+    }
+
     function startGame() {
-      const title = encodeURIComponent(document.getElementById('title').value);
-      const info = encodeURIComponent(document.getElementById('info').value);
-      const rows = document.getElementById('rows').value;
-      const cols = document.getElementById('cols').value;
-      const win = document.getElementById('win').value;
-
-      const url = `game.html?title=${title}&info=${info}&rows=${rows}&cols=${cols}&win=${win}`;
+      const settings = {
+        title: document.getElementById("mainTitle").value,
+        itemInfo: document.getElementById("itemInfo").value,
+        rows: parseInt(document.getElementById("rows").value),
+        cols: parseInt(document.getElementById("cols").value),
+        winCount: parseInt(document.getElementById("winCount").value),
+        winType: document.querySelector("input[name='winType']:checked").value,
+        cellUi: document.querySelector("input[name='cellUi']:checked").value
+      };
+      const winTexts = Array.from(winInputsDiv.querySelectorAll("input")).map(i => i.value);
+      const winTextParam = encodeURIComponent(JSON.stringify(winTexts));
+      const url = `game.html?settings=${encodeURIComponent(JSON.stringify(settings))}&wtexts=${winTextParam}`;
       window.open(url, '_blank');
     }
   </script></body>
