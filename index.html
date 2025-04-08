@@ -1,8 +1,8 @@
-<!-- 버전: 1.4.3 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.4.6 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뽑기판 설정 v1.4.3</title>
+  <title>뽑기판 설정 v1.4.6</title>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -11,11 +11,11 @@
     <h2 class="text-xl font-semibold">타이틀 설정</h2>
     <input type="text" x-model="mainTitle" placeholder="메인 타이틀" class="w-full border p-2 rounded" />
     <input type="text" x-model="subTitle" placeholder="서브 타이틀" class="w-full border p-2 rounded" />
-  </div>  <!-- 판 크기 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
-    <h2 class="text-xl font-semibold">판 크기 및 당첨 개수</h2>
-    <div class="grid grid-cols-3 gap-4">
-      <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" placeholder="세로" class="border p-2 rounded w-full" />
-      <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" placeholder="가로" class="border p-2 rounded w-full" />
+  </div>  <!-- 가로 / 세로 / 당첨개수 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
+    <h2 class="text-xl font-semibold">가로 / 세로 / 당첨개수</h2>
+    <div class="space-y-3">
+      <input type="number" min="1" max="10" x-model.number="cols" @input="validateWinners" placeholder="가로" class="w-full border p-2 rounded" />
+      <input type="number" min="1" max="10" x-model.number="rows" @input="validateWinners" placeholder="세로" class="w-full border p-2 rounded" />
       <div>
         <input type="number" :max="maxWinners" min="1" x-model.number="winners" placeholder="당첨 개수" class="w-full border p-2 rounded" />
         <p class="text-sm text-gray-500 mt-1">최대: {{ maxWinners }}</p>
@@ -27,6 +27,9 @@
       <option value="default">기본 (꽝/당첨)</option>
       <option value="text">직접 텍스트 입력</option>
     </select>
+    <template x-if="winMode === 'text'">
+      <input type="text" x-model="customWinText" placeholder="당첨 시 표시할 텍스트" class="w-full border p-2 rounded" />
+    </template>
   </div>  <!-- 셀 설정 -->  <div class="bg-gray-50 border p-4 rounded-xl space-y-3 mb-4">
     <h2 class="text-xl font-semibold">셀 설정</h2>
     <select x-model="cellUI" class="w-full border p-2 rounded">
@@ -34,11 +37,17 @@
       <option value="text">텍스트 직접 입력</option>
       <option value="image">이미지 업로드</option>
     </select>
+    <template x-if="cellUI === 'text'">
+      <textarea x-model="cellTexts" placeholder="쉼표로 구분된 텍스트 입력 (예: 사과,바나나,딸기)" class="w-full border p-2 rounded"></textarea>
+    </template>
+    <template x-if="cellUI === 'image'">
+      <textarea x-model="cellImages" placeholder="쉼표로 구분된 이미지 URL 입력" class="w-full border p-2 rounded"></textarea>
+    </template>
   </div>  <!-- 버튼 -->  <div class="flex justify-between mt-6 gap-4">
-    <button class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="startGame()">시작하기</button>
-    <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" @click="saveSettings()">저장하기</button>
+    <button class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50" @click="startGame()" :disabled="!isValid">시작하기</button>
+    <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50" @click="saveSettings()" :disabled="!isValid">저장하기</button>
     <button class="flex-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" @click="reset()">초기화</button>
-  </div>  <!-- 버전 텍스트 -->  <p class="text-center text-gray-500 text-sm mt-8">버전: 1.4.3</p>  <script>
+  </div>  <!-- 버전 텍스트 -->  <p class="text-center text-gray-500 text-sm mt-8">버전: 1.4.6</p>  <script>
     document.addEventListener('alpine:init', () => {
       Alpine.data('lotteryApp', () => ({
         mainTitle: '',
@@ -47,7 +56,10 @@
         cols: 3,
         winners: 1,
         winMode: 'default',
+        customWinText: '',
         cellUI: 'basic',
+        cellTexts: '',
+        cellImages: '',
 
         init() {
           const saved = JSON.parse(localStorage.getItem('lottery-settings'));
@@ -58,6 +70,13 @@
 
         get maxWinners() {
           return Math.max(1, this.rows * this.cols - 1);
+        },
+
+        get isValid() {
+          return this.mainTitle.trim() !== '' &&
+                 this.subTitle.trim() !== '' &&
+                 this.rows > 0 && this.cols > 0 &&
+                 this.winners > 0 && this.winners <= this.maxWinners;
         },
 
         validateWinners() {
@@ -83,7 +102,10 @@
           this.cols = 3;
           this.winners = 1;
           this.winMode = 'default';
+          this.customWinText = '';
           this.cellUI = 'basic';
+          this.cellTexts = '';
+          this.cellImages = '';
           localStorage.removeItem('lottery-settings');
         },
 
@@ -95,10 +117,14 @@
             cols: this.cols,
             winners: this.winners,
             winMode: this.winMode,
-            cellUI: this.cellUI
+            customWinText: this.customWinText,
+            cellUI: this.cellUI,
+            cellTexts: this.cellTexts,
+            cellImages: this.cellImages
           };
         }
       }));
     });
   </script></body>
 </html>
+<!-- 버전: 1.4.6 -->
