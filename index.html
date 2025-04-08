@@ -1,4 +1,4 @@
-<!-- 버전: 1.7.0 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.7.1 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,15 +19,20 @@
     }
     .row {
       display: flex;
+      flex-wrap: nowrap;
       align-items: center;
       margin-bottom: 10px;
     }
     .row label {
       width: 120px;
+      flex-shrink: 0;
+      margin-right: 10px;
     }
     .row input, .row select {
       flex: 1;
+      min-width: 0;
       padding: 5px;
+      box-sizing: border-box;
     }
     .section-title {
       font-size: 18px;
@@ -64,12 +69,11 @@
 </head>
 <body>
   <div class="container">
-    <div class="title">뽑기판 설정</div><div class="row">
-  <label>메인 타이틀</label>
-  <input type="text" placeholder="예: 행운의 룰렛!">
-</div>
-
-<div class="row">
+    <div class="title">뽑기판 설정</div>
+    <div class="row">
+      <label>메인 타이틀</label>
+      <input type="text" placeholder="예: 행운의 룰렛!">
+    </div><div class="row">
   <label>상품 안내</label>
   <input type="text" placeholder="예: 치킨, 커피, 꽝 등">
 </div>
@@ -114,9 +118,9 @@
   <button class="reset-btn">초기화</button>
 </div>
 
-<div class="version-text">버전: 1.7.0</div>
+<div class="version-text">버전: 1.7.1</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.0 -->
+<!-- 버전: 1.7.1 -->
