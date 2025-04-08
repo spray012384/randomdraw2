@@ -1,4 +1,4 @@
-<!-- 버전: 1.5.9 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.6.0 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f3fef5;
+      background-color: #ffffff;
       padding: 20px;
     }
     h1 {
@@ -15,11 +15,17 @@
       font-weight: bold;
       margin-bottom: 30px;
     }
+    h2 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
     .section {
       background-color: white;
       border-radius: 10px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .row {
@@ -38,15 +44,20 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-    .radio-group {
+    .radio-row {
       display: flex;
-      gap: 20px;
-      padding-left: 100px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .radio-row label {
+      margin-left: 10px;
+      font-weight: normal;
     }
   </style>
 </head>
 <body>
   <h1>뽑기판 설정</h1>  <div class="section">
+    <h2>타이틀 설정</h2>
     <div class="row">
       <label for="main-title">메인 타이틀:</label>
       <input id="main-title" type="text" placeholder="예: 시그뽑, 댄스뽑기">
@@ -56,6 +67,7 @@
       <input id="desc" type="text" value="세팅에 따라 자동으로 입력됩니다." disabled>
     </div>
   </div>  <div class="section">
+    <h2>가로 / 세로 / 당첨개수</h2>
     <div class="row">
       <label for="cols">가로:</label>
       <input id="cols" type="number" placeholder="10개 이하로">
@@ -69,23 +81,30 @@
       <input id="winners" type="number" placeholder="전체 카드보다 작게 입력">
     </div>
   </div>  <div class="section">
-    <div class="row">
-      <label>당첨 방식 선택</label>
-      <div class="radio-group">
-        <label><input type="radio" name="win-type" checked> 기본 (꽝/당첨)</label>
-        <label><input type="radio" name="win-type"> 직접 텍스트 입력</label>
-      </div>
+    <h2>당첨 방식 선택</h2>
+    <div class="radio-row">
+      <input type="radio" name="win-type" id="win-default" checked>
+      <label for="win-default">기본 (꽝/당첨)</label>
+    </div>
+    <div class="radio-row">
+      <input type="radio" name="win-type" id="win-custom">
+      <label for="win-custom">직접 텍스트 입력</label>
     </div>
   </div>  <div class="section">
-    <div class="row">
-      <label>셀 설정</label>
-      <div class="radio-group">
-        <label><input type="radio" name="cell-type" checked> 기본</label>
-        <label><input type="radio" name="cell-type"> 텍스트 직접 입력</label>
-        <label><input type="radio" name="cell-type"> 이미지 업로드</label>
-      </div>
+    <h2>셀 설정</h2>
+    <div class="radio-row">
+      <input type="radio" name="cell-type" id="cell-default" checked>
+      <label for="cell-default">기본</label>
+    </div>
+    <div class="radio-row">
+      <input type="radio" name="cell-type" id="cell-text">
+      <label for="cell-text">텍스트 직접 입력</label>
+    </div>
+    <div class="radio-row">
+      <input type="radio" name="cell-type" id="cell-image">
+      <label for="cell-image">이미지 업로드</label>
     </div>
   </div>
 </body>
 </html>
-<!-- 버전: 1.5.9 -->
+<!-- 버전: 1.6.0 -->
