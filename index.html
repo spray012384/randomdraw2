@@ -1,137 +1,20 @@
-<!-- 버전: 1.4.8 --><!DOCTYPE html><html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>뽑기판 설정</title>
-  <style>
-    body {
-      font-family: 'Arial';
-      padding: 20px;
-      background: #f9f9f9;
-    }
-    h2 {
-      margin-top: 30px;
-    }
-    .box {
-      border: 2px solid #ccc;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      background: #fff;
-    }
-    .field {
-      margin-bottom: 15px;
-    }
-    .field label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .field input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .button-row {
-      display: flex;
-      gap: 10px;
-    }
-    .button-row button {
-      flex: 1;
-      padding: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-    .button-row button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-    .hint {
-      font-size: 0.9em;
-      color: gray;
-    }
-  </style>
-</head>
-<body>  <div class="box">
-    <h2>타이틀 설정</h2>
-    <div class="field">
-      <label for="mainTitle">메인 타이틀</label>
-      <input type="text" id="mainTitle" placeholder="예) 경신뽑기">
+<!-- 버전: 1.5.0 --><div class="space-y-6 p-4">
+  <!-- 타이틀 설정 영역 -->
+  <div class="space-y-2">
+    <label class="block font-bold">타이틀 설정</label>
+    <input type="text" placeholder="예) 시그뽑기, 댄스뽑기, 방셀뽑기 등" class="w-full p-2 border rounded" id="mainTitle">
+    <input type="text" placeholder="당첨 안내 내용을 적어주세요" class="w-full p-2 border rounded" id="subTitle">
+  </div>  <!-- 가로/세로/당첨 개수 설정 -->  <div class="space-y-2">
+    <label class="block font-bold">가로 / 세로 / 당첨 개수</label>
+    <div class="space-y-2">
+      <input type="number" placeholder="10개 이하로" class="w-full p-2 border rounded" id="cols" min="1" max="10">
+      <input type="number" placeholder="10개 이하로" class="w-full p-2 border rounded" id="rows" min="1" max="10">
+      <input type="number" placeholder="전체 셀보다 작게" class="w-full p-2 border rounded" id="winCount" min="1">
     </div>
-    <div class="field">
-      <label for="prizeGuide">당첨 내용 <span class="hint">(지움으로 입력)</span></label>
-      <input type="text" id="prizeGuide" placeholder="예) 스타벅스 쿠폰, 꽝, 커피 등">
-    </div>
-  </div>  <div class="box">
-    <h2>가로 / 세로 / 당첨 개수</h2>
-    <div class="field">
-      <label for="cols">가로 (최대 10)</label>
-      <input type="number" id="cols" min="1" max="10">
-    </div>
-    <div class="field">
-      <label for="rows">세로 (최대 10)</label>
-      <input type="number" id="rows" min="1" max="10">
-    </div>
-    <div class="field">
-      <label for="winnerCount">당첨 개수 <span class="hint">(가로 × 세로 - 1 이하)</span></label>
-      <input type="number" id="winnerCount" min="1">
-    </div>
-  </div>  <div class="button-row">
-    <button id="startBtn" disabled>시작하기</button>
-    <button id="saveBtn" disabled>저장하기</button>
-    <button id="resetBtn">초기화</button>
-  </div>  <script>
-    const mainTitle = document.getElementById('mainTitle');
-    const prizeGuide = document.getElementById('prizeGuide');
-    const cols = document.getElementById('cols');
-    const rows = document.getElementById('rows');
-    const winnerCount = document.getElementById('winnerCount');
-    const startBtn = document.getElementById('startBtn');
-    const saveBtn = document.getElementById('saveBtn');
-
-    function validateInputs() {
-      const c = parseInt(cols.value);
-      const r = parseInt(rows.value);
-      const w = parseInt(winnerCount.value);
-      const isValid = mainTitle.value && prizeGuide.value && c && r && w && (w <= c * r - 1);
-      startBtn.disabled = !isValid;
-      saveBtn.disabled = !isValid;
-    }
-
-    [mainTitle, prizeGuide, cols, rows, winnerCount].forEach(input => {
-      input.addEventListener('input', validateInputs);
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      localStorage.clear();
-      location.reload();
-    });
-
-    window.addEventListener('load', () => {
-      const saved = JSON.parse(localStorage.getItem('settings'));
-      if (saved) {
-        mainTitle.value = saved.mainTitle;
-        prizeGuide.value = saved.prizeGuide;
-        cols.value = saved.cols;
-        rows.value = saved.rows;
-        winnerCount.value = saved.winnerCount;
-        validateInputs();
-      }
-    });
-
-    saveBtn.addEventListener('click', () => {
-      const settings = {
-        mainTitle: mainTitle.value,
-        prizeGuide: prizeGuide.value,
-        cols: cols.value,
-        rows: rows.value,
-        winnerCount: winnerCount.value
-      };
-      localStorage.setItem('settings', JSON.stringify(settings));
-      alert('세팅값이 저장되었습니다!');
-    });
-  </script><!-- 버전: 1.4.8 -->
+  </div>  <!-- 나머지 설정 영역 (당첨 방식, 셀 설정 등) 여기에 이어서 위치함) -->  <!-- 버튼들 -->  <div class="flex justify-between pt-4">
+    <button id="startBtn" disabled class="bg-blue-500 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">시작하기</button>
+    <button id="saveBtn" disabled class="bg-green-500 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">저장하기</button>
+    <button id="resetBtn" class="bg-gray-400 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">초기화</button>
+  </div>
+</div>
+<!-- 버전: 1.5.0 -->
