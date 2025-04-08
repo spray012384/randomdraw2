@@ -1,20 +1,50 @@
-<!-- 버전: 1.5.0 --><div class="space-y-6 p-4">
-  <!-- 타이틀 설정 영역 -->
-  <div class="space-y-2">
-    <label class="block font-bold">타이틀 설정</label>
-    <input type="text" placeholder="예) 시그뽑기, 댄스뽑기, 방셀뽑기 등" class="w-full p-2 border rounded" id="mainTitle">
-    <input type="text" placeholder="당첨 안내 내용을 적어주세요" class="w-full p-2 border rounded" id="subTitle">
-  </div>  <!-- 가로/세로/당첨 개수 설정 -->  <div class="space-y-2">
-    <label class="block font-bold">가로 / 세로 / 당첨 개수</label>
-    <div class="space-y-2">
-      <input type="number" placeholder="10개 이하로" class="w-full p-2 border rounded" id="cols" min="1" max="10">
-      <input type="number" placeholder="10개 이하로" class="w-full p-2 border rounded" id="rows" min="1" max="10">
-      <input type="number" placeholder="전체 셀보다 작게" class="w-full p-2 border rounded" id="winCount" min="1">
+<!-- 버전: 1.5.1 --><div class="p-4 space-y-6 max-w-3xl mx-auto">
+  <!-- 타이틀 설정 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block font-bold mb-1">메인 타이틀</label>
+      <input type="text" id="mainTitle" class="w-full p-2 border rounded" placeholder="시그뽑기, 댄스뽑기 등" />
     </div>
-  </div>  <!-- 나머지 설정 영역 (당첨 방식, 셀 설정 등) 여기에 이어서 위치함) -->  <!-- 버튼들 -->  <div class="flex justify-between pt-4">
+    <div>
+      <label class="block font-bold mb-1">당첨 내용</label>
+      <input type="text" id="subTitle" class="w-full p-2 border rounded" placeholder="당첨 내용을 입력해주세요" />
+    </div>
+  </div>  <!-- 가로 / 세로 / 당첨 개수 설정 -->  <div>
+    <label class="block font-bold mb-2">가로 / 세로 / 당첨 개수</label>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <input type="number" id="cols" class="w-full p-2 border rounded" placeholder="10개 이하로" min="1" max="10" />
+      <input type="number" id="rows" class="w-full p-2 border rounded" placeholder="10개 이하로" min="1" max="10" />
+      <input type="number" id="winCount" class="w-full p-2 border rounded" placeholder="전체 셀보다 작게" min="1" />
+    </div>
+  </div>  <!-- 당첨 방식 설정 -->  <div>
+    <label class="block font-bold mb-2">당첨 방식 선택</label>
+    <div class="flex flex-col md:flex-row gap-4">
+      <label class="inline-flex items-center">
+        <input type="radio" name="winType" value="basic" class="mr-2" checked /> 기본 (당첨 / 꽝)
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="winType" value="custom" class="mr-2" /> 직접 텍스트 입력
+      </label>
+    </div>
+    <div id="customWinTexts" class="mt-2 hidden space-y-2"></div>
+  </div>  <!-- 셀 설정 -->  <div>
+    <label class="block font-bold mb-2">셀 설정</label>
+    <div class="flex flex-col md:flex-row gap-4">
+      <label class="inline-flex items-center">
+        <input type="radio" name="cellType" value="basic" class="mr-2" checked /> 기본
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="cellType" value="text" class="mr-2" /> 텍스트 입력
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="cellType" value="image" class="mr-2" /> 이미지 업로드
+      </label>
+    </div>
+    <div id="customCellInputs" class="mt-2 hidden space-y-2"></div>
+  </div>  <!-- 버튼 영역 -->  <div class="flex justify-between pt-4">
     <button id="startBtn" disabled class="bg-blue-500 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">시작하기</button>
     <button id="saveBtn" disabled class="bg-green-500 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">저장하기</button>
     <button id="resetBtn" class="bg-gray-400 text-white px-4 py-2 rounded w-full max-w-[120px] mx-1">초기화</button>
   </div>
 </div>
-<!-- 버전: 1.5.0 -->
+<!-- 버전: 1.5.1 -->
