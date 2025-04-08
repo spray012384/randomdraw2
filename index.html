@@ -1,7 +1,7 @@
 <!-- Version: 1.3.1 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>뽑기판 4설정</title>
+  <title>뽑기판 설정</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
@@ -52,19 +52,25 @@
       justify-content: center;
       font-size: 14px;
     }
+    .info-text {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
     button {
       padding: 10px 20px;
       margin-right: 10px;
       margin-top: 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-size: 14px;
     }
-    .btn-start {
+    .btn-blue {
       background-color: #007bff;
       color: white;
     }
     .btn-gray {
-      background-color: #e0e0e0;
+      background-color: #ccc;
       color: black;
     }
     .version {
@@ -73,20 +79,6 @@
       color: gray;
       text-align: center;
     }
-    .image-upload {
-      margin-top: 10px;
-    }
-    .thumbnail {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      margin-right: 5px;
-    }
-    .error {
-      color: red;
-      font-size: 13px;
-      margin-top: 5px;
-    }
   </style>
 </head>
 <body>
@@ -94,69 +86,60 @@
   <div class="section">
     <label>메인 타이틀</label>
     <input type="text" id="mainTitle" placeholder="예: 신년맞이 경품 이벤트" />
-    <div id="subTitleContainer" style="display: none;">
-      <label>서브 타이틀</label>
-      <input type="text" id="subTitle" readonly />
-    </div>
-  </div>
-  <div class="section">
+  </div>  <div class="section">
+    <label>가로 / 세로 / 당첨 개수</label>
+    <input type="number" id="cols" placeholder="가로 (예: 3)" min="1" max="10" />
+    <input type="number" id="rows" placeholder="세로 (예: 3)" min="1" max="10" />
+    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
+    <div id="countInfo" class="info-text"></div>
+  </div>  <div class="section">
     <label>당첨 방식 선택</label>
     <div class="radio-group">
       <label><input type="radio" name="winType" value="basic" checked /> 꽝 / 당첨</label>
       <label><input type="radio" name="winType" value="custom" /> 직접 텍스트 입력</label>
     </div>
     <div id="customWinInputs"></div>
-  </div>
-  <div class="section">
-    <label>가로 / 세로 / 당첨 개수</label>
-    <input type="number" id="cols" placeholder="가로 (예: 3)" min="1" max="10" />
-    <div id="colsError" class="error"></div>
-    <input type="number" id="rows" placeholder="세로 (예: 3)" min="1" max="10" />
-    <div id="rowsError" class="error"></div>
-    <input type="number" id="winCount" placeholder="당첨 개수 (예: 2)" min="1" />
-    <div id="winCountError" class="error"></div>
-  </div>
-  <div class="section">
+  </div>  <div class="section">
     <label>셀 UI 설정</label>
     <div class="radio-group">
       <label><input type="radio" name="cellUi" value="default" checked /> 기본</label>
       <label><input type="radio" name="cellUi" value="text" /> 셀에 텍스트 입력</label>
       <label><input type="radio" name="cellUi" value="image" /> 셀에 이미지 업로드</label>
     </div>
-    <div id="cellImageUpload" class="image-upload" style="display: none;"></div>
-  </div>
-  <button class="btn-start" onclick="startGame()">시작하기</button>
-  <button class="btn-gray">저장하기</button>
-  <button class="btn-gray" onclick="location.reload()">초기화</button>
-  <div class="preview-board" id="preview"></div>
+  </div>  <div id="preview" class="preview-board"></div><button class="btn-blue" onclick="startGame()">시작하기</button> <button class="btn-gray">저장하기</button> <button class="btn-gray" onclick="location.reload()">초기화</button>
+
   <div class="version">Version 1.3.1</div>  <script>
     const winInputsDiv = document.getElementById("customWinInputs");
-    const subTitleContainer = document.getElementById("subTitleContainer");
-    const subTitleInput = document.getElementById("subTitle");
     const winCountInput = document.getElementById("winCount");
-    const colsInput = document.getElementById("cols");
-    const rowsInput = document.getElementById("rows");
+    const countInfo = document.getElementById("countInfo");
+
+    function validateCounts() {
+      const rows = parseInt(document.getElementById("rows").value || 0);
+      const cols = parseInt(document.getElementById("cols").value || 0);
+      const max = rows * cols;
+      const winCount = parseInt(winCountInput.value || 0);
+
+      if (rows > 10 || cols > 10) {
+        countInfo.textContent = "가로와 세로는 10 이하만 가능합니다.";
+        return false;
+      } else if (winCount > max - 1) {
+        countInfo.textContent = `당첨 개수는 ${max - 1}개를 초과할 수 없습니다.`;
+        return false;
+      } else {
+        countInfo.textContent = '';
+        return true;
+      }
+    }
+
+    document.getElementById("rows").addEventListener("input", validateCounts);
+    document.getElementById("cols").addEventListener("input", validateCounts);
+    winCountInput.addEventListener("input", () => {
+      if (validateCounts()) renderCustomWinInputs();
+    });
 
     document.querySelectorAll("input[name='winType']").forEach(radio => {
-      radio.addEventListener("change", () => {
-        renderCustomWinInputs();
-        toggleSubTitle();
-      });
+      radio.addEventListener("change", renderCustomWinInputs);
     });
-
-    winCountInput.addEventListener("input", () => {
-      renderCustomWinInputs();
-      validateWinCount();
-    });
-
-    colsInput.addEventListener("input", validateColsRows);
-    rowsInput.addEventListener("input", validateColsRows);
-
-    function toggleSubTitle() {
-      const isCustom = document.querySelector("input[name='winType']:checked").value === 'custom';
-      subTitleContainer.style.display = isCustom ? 'block' : 'none';
-      updateSubTitle();
-    }
 
     function renderCustomWinInputs() {
       const count = parseInt(winCountInput.value || 0);
@@ -167,36 +150,32 @@
           const input = document.createElement("input");
           input.type = "text";
           input.placeholder = `상품 ${i + 1}`;
-          input.oninput = updateSubTitle;
           winInputsDiv.appendChild(input);
         }
       }
     }
 
-    function updateSubTitle() {
-      const values = Array.from(winInputsDiv.querySelectorAll("input"))
-        .map(i => i.value.trim()).filter(v => v);
-      subTitleInput.value = values.join(', ');
-    }
-
-    function validateColsRows() {
-      const cols = parseInt(colsInput.value || 0);
-      const rows = parseInt(rowsInput.value || 0);
-      document.getElementById("colsError").textContent = cols > 10 ? "가로는 10 이하로 입력해주세요." : "";
-      document.getElementById("rowsError").textContent = rows > 10 ? "세로는 10 이하로 입력해주세요." : "";
-      validateWinCount();
-    }
-
-    function validateWinCount() {
-      const cols = parseInt(colsInput.value || 0);
-      const rows = parseInt(rowsInput.value || 0);
-      const winCount = parseInt(winCountInput.value || 0);
-      const max = cols * rows;
-      document.getElementById("winCountError").textContent = winCount > max - 1 ? `당첨개수는 ${max - 1}개를 초과할 수 없습니다.` : "";
-    }
-
     function startGame() {
-      alert("게임 시작!");
+      if (!validateCounts()) return;
+      const settings = {
+        title: document.getElementById("mainTitle").value,
+        rows: parseInt(document.getElementById("rows").value),
+        cols: parseInt(document.getElementById("cols").value),
+        winCount: parseInt(winCountInput.value),
+        winType: document.querySelector("input[name='winType']:checked").value,
+        cellUi: document.querySelector("input[name='cellUi']:checked").value
+      };
+
+      const preview = document.getElementById("preview");
+      preview.innerHTML = '';
+      preview.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`;
+
+      for (let i = 0; i < settings.rows * settings.cols; i++) {
+        const cell = document.createElement("div");
+        cell.className = "preview-cell";
+        cell.textContent = i + 1;
+        preview.appendChild(cell);
+      }
     }
   </script></body>
 </html>
