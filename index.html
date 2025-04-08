@@ -1,102 +1,101 @@
-<!-- 버전: 1.5.1 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.5.2 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>뽑기판 설정</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      margin: 20px;
+      font-family: sans-serif;
+      padding: 20px;
     }
     h2 {
-      margin-bottom: 10px;
+      text-align: center;
+      margin-bottom: 30px;
     }
     .section {
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input[type="text"], input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-      border-radius: 5px;
       border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+    .form-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .form-row label {
+      width: 120px;
+      margin-right: 10px;
+    }
+    .form-row input[type="text"],
+    .form-row input[type="number"] {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     .radio-group {
       display: flex;
-      gap: 10px;
-      margin-top: 5px;
-    }
-    .radio-group label {
-      font-weight: normal;
+      gap: 20px;
+      margin: 10px 0;
     }
     .button-group {
+      margin-top: 20px;
       display: flex;
       gap: 10px;
-      margin-top: 20px;
     }
     button {
-      flex: 1;
-      padding: 10px;
-      font-size: 16px;
-      border: none;
+      padding: 10px 20px;
       border-radius: 5px;
+      border: none;
+      background-color: #eee;
       cursor: pointer;
     }
     button:disabled {
-      background-color: #ccc;
+      opacity: 0.5;
       cursor: not-allowed;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 14px;
-      color: #888;
     }
   </style>
 </head>
 <body>
   <h2>뽑기 설정</h2>  <div class="section">
-    <label for="mainTitle">메인 타이틀</label>
-    <input type="text" id="mainTitle" placeholder="시그뽑기, 댄스뽑기 등" /><label for="subtitle">당첨 내용</label>
-<input type="text" id="subtitle" placeholder="당첨 내용을 입력해주세요" />
-
-  </div>  <div class="section">
-    <label>가로 / 세로 / 당첨개수</label><label for="cols">가로</label>
-<input type="number" id="cols" min="1" max="10" placeholder="10개 이하로" />
-
-<label for="rows">세로</label>
-<input type="number" id="rows" min="1" max="10" placeholder="10개 이하로" />
-
-<label for="winners">당첨개수</label>
-<input type="number" id="winners" min="1" placeholder="전체 셀보다 작게" />
-
-  </div>  <div class="section">
-    <label>당첨 방식 선택</label>
-    <div class="radio-group">
-      <label><input type="radio" name="winnerMode" value="default" checked /> 기본 (당첨 / 꽝)</label>
-      <label><input type="radio" name="winnerMode" value="custom" /> 직접 텍스트 입력</label>
+    <div class="form-row">
+      <label for="mainTitle">메인 타이틀</label>
+      <input type="text" id="mainTitle" placeholder="시그뽑기, 댄스뽑기 등" />
+    </div>
+    <div class="form-row">
+      <label for="subtitle">당첨 내용</label>
+      <input type="text" id="subtitle" placeholder="당첨 내용을 입력해주세요" />
     </div>
   </div>  <div class="section">
-    <label>셀 설정</label>
+    <div class="form-row">
+      <label for="cols">가로</label>
+      <input type="number" id="cols" placeholder="10개 이하로" min="1" max="10" />
+    </div>
+    <div class="form-row">
+      <label for="rows">세로</label>
+      <input type="number" id="rows" placeholder="10개 이하로" min="1" max="10" />
+    </div>
+    <div class="form-row">
+      <label for="winners">당첨개수</label>
+      <input type="number" id="winners" placeholder="전체 셀보다 작게" min="1" />
+    </div>
+  </div>  <div class="section">
+    <div><strong>당첨 방식 선택</strong></div>
     <div class="radio-group">
-      <label><input type="radio" name="cellMode" value="default" checked /> 기본</label>
-      <label><input type="radio" name="cellMode" value="text" /> 텍스트 입력</label>
-      <label><input type="radio" name="cellMode" value="image" /> 이미지 업로드</label>
+      <label><input type="radio" name="winnerType" value="basic" checked /> 기본 (당첨 / 꽝)</label>
+      <label><input type="radio" name="winnerType" value="text" /> 직접 텍스트 입력</label>
+    </div>
+  </div>  <div class="section">
+    <div><strong>셀 설정</strong></div>
+    <div class="radio-group">
+      <label><input type="radio" name="cellType" value="basic" checked /> 기본</label>
+      <label><input type="radio" name="cellType" value="text" /> 텍스트 입력</label>
+      <label><input type="radio" name="cellType" value="image" /> 이미지 업로드</label>
     </div>
   </div>  <div class="button-group">
     <button id="startBtn" disabled>시작하기</button>
     <button id="saveBtn" disabled>저장하기</button>
     <button id="resetBtn">초기화</button>
-  </div>  <div class="footer">버전: 1.5.1</div>
-</body>
+  </div>  <!-- 버전: 1.5.2 --></body>
 </html>
-<!-- 버전: 1.5.1 -->
