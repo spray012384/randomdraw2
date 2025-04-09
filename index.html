@@ -1,179 +1,49 @@
-<!-- v 2.0.0 --><!DOCTYPE html><html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>랜덤 뽑기</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-    h1 span.version {
-      font-size: 14px;
-      color: gray;
-    }
-    .section {
-      width: 100%;
-      max-width: 600px;
-      margin-bottom: 20px;
-      border-top: 1px solid #ccc;
-      padding-top: 20px;
-    }
-    .section-title {
-      font-weight: bold;
-      font-size: 18px;
-      margin-bottom: 10px;
-      text-align: left;
-    }
-    .input-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .input-group label {
-      width: 100px;
-    }
-    .input-group input[type="text"],
-    .input-group input[type="number"] {
-      flex: 1;
-      padding: 5px;
-    }
-    .input-inline {
-      display: flex;
-      align-items: center;
-    }
-    .input-inline input[type="checkbox"] {
-      margin-right: 5px;
-    }
-    .option-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 10px 0;
-    }
-    .option-buttons button {
-      padding: 6px 12px;
-      border: 1px solid #ccc;
-      background-color: white;
-      cursor: pointer;
-    }
-    .bottom-buttons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .bottom-buttons .line1 {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .bottom-buttons button {
-      padding: 10px 20px;
-      font-size: 14px;
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-    }
-    .save-btn {
-      background-color: green;
-      color: white;
-    }
-    .reset-btn {
-      background-color: lightgray;
-      color: black;
-    }
-    .start-btn {
-      background-color: blue;
-      color: white;
-      width: 100%;
-      max-width: 300px;
-    }
-    .preview-btn {
-      background-color: #e0e0e0;
-      color: black;
-      width: 100%;
-      max-width: 300px;
-    }
-  </style>
-</head>
-<body>
-  <h1>랜덤 뽑기 <span class="version">v 2.0.0</span></h1>  <div class="section">
-    <div class="section-title">뽑기 설정</div><div class="input-group">
-  <label>메인 타이틀</label>
-  <input type="text" placeholder="제목을 입력하세요" />
-</div>
-
-<div class="input-group">
-  <label>상품 안내</label>
-  <input type="text" placeholder="자동으로 입력됩니다." disabled />
-</div>
-<div class="input-group">
-  <label></label>
-  <div class="input-inline">
-    <input type="checkbox" id="useGuide" />
-    <label for="useGuide">상품안내 사용</label>
+<!-- v 2.0.1 --><div class="w-full max-w-2xl mx-auto p-4 space-y-4">
+  <div class="text-center text-2xl font-bold">
+    랜덤 뽑기 <span class="text-gray-400 text-sm align-top">v 2.0.1</span>
+  </div>  <!-- 뽑기 설정 소제목 -->  <div class="text-left text-lg font-semibold border-b pb-1">뽑기 설정</div>  <!-- 상품 안내 입력 라인 -->  <div class="flex items-center justify-between">
+    <label class="font-semibold w-28">상품 안내</label>
+    <input type="text" class="border border-gray-300 p-1 flex-grow text-sm text-gray-500 bg-gray-100" value="자동으로 입력됩니다." disabled>
   </div>
-</div>
-
-<hr />
-
-<div class="input-group">
-  <label>가로</label>
-  <input type="number" />
-</div>
-<div class="input-group">
-  <label>세로</label>
-  <input type="number" />
-</div>
-<div class="input-group">
-  <label>당첨 개수</label>
-  <input type="number" />
-</div>
-
-<hr />
-
-  </div>  <div class="section">
-    <div class="section-title">당첨 방식 설정</div>
-    <div class="option-buttons">
-      <button>꽝/당첨</button>
-      <button>직접입력</button>
-    </div><div class="section-title">당첨 위치 설정</div>
-<hr />
-<div class="option-buttons">
-  <button>랜덤</button>
-  <button>직접지정</button>
-</div>
-
-<div class="section-title">카드 디자인 설정</div>
-<hr />
-<div class="option-buttons">
-  <button>기본</button>
-  <button>텍스트</button>
-  <button>이미지</button>
-</div>
-<hr />
-
-  </div>  <div class="bottom-buttons">
-    <div class="line1">
-      <button class="save-btn">저장하기</button>
-      <button class="reset-btn">초기화</button>
+  <!-- 상품 안내 사용 체크박스 라인 -->
+  <div class="flex items-center justify-end gap-2">
+    <input type="checkbox" id="useDesc">
+    <label for="useDesc" class="text-sm">상품안내 사용</label>
+  </div>  <!-- 가로/세로/당첨 개수 입력 -->  <div class="space-y-2">
+    <div class="flex items-center gap-2">
+      <label class="w-28">가로</label>
+      <input type="number" class="border p-1 w-full" max="10">
     </div>
-    <button class="preview-btn">미리보기</button>
-    <button class="start-btn">시작하기</button>
+    <div class="flex items-center gap-2">
+      <label class="w-28">세로</label>
+      <input type="number" class="border p-1 w-full" max="10">
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="w-28">당첨 개수</label>
+      <input type="number" class="border p-1 w-full">
+    </div>
+  </div>  <hr class="my-4">  <!-- 당첨 방식 설정 소제목 및 버튼 -->  <div class="text-left text-lg font-semibold">당첨 방식 설정</div>
+  <div class="flex justify-center gap-2">
+    <button class="border px-3 py-1">꽝/당첨</button>
+    <button class="border px-3 py-1">텍스트 직접입력</button>
+  </div>  <hr class="my-4">  <!-- 당첨 위치 설정 소제목 및 버튼 -->  <div class="text-left text-lg font-semibold border-t pt-4">당첨 위치 설정</div>
+  <div class="flex justify-center gap-2">
+    <button class="border px-3 py-1">랜덤</button>
+    <button class="border px-3 py-1">직접지정</button>
+  </div>  <hr class="my-4">  <!-- 카드 디자인 설정 소제목 및 버튼 -->  <div class="text-left text-lg font-semibold border-t pt-4">카드 디자인 설정</div>
+  <div class="flex justify-center gap-2">
+    <button class="border px-3 py-1">기본</button>
+    <button class="border px-3 py-1">텍스트</button>
+    <button class="border px-3 py-1">이미지</button>
+  </div>  <hr class="mt-6 mb-2">  <!-- 하단 버튼들 -->  <div class="flex justify-center gap-4">
+    <button class="bg-green-500 text-white px-4 py-2 rounded w-28">저장하기</button>
+    <button class="bg-gray-300 text-black px-4 py-2 rounded w-28">초기화</button>
   </div>
-</body>
-</html>
-<!-- v 2.0.0 -->
+  <div class="flex justify-center mt-2">
+    <button class="bg-gray-200 text-black px-4 py-2 rounded w-60">미리보기</button>
+  </div>
+  <div class="flex justify-center mt-2">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded w-60">시작하기</button>
+  </div>
+</div>
+<!-- v 2.0.1 -->
