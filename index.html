@@ -1,10 +1,10 @@
-<!-- 버전: v.1.8.7 -->
+<!-- 버전: v.1.8.5 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.8.7</title>
+    <title>랜덤 뽑기 설정 v.1.8.5</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,6 +25,7 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
         .input-group {
             margin-bottom: 20px;
@@ -36,8 +37,7 @@
             font-weight: bold;
             width: 40%;
         }
-        .input-group input,
-        .input-group select {
+        .input-group input, .input-group select {
             width: 55%;
             padding: 8px;
             font-size: 14px;
@@ -51,6 +51,7 @@
         .button-group {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
         }
         .button-group button {
             padding: 10px 20px;
@@ -58,6 +59,8 @@
             border-radius: 4px;
             font-size: 14px;
             cursor: pointer;
+            margin-bottom: 10px;
+            width: 45%;
         }
         .button-group button[type="submit"] {
             background-color: #28a745; /* 녹색 */
@@ -77,25 +80,11 @@
             font-size: 12px;
             color: #888;
         }
-        .settings-button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>랜덤 뽑기</h1> <!-- 메인 제목 다시 추가 -->
-        
-        <div class="footer">
-            <p>버전: v.1.8.7</p>
-        </div>
+        <h1>랜덤 뽑기</h1>
         
         <!-- 뽑기 설정 -->
         <h2>뽑기 설정</h2>
@@ -129,62 +118,42 @@
         
         <div class="separator"></div>
         
-        <!-- 당첨 방식 설정 -->
+        <!-- 당첨 방식 설정 (버튼형) -->
         <h2>당첨 방식 설정</h2>
-        <button class="settings-button" onclick="toggleSetting('winning-method')">당첨 방식 설정</button>
+        <div class="button-group">
+            <button type="button" id="winning-method-random">꽝/당첨</button>
+            <button type="button" id="winning-method-manual">직접 입력</button>
+        </div>
 
-        <!-- 당첨 위치 설정 -->
+        <!-- 당첨 위치 설정 (버튼형) -->
         <h2>당첨 위치 설정</h2>
-        <button class="settings-button" onclick="toggleSetting('location-method')">위치 설정</button>
+        <div class="button-group">
+            <button type="button" id="location-method-random">랜덤 설정</button>
+            <button type="button" id="location-method-manual">직접 위치 설정</button>
+        </div>
 
-        <!-- 카드 디자인 설정 -->
+        <!-- 카드 디자인 설정 (버튼형) -->
         <h2>카드 디자인 설정</h2>
-        <button class="settings-button" onclick="toggleSetting('card-design')">디자인 설정</button>
+        <div class="button-group">
+            <button type="button" id="card-design-default">기본</button>
+            <button type="button" id="card-design-text">직접 입력</button>
+            <button type="button" id="card-design-image">이미지 설정</button>
+        </div>
 
         <div class="separator"></div>
 
         <!-- 버튼들 -->
         <div class="button-group">
-            <button type="submit" onclick="validateForm()">저장하기</button>
+            <button type="submit">저장하기</button>
             <button type="reset">초기화</button>
         </div>
         
-        <button type="button" style="width: 100%; padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; margin-top: 20px;" onclick="startLottery()">시작하기</button>
+        <button type="button" style="width: 100%; padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; margin-top: 20px;">시작하기</button>
     </div>
 
-    <script>
-        function toggleSetting(setting) {
-            alert(setting + " 설정 버튼 클릭됨!");
-            // 추가적인 설정을 처리하는 로직을 여기에 구현
-        }
-
-        function validateForm() {
-            const title = document.getElementById("main-title").value;
-            const width = document.getElementById("width").value;
-            const height = document.getElementById("height").value;
-            const winningCount = document.getElementById("winning-count").value;
-            
-            if (!title || !width || !height || !winningCount) {
-                alert("모든 필드를 입력해 주세요.");
-                return false;
-            }
-            alert("저장되었습니다!");
-        }
-
-        function startLottery() {
-            const title = document.getElementById("main-title").value;
-            const width = document.getElementById("width").value;
-            const height = document.getElementById("height").value;
-            const winningCount = document.getElementById("winning-count").value;
-            
-            if (!title || !width || !height || !winningCount) {
-                alert("모든 필드를 입력해 주세요.");
-                return;
-            }
-            alert("뽑기가 시작됩니다!");
-        }
-    </script>
-
+    <div class="footer">
+        <p>v.1.8.5</p>
+    </div>
 </body>
 </html>
-<!-- 버전: v.1.8.7 -->
+<!-- 버전: v.1.8.5 -->
