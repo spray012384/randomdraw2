@@ -1,162 +1,145 @@
-<!-- v.1.8.2 --><!DOCTYPE html><html lang="ko">
+<!-- v.1.8.3 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>랜덤 뽑기</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: #f7f7f7;
       margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      width: 100%;
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .title-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-    .main-title {
-      font-size: 24px;
-      font-weight: bold;
+      padding: 20px;
     }
     .version {
-      font-size: 14px;
-      color: #888;
+      font-size: 0.8rem;
+      color: #aaa;
+      display: inline-block;
+      margin-left: 10px;
+    }
+    h1 {
+      margin-bottom: 5px;
     }
     .section {
-      width: 100%;
-      border-top: 1px solid #ddd;
+      max-width: 600px;
+      margin: 30px auto;
+      border-top: 1px solid #ccc;
       padding-top: 20px;
-      margin-top: 20px;
     }
-    .input-group {
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .form-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      align-items: center;
+      margin: 10px 0;
     }
-    .input-group label {
-      width: 100px;
-      font-weight: 500;
-    }
-    .input-group input {
+    .form-row label {
       flex: 1;
-      padding: 8px;
-      font-size: 14px;
+      text-align: left;
+    }
+    .form-row input[type="text"],
+    .form-row input[type="number"] {
+      flex: 2;
+      padding: 5px;
     }
     .button-group {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin-top: 30px;
+      gap: 10px;
+      margin-top: 20px;
     }
-    .button {
-      padding: 10px 16px;
-      font-size: 14px;
+    .option-buttons,
+    .card-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 15px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
-    .start-btn {
+    .btn-start {
       background-color: #007bff;
-      color: #fff;
-      width: 250px;
-    }
-    .save-btn {
-      background-color: #28a745;
-      color: #fff;
-      width: 120px;
-    }
-    .reset-btn {
-      background-color: #e0e0e0;
-      color: #333;
-      width: 120px;
-    }
-    .button-option-group {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 10px;
-    }
-    .option-btn {
-      padding: 8px 12px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-      cursor: pointer;
-    }
-    .option-btn.selected {
-      background: #007bff;
       color: white;
-      border-color: #007bff;
+      width: 220px;
+    }
+    .btn-save {
+      background-color: #28a745;
+      color: white;
+      width: 100px;
+    }
+    .btn-reset {
+      background-color: #ccc;
+      color: black;
+      width: 100px;
+    }
+    .btn-toggle {
+      background-color: #e0e0e0;
+      color: black;
+      min-width: 100px;
+    }
+    .button-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="title-row">
-      <div class="main-title">랜덤 뽑기</div>
-      <div class="version">v.1.8.2</div>
-    </div><div class="section">
-  <div class="input-group">
-    <label>상품 안내</label>
-    <input type="text" placeholder="자동 생성됨" disabled />
-  </div>
-  <div class="input-group">
-    <label>가로</label>
-    <input type="number" />
-  </div>
-  <div class="input-group">
-    <label>세로</label>
-    <input type="number" />
-  </div>
-  <div class="input-group">
-    <label>당첨 개수</label>
-    <input type="number" />
-  </div>
+  <h1>랜덤 뽑기<span class="version">v.1.8.3</span></h1>  <div class="section">
+    <div class="section-title">뽑기 설정</div><div class="form-row">
+  <label for="title">메인 타이틀</label>
+  <input type="text" id="title" placeholder="ex) 럭키 추첨">
 </div>
 
-<div class="section">
-  <div class="input-group">
-    <label>당첨 방식</label>
-    <div class="button-option-group">
-      <div class="option-btn">기본</div>
-      <div class="option-btn">직접 입력</div>
+<div class="form-row">
+  <label for="product">상품 안내</label>
+  <input type="text" id="product" placeholder="상품은 자동 입력됩니다" disabled>
+</div>
+
+<div class="form-row">
+  <label for="cols">가로</label>
+  <input type="number" id="cols" min="1" max="10">
+</div>
+<div class="form-row">
+  <label for="rows">세로</label>
+  <input type="number" id="rows" min="1" max="10">
+</div>
+<div class="form-row">
+  <label for="winners">당첨 개수</label>
+  <input type="number" id="winners" min="1">
+</div>
+
+  </div>  <div class="section">
+    <div class="section-title">당첨 방식 설정</div>
+    <div class="option-buttons">
+      <button class="btn-toggle">꽝/당첨</button>
+      <button class="btn-toggle">텍스트 직접 입력</button>
     </div>
-  </div>
-  <div class="input-group">
-    <label>카드 디자인 설정</label>
-    <div class="button-option-group">
-      <div class="option-btn">기본</div>
-      <div class="option-btn">직접 입력</div>
-      <div class="option-btn">이미지 설정</div>
+  </div>  <div class="section">
+    <div class="section-title">당첨 위치 설정</div>
+    <div class="form-row">
+      <label>위치를 직접 선택할 수 있도록 구현 예정</label>
     </div>
-  </div>
-</div>
-
-<div class="button-group">
-  <button class="button save-btn">저장하기</button>
-  <button class="button reset-btn">초기화</button>
-</div>
-<div class="button-group" style="margin-top: 10px;">
-  <button class="button start-btn">시작하기</button>
-</div>
-
-  </div>
-</body>
-</html><!-- v.1.8.2 -->
+  </div>  <div class="section">
+    <div class="section-title">카드 디자인 설정</div>
+    <div class="card-buttons">
+      <button class="btn-toggle">기본</button>
+      <button class="btn-toggle">직접 입력</button>
+      <button class="btn-toggle">이미지 설정</button>
+    </div>
+  </div>  <div class="button-bottom">
+    <button class="btn-save">저장하기</button>
+    <button class="btn-reset">초기화</button>
+    <button class="btn-start">시작하기</button>
+  </div></body>
+</html>
+<!-- v.1.8.3 -->
