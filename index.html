@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 버전: 0.0.0 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>랜덤 뽑기 설정</title>
@@ -24,7 +25,7 @@
 
         .input-group {
             display: flex;
-            justify-content: flex-start; /* 왼쪽 정렬로 수정 */
+            justify-content: center;
             margin-bottom: 15px;
         }
 
@@ -78,49 +79,32 @@
             margin-top: 20px;
         }
 
-        .section-button {
+        .button-group {
             display: flex;
-            justify-content: flex-start; /* 버튼들은 왼쪽 정렬 */
-            margin-top: 20px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .footer-version {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: grey;
+        .button-group button {
+            width: 150px;
         }
 
-        .top-version {
-            text-align: right;
-            font-size: 0.8rem;
-            color: grey;
-        }
-
-        .button-group button#save-button {
-            background-color: green;
-        }
-
-        .button-group button#reset-button {
-            background-color: gray;
-        }
-
-        .button-group button#start-button {
-            background-color: blue;
-        }
-
-        .button-group button#preview-button {
-            background-color: lightblue;
+        .section-title {
+            border-top: none;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 상단 버전 표시 -->
-        <div class="top-version">v 0.0.0</div>
+        <!-- 버전: 0.0.0 -->
+        <div id="version" style="color: grey; font-size: 0.8rem; text-align: center;">
+            v 0.0.0
+        </div>
+
         <h1>랜덤 뽑기 설정</h1>
 
         <div class="section-title">뽑기 설정</div>
-
         <div class="input-group">
             <label for="main-title">메인 타이틀</label>
             <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
@@ -153,29 +137,32 @@
         </div>
 
         <div class="section-title">당첨 방식 설정</div>
-        <div class="section-button">
-            <button>당첨 방식</button> <!-- 버튼으로 변경 -->
+        <div class="button-group">
+            <button id="win-fail">당첨/꽝 방식</button>
+            <button id="manual-entry">직접 입력 방식</button>
         </div>
 
         <div class="section-title">당첨 위치 설정</div>
-        <div class="section-button">
-            <button>당첨 위치 설정</button> <!-- 버튼으로 변경 -->
+        <div class="button-group">
+            <button id="random-position">랜덤 생성</button>
+            <button id="manual-position">직접 지정</button>
         </div>
 
         <div class="section-title">카드 디자인 설정</div>
-        <div class="section-button">
-            <button>카드 디자인 설정</button> <!-- 버튼으로 변경 -->
+        <div class="button-group">
+            <button id="default-design">기본</button>
+            <button id="text-input-design">텍스트 입력</button>
+            <button id="image-design">이미지 설정</button>
         </div>
 
         <div class="button-group">
-            <button id="preview-button">미리보기</button>
             <button id="save-button">저장하기</button>
             <button id="reset-button">초기화</button>
+            <button id="preview-button">미리보기</button>
             <button id="start-button">시작하기</button>
         </div>
 
-        <!-- 하단 버전 표시 -->
-        <div id="version" class="footer-version">
+        <div id="version" class="footer" style="color: grey; font-size: 0.8rem;">
             v 0.0.0
         </div>
     </div>
