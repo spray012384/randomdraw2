@@ -1,194 +1,202 @@
-<!-- v.1.9.0 -->
+<!-- v.1.9.1 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.9.0</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 400px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        h1 {
-            margin-bottom: 5px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            width: 100%;
-            text-align: center; /* 랜덤 뽑기만 가운데 정렬 */
-            visibility: visible; /* 보이도록 설정 */
-            position: relative; /* 위치 조정 */
-            z-index: 1; /* 다른 요소에 의해 가려지지 않도록 */
-        }
-        .version-text {
-            font-size: 12px;
-            color: #aaa;
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: center;
-        }
-        h2 {
-            margin-top: 20px;
-            margin-bottom: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            width: 100%;
-            text-align: left; /* 제목들 좌측 정렬 */
-        }
-        .input-group {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        .input-group label {
-            font-weight: bold;
-            width: 40%;
-            color: #333;
-        }
-        .input-group input, .input-group select {
-            width: 55%;
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .separator {
-            border-top: 1px solid #ddd;
-            margin: 20px 0;
-            width: 100%;
-        }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 100%;
-            gap: 10px;
-        }
-        .button-group button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-            width: 45%;
-        }
-        .button-group button[type="submit"] {
-            background-color: #28a745;
-            color: white;
-        }
-        .button-group button[type="reset"] {
-            background-color: #6c757d;
-            color: white;
-        }
-        .button-group button[type="button"] {
-            background-color: #007BFF;
-            color: white;
-        }
-        .card-design-buttons {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            gap: 10px;
-        }
-        .card-design-buttons button {
-            width: 45%; /* 버튼 너비 조정 */
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-            background-color: #007BFF; /* 버튼 색상 통일 */
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>랜덤 뽑기 설정 v.1.9.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-bottom: 5px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+    .version-text {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%;
+    }
+    h2 {
+      margin-top: 20px;
+      margin-bottom: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      width: 100%;
+      text-align: left;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .input-group label {
+      font-weight: bold;
+      width: 40%;
+      color: #333;
+    }
+    .input-group input,
+    .input-group select {
+      width: 55%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .separator {
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+      width: 100%;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 10px;
+    }
+    .button-group button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      width: 45%;
+    }
+    .button-group button[type="submit"] {
+      background-color: #28a745;
+      color: white;
+    }
+    .button-group button[type="reset"] {
+      background-color: #6c757d;
+      color: white;
+    }
+    .button-group button[type="button"] {
+      background-color: #007bff;
+      color: white;
+    }
+    .card-design-buttons {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card-design-buttons button {
+      width: 30%;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+    }
+    .start-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-top: 20px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>랜덤 뽑기</h1>
-        <div class="version-text">
-            <p>v.1.9.0</p>
-        </div>
-
-        <h2>뽑기 설정</h2>
-
-        <div class="input-group">
-            <label for="main-title">메인 타이틀</label>
-            <input type="text" id="main-title" placeholder="메인 타이틀 입력">
-        </div>
-
-        <div class="input-group">
-            <label for="product-info">상품 안내</label>
-            <input type="text" id="product-info" placeholder="상품 안내 입력">
-        </div>
-
-        <div class="separator"></div>
-
-        <div class="input-group">
-            <label for="width">가로</label>
-            <input type="number" id="width" placeholder="가로 입력">
-        </div>
-
-        <div class="input-group">
-            <label for="height">세로</label>
-            <input type="number" id="height" placeholder="세로 입력">
-        </div>
-
-        <div class="input-group">
-            <label for="winning-count">당첨 개수</label>
-            <input type="number" id="winning-count" placeholder="당첨 개수 입력">
-        </div>
-
-        <div class="separator"></div>
-
-        <h2>당첨 방식 설정</h2>
-        <div class="button-group">
-            <button type="button" id="winning-method-random">꽝/당첨</button>
-            <button type="button" id="winning-method-manual">직접 입력</button>
-        </div>
-
-        <h2>당첨 위치 설정</h2>
-        <div class="button-group">
-            <button type="button" id="location-method-random">랜덤 설정</button>
-            <button type="button" id="location-method-manual">직접 위치 설정</button>
-        </div>
-
-        <h2>카드 디자인 설정</h2>
-        <div class="card-design-buttons">
-            <button type="button" id="card-design-default">기본</button>
-            <button type="button" id="card-design-text">직접 입력</button>
-            <button type="button" id="card-design-image">이미지 설정</button>
-        </div>
-
-        <div class="separator"></div>
-
-        <div class="button-group">
-            <button type="submit">저장하기</button>
-            <button type="reset">초기화</button>
-        </div>
-
-        <button type="button" style="width: 100%; padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; margin-top: 20px;">시작하기</button>
+  <div class="container">
+    <h1>랜덤 뽑기</h1>
+    <div class="version-text">
+      <p>v.1.9.1</p>
     </div>
+
+    <h2>뽑기 설정</h2>
+    <div class="input-group">
+      <label for="main-title">메인 타이틀</label>
+      <input type="text" id="main-title" placeholder="메인 타이틀 입력" />
+    </div>
+
+    <div class="input-group">
+      <label for="product-info">상품 안내</label>
+      <input type="text" id="product-info" placeholder="상품 안내 입력" />
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="input-group">
+      <label for="width">가로</label>
+      <input type="number" id="width" placeholder="가로 입력" />
+    </div>
+
+    <div class="input-group">
+      <label for="height">세로</label>
+      <input type="number" id="height" placeholder="세로 입력" />
+    </div>
+
+    <div class="input-group">
+      <label for="winning-count">당첨 개수</label>
+      <input type="number" id="winning-count" placeholder="당첨 개수 입력" />
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>당첨 방식 설정</h2>
+    <div class="button-group">
+      <button type="button" id="winning-method-random">꽝/당첨</button>
+      <button type="button" id="winning-method-manual">직접 입력</button>
+    </div>
+
+    <h2>당첨 위치 설정</h2>
+    <div class="button-group">
+      <button type="button" id="location-method-random">랜덤 설정</button>
+      <button type="button" id="location-method-manual">직접 위치 설정</button>
+    </div>
+
+    <h2>카드 디자인 설정</h2>
+    <div class="card-design-buttons">
+      <button type="button" id="card-design-default">기본</button>
+      <button type="button" id="card-design-text">직접 입력</button>
+      <button type="button" id="card-design-image">이미지 설정</button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="button-group">
+      <button type="submit">저장하기</button>
+      <button type="reset">초기화</button>
+    </div>
+
+    <button type="button" class="start-button">시작하기</button>
+  </div>
 </body>
 </html>
-<!-- v.1.9.0 -->
+<!-- v.1.9.1 -->
