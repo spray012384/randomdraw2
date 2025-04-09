@@ -1,10 +1,10 @@
-<!-- v.1.8.8 -->
+<!-- v.1.8.9 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.8.8</title>
+    <title>랜덤 뽑기 설정 v.1.8.9</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,19 +23,33 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            align-items: center; /* 가운데 정렬 */
+            align-items: flex-start; /* 좌측 정렬 */
         }
         h1 {
-            text-align: center;
             margin-bottom: 5px;
             font-size: 28px;
+            font-weight: bold;
             color: #333;
+            width: 100%;
+            text-align: center; /* 랜덤 뽑기만 가운데 정렬 */
+            visibility: visible; /* 확인: 보이지 않는 상태를 방지 */
+            display: block; /* 확인: 요소가 화면에 보이도록 */
         }
         .version-text {
-            text-align: center;
             font-size: 12px;
             color: #aaa;
             margin-bottom: 20px;
+            width: 100%;
+            text-align: center; /* 버전 텍스트 가운데 정렬 */
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            width: 100%;
+            text-align: left; /* 제목들 좌측 정렬 */
         }
         .input-group {
             margin-bottom: 20px;
@@ -112,7 +126,7 @@
     <div class="container">
         <h1>랜덤 뽑기</h1>
         <div class="version-text">
-            <p>v.1.8.8</p>
+            <p>v.1.8.9</p>
         </div>
 
         <h2>뽑기 설정</h2>
@@ -176,4 +190,4 @@
     </div>
 </body>
 </html>
-<!-- v.1.8.8 -->
+<!-- v.1.8.9 -->
