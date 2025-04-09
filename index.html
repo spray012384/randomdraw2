@@ -1,10 +1,10 @@
-<!-- v.1.9.2 -->
+<!-- v.1.9.3 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>뽑기판 설정</title>
+  <title>랜덤 뽑기</title>
   <style>
     body {
       font-family: sans-serif;
@@ -25,7 +25,7 @@
       text-align: center;
       margin-top: 10px;
       margin-bottom: 30px;
-      font-size: 24px;
+      font-size: 26px;
     }
     .section {
       margin-bottom: 20px;
@@ -34,6 +34,11 @@
     }
     .section:last-of-type {
       border-bottom: none;
+    }
+    .sub-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 15px;
     }
     label {
       display: block;
@@ -76,6 +81,15 @@
       justify-content: space-between;
       margin-top: 30px;
     }
+    .bottom-buttons button {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white;
+    }
     .start-button {
       margin-top: 10px;
       width: 100%;
@@ -98,9 +112,11 @@
 </head>
 <body>
   <div class="container">
-    <h1>뽑기판 설정 <span style="font-size: 12px; color: #aaa;">v.1.9.2</span></h1>
+    <h1>랜덤 뽑기 <span style="font-size: 12px; color: #aaa;">v.1.9.3</span></h1>
 
     <div class="section">
+      <div class="sub-title">뽑기판 설정</div>
+
       <label for="guide">상품 안내</label>
       <input type="text" id="guide" placeholder="상품 안내 입력" />
       
@@ -146,8 +162,8 @@
 
     <button class="start-button">시작하기</button>
 
-    <div class="version">v.1.9.2</div>
+    <div class="version">v.1.9.3</div>
   </div>
 </body>
 </html>
-<!-- v.1.9.2 -->
+<!-- v.1.9.3 -->
