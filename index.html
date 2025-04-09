@@ -1,4 +1,4 @@
-<!-- 버전: 1.7.7 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.7.4 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,36 +64,22 @@
     }
     .start-btn { background-color: #007bff; }
     .save-btn { background-color: #28a745; }
-    .reset-btn { background-color: #6c757d; }.option-buttons {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0 20px 0;
-}
-.option-buttons button {
-  background-color: #eee;
-  color: #333;
-}
-.option-buttons button.selected {
-  background-color: #6c757d;
-  color: white;
-}
-
-.version-text {
-  margin-top: 40px;
-  text-align: right;
-  font-size: 12px;
-  color: #999;
-}
-.divider {
-  border-top: 1px solid #ccc;
-  margin: 20px 0;
-}
-
+    .reset-btn { background-color: #6c757d; }
+    .version-text {
+      margin-top: 40px;
+      text-align: right;
+      font-size: 12px;
+      color: #999;
+    }
+    .divider {
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="main-title">랜덤 뽑기 <span>(v1.7.7)</span></div>
+    <div class="main-title">랜덤 뽑기 <span>(v1.7.4)</span></div>
     <div class="title">뽑기판 설정</div><div class="row">
   <label>메인 타이틀</label>
   <input type="text" placeholder="예: 행운의 룰렛!">
@@ -131,16 +117,22 @@
 </div>
 
 <div class="section-title">당첨 위치 선택</div>
-<div class="option-buttons">
-  <button class="selected">랜덤</button>
-  <button>직접 선택</button>
+<div class="row">
+  <label>위치 방식</label>
+  <select>
+    <option value="random">랜덤</option>
+    <option value="manual">직접 선택</option>
+  </select>
 </div>
 
 <div class="section-title">셀 UI 설정</div>
-<div class="option-buttons">
-  <button class="selected">기본</button>
-  <button>텍스트 입력</button>
-  <button>이미지 지정</button>
+<div class="row">
+  <label>UI 선택</label>
+  <select>
+    <option value="default">기본</option>
+    <option value="text">텍스트 입력</option>
+    <option value="image">이미지 업로드</option>
+  </select>
 </div>
 
 <div class="buttons">
@@ -149,9 +141,9 @@
   <button class="reset-btn">초기화</button>
 </div>
 
-<div class="version-text">버전: 1.7.7</div>
+<div class="version-text">버전: 1.7.4</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.7 -->
+<!-- 버전: 1.7.4 -->
