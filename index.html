@@ -1,52 +1,42 @@
-<!-- v.1.8.4 --><div class="w-full max-w-3xl mx-auto p-4 space-y-6">
-  <div class="text-center">
-    <h1 class="text-3xl font-bold">랜덤 뽑기</h1>
-    <p class="text-sm text-gray-400">v.1.8.4</p>
-  </div>  <hr>  <div class="space-y-4">
-    <label class="block text-sm font-medium">메인 타이틀</label>
-    <input type="text" class="w-full border rounded p-2" placeholder="예: 우리 조 추첨기">
-  </div>  <hr>  <div class="space-y-4">
-    <label class="block text-sm font-medium">상품 안내</label>
-    <input type="text" class="w-full border rounded p-2 bg-gray-100" placeholder="아래 설정에 따라 자동 입력됩니다" disabled>
-  </div>  <hr>  <div class="grid grid-cols-3 gap-4">
+<!-- v.1.8.4 --><div class="flex flex-col items-center w-full space-y-4 p-4">
+  <h1 class="text-3xl font-bold text-center">랜덤 뽑기 <span class="text-sm text-gray-400 ml-2">v.1.8.4</span></h1>  <div class="border-t border-gray-300 w-full max-w-xl mt-2"></div><label class="text-sm text-gray-600 w-full max-w-xl text-left mt-2">상품 안내</label> <input type="text" placeholder="상품을 입력하세요" class="border rounded px-3 py-2 w-full max-w-xl bg-gray-100" disabled>
+
+  <div class="border-t border-gray-300 w-full max-w-xl"></div>  <h2 class="text-xl font-semibold w-full max-w-xl text-left">뽑기 설정</h2>  <div class="grid grid-cols-3 gap-4 w-full max-w-xl">
     <div>
-      <label class="block text-sm font-medium">가로</label>
-      <input type="number" class="w-full border rounded p-2" min="1" max="10">
+      <label class="text-sm text-gray-600">가로</label>
+      <input type="number" class="border rounded px-2 py-1 w-full">
     </div>
     <div>
-      <label class="block text-sm font-medium">세로</label>
-      <input type="number" class="w-full border rounded p-2" min="1" max="10">
+      <label class="text-sm text-gray-600">세로</label>
+      <input type="number" class="border rounded px-2 py-1 w-full">
     </div>
     <div>
-      <label class="block text-sm font-medium">당첨 개수</label>
-      <input type="number" class="w-full border rounded p-2" min="1">
+      <label class="text-sm text-gray-600">당첨 개수</label>
+      <input type="number" class="border rounded px-2 py-1 w-full">
     </div>
-  </div>  <hr>  <div class="space-y-2">
-    <div class="font-medium">당첨 방식 설정</div>
-    <div class="flex gap-2">
-      <button class="px-4 py-2 rounded border bg-blue-100">꽝 / 당첨</button>
-      <button class="px-4 py-2 rounded border">텍스트 입력</button>
+  </div>  <div class="border-t border-gray-300 w-full max-w-xl"></div>  <div class="w-full max-w-xl">
+    <h3 class="text-sm font-medium mb-1">당첨 방식 설정</h3>
+    <div class="flex space-x-2">
+      <button class="px-3 py-1 border rounded bg-blue-100 text-blue-800">꽝/당첨</button>
+      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 입력</button>
     </div>
-  </div>  <hr>  <div class="space-y-2">
-    <div class="font-medium">당첨 위치 설정</div>
-    <div class="flex gap-2">
-      <button class="px-4 py-2 rounded border bg-blue-100">랜덤 설정</button>
-      <button class="px-4 py-2 rounded border">직접 위치 설정</button>
+  </div>  <div class="w-full max-w-xl">
+    <h3 class="text-sm font-medium mb-1">당첨 위치 설정</h3>
+    <div class="flex space-x-2">
+      <button class="px-3 py-1 border rounded bg-blue-100 text-blue-800">랜덤 설정</button>
+      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 위치 설정</button>
     </div>
-  </div>  <hr>  <div class="space-y-2">
-    <div class="font-medium">카드 디자인 설정</div>
-    <div class="flex gap-2">
-      <button class="flex-1 px-4 py-2 rounded border bg-blue-100">기본</button>
-      <button class="flex-1 px-4 py-2 rounded border">직접 입력</button>
-      <button class="flex-1 px-4 py-2 rounded border">이미지 설정</button>
+  </div>  <div class="w-full max-w-xl">
+    <h3 class="text-sm font-medium mb-1">카드 디자인 설정</h3>
+    <div class="flex space-x-2">
+      <button class="px-3 py-1 border rounded bg-white text-gray-800">기본</button>
+      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 입력</button>
+      <button class="px-3 py-1 border rounded bg-white text-gray-800">이미지 설정</button>
     </div>
-  </div>  <hr>  <div class="pt-4">
-    <div class="flex justify-center gap-4 mb-4">
-      <button class="px-8 py-2 bg-green-500 text-white rounded">저장하기</button>
-      <button class="px-8 py-2 bg-gray-300 text-black rounded">초기화</button>
-    </div>
-    <div class="flex justify-center">
-      <button class="px-20 py-2 bg-blue-500 text-white rounded">시작하기</button>
-    </div>
-  </div>
+  </div>  <div class="border-t border-gray-300 w-full max-w-xl mt-4"></div>  <div class="flex justify-center space-x-4 mt-4 w-full max-w-xl">
+    <button class="bg-green-300 text-white px-6 py-2 rounded w-1/2">저장하기</button>
+    <button class="bg-gray-200 text-gray-800 px-6 py-2 rounded w-1/2">초기화</button>
+  </div><button class="bg-blue-500 text-white px-12 py-2 rounded mt-2">시작하기</button>
+
+  <div class="text-xs text-gray-400 mt-4">v.1.8.4</div>
 </div><!-- v.1.8.4 -->
