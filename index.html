@@ -1,10 +1,10 @@
-<!-- 버전: v.1.8.5 -->
+<!-- v.1.8.6 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.8.5</title>
+    <title>랜덤 뽑기 설정 v.1.8.6</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,6 +21,8 @@
             border-radius: 8px;
             width: 400px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column; /* 내용이 세로로 쌓이게 */
         }
         h1 {
             text-align: center;
@@ -50,8 +52,9 @@
         }
         .button-group {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* 버튼들을 가운데 정렬 */
             flex-wrap: wrap;
+            width: 100%;
         }
         .button-group button {
             padding: 10px 20px;
@@ -61,6 +64,7 @@
             cursor: pointer;
             margin-bottom: 10px;
             width: 45%;
+            text-align: center; /* 텍스트 가운데 정렬 */
         }
         .button-group button[type="submit"] {
             background-color: #28a745; /* 녹색 */
@@ -79,6 +83,17 @@
             margin-top: 20px;
             font-size: 12px;
             color: #888;
+        }
+
+        /* 카드 디자인 버튼을 한 줄에 배치 */
+        .card-design-buttons {
+            display: flex;
+            justify-content: center; /* 버튼들을 가운데 정렬 */
+            width: 100%;
+        }
+        .card-design-buttons button {
+            width: 30%; /* 버튼 너비 조정 */
+            margin: 5px; /* 버튼 간격 */
         }
     </style>
 </head>
@@ -134,7 +149,7 @@
 
         <!-- 카드 디자인 설정 (버튼형) -->
         <h2>카드 디자인 설정</h2>
-        <div class="button-group">
+        <div class="card-design-buttons">
             <button type="button" id="card-design-default">기본</button>
             <button type="button" id="card-design-text">직접 입력</button>
             <button type="button" id="card-design-image">이미지 설정</button>
@@ -152,8 +167,8 @@
     </div>
 
     <div class="footer">
-        <p>v.1.8.5</p>
+        <p>v.1.8.6</p>
     </div>
 </body>
 </html>
-<!-- 버전: v.1.8.5 -->
+<!-- v.1.8.6 -->
