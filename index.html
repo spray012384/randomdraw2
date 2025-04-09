@@ -24,7 +24,7 @@
 
         .input-group {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start; /* 왼쪽 정렬로 수정 */
             margin-bottom: 15px;
         }
 
@@ -77,10 +77,46 @@
         .footer {
             margin-top: 20px;
         }
+
+        .section-button {
+            display: flex;
+            justify-content: flex-start; /* 버튼들은 왼쪽 정렬 */
+            margin-top: 20px;
+        }
+
+        .footer-version {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: grey;
+        }
+
+        .top-version {
+            text-align: right;
+            font-size: 0.8rem;
+            color: grey;
+        }
+
+        .button-group button#save-button {
+            background-color: green;
+        }
+
+        .button-group button#reset-button {
+            background-color: gray;
+        }
+
+        .button-group button#start-button {
+            background-color: blue;
+        }
+
+        .button-group button#preview-button {
+            background-color: lightblue;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 상단 버전 표시 -->
+        <div class="top-version">v 0.0.0</div>
         <h1>랜덤 뽑기 설정</h1>
 
         <div class="section-title">뽑기 설정</div>
@@ -117,21 +153,18 @@
         </div>
 
         <div class="section-title">당첨 방식 설정</div>
-        <div class="input-group">
-            <label for="lottery-type">당첨 방식</label>
-            <input type="text" id="lottery-type" placeholder="당첨 방식을 입력하세요">
+        <div class="section-button">
+            <button>당첨 방식</button> <!-- 버튼으로 변경 -->
         </div>
 
         <div class="section-title">당첨 위치 설정</div>
-        <div class="input-group">
-            <label for="position">당첨 위치</label>
-            <input type="text" id="position" placeholder="당첨 위치를 입력하세요">
+        <div class="section-button">
+            <button>당첨 위치 설정</button> <!-- 버튼으로 변경 -->
         </div>
 
         <div class="section-title">카드 디자인 설정</div>
-        <div class="input-group">
-            <label for="design">디자인 스타일</label>
-            <input type="text" id="design" placeholder="디자인을 입력하세요">
+        <div class="section-button">
+            <button>카드 디자인 설정</button> <!-- 버튼으로 변경 -->
         </div>
 
         <div class="button-group">
@@ -141,7 +174,8 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div id="version" class="footer">
+        <!-- 하단 버전 표시 -->
+        <div id="version" class="footer-version">
             v 0.0.0
         </div>
     </div>
