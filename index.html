@@ -1,164 +1,41 @@
-<!-- 버전: 1.7.7 --><!DOCTYPE html><html lang="ko"><head>  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>뽑기판 설정</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-    .main-title {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .main-title small {
-      font-size: 14px;
-      color: #aaa;
-      margin-left: 10px;
-    }
-    .title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    .row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .row label {
-      width: 120px;
-    }
-    .row input, .row select {
-      flex: 1;
-      padding: 5px;
-    }
-    .section-title {
-      font-size: 18px;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-    }
-    .button-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .button-group button {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      background-color: white;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-    .button-group button.selected {
-      background-color: #eee;
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .button-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      width: 100px;
-    }
-    .start-btn { background-color: #007bff; }
-    .save-btn { background-color: #28a745; }
-    .reset-btn { background-color: #6c757d; }
-    .version-text {
-      margin-top: 40px;
-      text-align: right;
-      font-size: 12px;
-      color: #999;
-    }
-    .divider {
-      border-top: 1px solid #ccc;
-      margin: 20px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="main-title">랜덤 뽑기 <small>v1.7.7</small></div>
-    <div class="title">뽑기판 설정</div><div class="row">
-  <label>메인 타이틀</label>
-  <input type="text" placeholder="예: 행운의 룰렛!">
-</div>
-
-<div class="row">
-  <label>상품 안내</label>
-  <input type="text" value="세팅에 따라 자동으로 입력됩니다." disabled>
-</div>
-
-<div class="divider"></div>
-
-<div class="row">
-  <label>가로 칸 수</label>
-  <input type="number" min="1" max="10" value="3">
-</div>
-
-<div class="row">
-  <label>세로 칸 수</label>
-  <input type="number" min="1" max="10" value="3">
-</div>
-
-<div class="row">
-  <label>당첨 개수</label>
-  <input type="number" min="1" value="2">
-</div>
-
-<div class="section-title">당첨방식 선택</div>
-<div class="button-group">
-  <button class="selected">기본 (당첨/꽝)</button>
-  <button>직접 텍스트 입력</button>
-</div>
-
-<div class="section-title">당첨위치선택</div>
-<div class="button-group">
-  <button class="selected">랜덤</button>
-  <button>직접 지정</button>
-</div>
-
-<div class="section-title">카드디자인 선택</div>
-<div class="button-group">
-  <button class="selected">기본</button>
-  <button>텍스트 입력</button>
-  <button>이미지 지정</button>
-</div>
-
-<div class="buttons">
-  <button class="start-btn">시작하기</button>
-</div>
-<div class="button-row">
-  <button class="save-btn">저장하기</button>
-  <button class="reset-btn">초기화</button>
-</div>
-
-<div class="version-text">버전: 1.7.7</div>
-
+<!-- v.1.7.6 --><div class="flex flex-col gap-8">
+  <!-- Title -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold">랜덤 뽑기</h1>
+    <span class="text-sm text-gray-400">v.1.7.6</span>
+  </div>  <!-- 당첨 방식 선택 -->  <div>
+    <h2 class="text-xl font-bold mb-2">당첨 방식 선택</h2>
+    <div class="flex gap-4">
+      <button class="option-button selected">꽝 / 당첨</button>
+      <button class="option-button">직접 입력</button>
+    </div>
+  </div>  <!-- 당첨 위치 선택 -->  <div>
+    <h2 class="text-xl font-bold mb-2">당첨 위치 선택</h2>
+    <div class="flex gap-4">
+      <button class="option-button selected">랜덤</button>
+      <button class="option-button">직접 선택</button>
+    </div>
+  </div>  <!-- 카드 디자인 선택 -->  <div>
+    <h2 class="text-xl font-bold mb-2">카드 디자인 선택</h2>
+    <div class="flex gap-4">
+      <button class="option-button selected">기본</button>
+      <button class="option-button">텍스트 지정</button>
+      <button class="option-button">이미지 지정</button>
+    </div>
+  </div>  <!-- 시작, 저장, 초기화 버튼 -->  <div class="flex flex-col gap-2 mt-4">
+    <div class="flex gap-2">
+      <button class="bg-blue-500 text-white px-4 py-2 rounded w-full">시작하기</button>
+    </div>
+    <div class="flex gap-2">
+      <button class="bg-green-500 text-white px-4 py-2 rounded w-full">저장하기</button>
+      <button class="bg-gray-400 text-white px-4 py-2 rounded w-full">초기화</button>
+    </div>
   </div>
-</body>
-</html>
-<!-- 버전: 1.7.7 -->
+</div><style>
+.option-button {
+  @apply px-6 py-3 rounded border text-lg w-full bg-white;
+}
+.selected {
+  @apply bg-gray-200 font-bold;
+}
+</style><!-- v.1.7.6 -->
