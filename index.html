@@ -1,65 +1,131 @@
-<!-- v 2.0.2 --><div class="main-container">
-  <h1 class="main-title">랜덤 뽑기 <span class="version-text">v 2.0.2</span></h1>
-  <hr><label class="main-label">메인 타이틀</label> <input type="text" placeholder="메인 타이틀을 입력하세요" class="input full-width">
-
-  <hr>  <div class="section">
-    <div class="section-header">상품안내</div>
-    <div class="row">
-      <label>상품안내</label>
-      <input type="text" class="input" placeholder="자동으로 입력됩니다" disabled>
+<!-- v 2.0.3 --><div class="main-container">
+  <div class="title-row">
+    <label for="main-title">랜덤 뽑기</label>
+    <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
+    <span class="version-text">v 2.0.3</span>
+  </div>  <div class="line-separator"></div>  <div class="info-row">
+    <label for="prize-info">상품안내</label>
+    <input type="text" id="prize-info" placeholder="상품 정보를 입력하세요">
+  </div>
+  <div class="checkbox-row">
+    <input type="checkbox" id="use-prize-info">
+    <label for="use-prize-info">상품안내 사용</label>
+  </div>  <div class="input-group">
+    <div class="input-row">
+      <label for="cols">가로</label>
+      <input type="number" id="cols">
     </div>
-    <div class="row">
-      <div class="checkbox-line">
-        <input type="checkbox" id="use-prize">
-        <label for="use-prize">상품안내 사용</label>
-      </div>
+    <div class="input-row">
+      <label for="rows">세로</label>
+      <input type="number" id="rows">
     </div>
-    <hr>
-  </div>  <div class="section">
-    <div class="section-header">뽑기 설정</div>
-    <div class="row">
-      <label>가로</label>
-      <input type="number" class="input">
+    <div class="input-row">
+      <label for="win-count">당첨개수</label>
+      <input type="number" id="win-count">
     </div>
-    <div class="row">
-      <label>세로</label>
-      <input type="number" class="input">
+  </div>  <div class="line-separator"></div>  <div class="section">
+    <h3 class="section-title">당첨 방식 설정</h3>
+    <div class="centered-options">
+      <button>기본 (꽝/당첨)</button>
+      <button>직접 입력</button>
     </div>
-    <div class="row">
-      <label>당첨 개수</label>
-      <input type="number" class="input">
+  </div>  <div class="line-separator"></div>  <div class="section">
+    <h3 class="section-title">당첨 위치 설정</h3>
+    <div class="centered-options">
+      <button>랜덤</button>
+      <button>직접 지정</button>
     </div>
-  </div>  <hr>  <div class="section">
-    <div class="section-header">당첨 방식 설정</div>
-    <div class="button-group center">
-      <button class="btn">꽝/당첨</button>
-      <button class="btn">직접 입력</button>
+  </div>  <div class="line-separator"></div>  <div class="section">
+    <h3 class="section-title">카드 디자인 설정</h3>
+    <div class="centered-options">
+      <button>기본</button>
+      <button>텍스트</button>
+      <button>이미지</button>
     </div>
-  </div>  <hr>  <div class="section">
-    <div class="section-header">당첨 위치 설정</div>
-    <div class="button-group center">
-      <button class="btn">랜덤</button>
-      <button class="btn">직접 지정</button>
-    </div>
-  </div>  <hr>  <div class="section">
-    <div class="section-header">카드 디자인 설정</div>
-    <div class="button-group center">
-      <button class="btn">기본</button>
-      <button class="btn">텍스트</button>
-      <button class="btn">이미지</button>
-    </div>
-  </div>  <hr>  <div class="button-footer">
-    <div class="row center">
-      <button class="btn green">저장하기</button>
+  </div>  <div class="line-separator"></div>  <div class="button-group">
+    <div class="top-buttons">
+      <button class="save-button">저장하기</button>
       <span class="spacer"></span>
-      <button class="btn gray">초기화</button>
+      <button class="reset-button">초기화</button>
     </div>
-    <div class="row center">
-      <button class="btn light-gray">미리보기</button>
+    <div class="middle-button">
+      <button class="preview-button">미리보기</button>
     </div>
-    <div class="row center">
-      <button class="btn blue full-width">시작하기</button>
+    <div class="bottom-button">
+      <button class="start-button">시작하기</button>
     </div>
-  </div>  <div class="version-footer">v 2.0.2</div>
-</div>
-<!-- v 2.0.2 -->
+  </div>
+</div><style>
+  .main-container {
+    max-width: 600px;
+    margin: auto;
+    font-family: sans-serif;
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .version-text {
+    font-size: 0.8rem;
+    color: gray;
+  }
+  .line-separator {
+    border-bottom: 1px solid #ddd;
+    margin: 16px 0;
+  }
+  .info-row, .checkbox-row, .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .checkbox-row {
+    margin-left: 100px;
+  }
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .section-title {
+    text-align: left;
+    margin-bottom: 8px;
+  }
+  .centered-options {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .top-buttons {
+    display: flex;
+    gap: 12px;
+  }
+  .save-button {
+    background-color: green;
+    color: white;
+    padding: 8px 16px;
+  }
+  .reset-button {
+    background-color: lightgray;
+    color: black;
+    padding: 8px 16px;
+  }
+  .preview-button {
+    background-color: lightgray;
+    color: black;
+    padding: 8px 16px;
+  }
+  .start-button {
+    background-color: blue;
+    color: white;
+    padding: 8px 80px;
+  }
+</style><!-- v 2.0.3 -->
