@@ -1,4 +1,4 @@
-<!-- 버전: 1.7.3 --><!DOCTYPE html><html lang="ko">
+<!-- 버전: 1.7.4 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,6 +43,23 @@
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
     }
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+    .button-group button {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .button-group button.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
     .buttons {
       display: flex;
       justify-content: space-between;
@@ -71,6 +88,15 @@
       margin: 20px 0;
     }
   </style>
+  <script>
+    function activateButton(groupName, value) {
+      const buttons = document.querySelectorAll(`.button-group[data-group="${groupName}"] button`);
+      buttons.forEach(btn => btn.classList.remove("active"));
+      const selected = document.querySelector(`.button-group[data-group="${groupName}"] button[data-value="${value}"]`);
+      if (selected) selected.classList.add("active");
+      document.getElementById(groupName + "Input").value = value;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -103,32 +129,26 @@
 </div>
 
 <div class="section-title">당첨 내용 설정</div>
-<div class="row">
-  <label>방식 선택</label>
-  <select>
-    <option value="basic">기본 (당첨/꽝)</option>
-    <option value="custom">직접 텍스트 입력</option>
-  </select>
+<div class="button-group" data-group="method" onclick="activateButton('method', event.target.dataset.value)">
+  <button data-value="basic" class="active">기본 (당첨/꽝)</button>
+  <button data-value="custom">직접 텍스트 입력</button>
 </div>
+<input type="hidden" id="methodInput" value="basic">
 
 <div class="section-title">당첨 위치 선택</div>
-<div class="row">
-  <label>위치 설정</label>
-  <select>
-    <option value="random">랜덤하게 정하기</option>
-    <option value="manual">내가 직접 위치 선택하기</option>
-  </select>
+<div class="button-group" data-group="position" onclick="activateButton('position', event.target.dataset.value)">
+  <button data-value="random" class="active">랜덤하게 정하기</button>
+  <button data-value="manual">직접 위치 지정하기</button>
 </div>
+<input type="hidden" id="positionInput" value="random">
 
 <div class="section-title">셀 UI 설정</div>
-<div class="row">
-  <label>UI 선택</label>
-  <select>
-    <option value="default">기본</option>
-    <option value="text">텍스트 직접 입력</option>
-    <option value="image">이미지 업로드</option>
-  </select>
+<div class="button-group" data-group="cell" onclick="activateButton('cell', event.target.dataset.value)">
+  <button data-value="default" class="active">기본</button>
+  <button data-value="text">텍스트 입력</button>
+  <button data-value="image">이미지 업로드</button>
 </div>
+<input type="hidden" id="cellInput" value="default">
 
 <div class="buttons">
   <button class="start-btn">시작하기</button>
@@ -136,9 +156,9 @@
   <button class="reset-btn">초기화</button>
 </div>
 
-<div class="version-text">버전: 1.7.3</div>
+<div class="version-text">버전: 1.7.4</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.3 -->
+<!-- 버전: 1.7.4 -->
