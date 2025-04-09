@@ -1,42 +1,118 @@
-<!-- v.1.8.4 --><div class="flex flex-col items-center w-full space-y-4 p-4">
-  <h1 class="text-3xl font-bold text-center">랜덤 뽑기 <span class="text-sm text-gray-400 ml-2">v.1.8.4</span></h1>  <div class="border-t border-gray-300 w-full max-w-xl mt-2"></div><label class="text-sm text-gray-600 w-full max-w-xl text-left mt-2">상품 안내</label> <input type="text" placeholder="상품을 입력하세요" class="border rounded px-3 py-2 w-full max-w-xl bg-gray-100" disabled>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤 뽑기 설정 v.1.8.4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .separator {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .button-group button[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+        }
+        .button-group button[type="reset"] {
+            background-color: #6c757d;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>랜덤 뽑기 설정</h1>
+        
+        <div class="input-group">
+            <label for="main-title">메인 타이틀</label>
+            <input type="text" id="main-title" placeholder="메인 타이틀 입력">
+        </div>
+        
+        <div class="input-group">
+            <label for="product-info">상품 안내</label>
+            <input type="text" id="product-info" placeholder="상품 안내 입력">
+        </div>
+        
+        <div class="separator"></div>
+        
+        <div class="input-group">
+            <label for="width">가로</label>
+            <input type="number" id="width" placeholder="가로 입력">
+        </div>
+        
+        <div class="input-group">
+            <label for="height">세로</label>
+            <input type="number" id="height" placeholder="세로 입력">
+        </div>
+        
+        <div class="input-group">
+            <label for="winning-count">당첨 개수</label>
+            <input type="number" id="winning-count" placeholder="당첨 개수 입력">
+        </div>
+        
+        <div class="separator"></div>
+        
+        <div class="button-group">
+            <button type="submit">저장하기</button>
+            <button type="reset">초기화</button>
+        </div>
+        
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; margin-top: 20px;">시작하기</button>
+    </div>
 
-  <div class="border-t border-gray-300 w-full max-w-xl"></div>  <h2 class="text-xl font-semibold w-full max-w-xl text-left">뽑기 설정</h2>  <div class="grid grid-cols-3 gap-4 w-full max-w-xl">
-    <div>
-      <label class="text-sm text-gray-600">가로</label>
-      <input type="number" class="border rounded px-2 py-1 w-full">
+    <div class="footer">
+        <p>v.1.8.4</p>
     </div>
-    <div>
-      <label class="text-sm text-gray-600">세로</label>
-      <input type="number" class="border rounded px-2 py-1 w-full">
-    </div>
-    <div>
-      <label class="text-sm text-gray-600">당첨 개수</label>
-      <input type="number" class="border rounded px-2 py-1 w-full">
-    </div>
-  </div>  <div class="border-t border-gray-300 w-full max-w-xl"></div>  <div class="w-full max-w-xl">
-    <h3 class="text-sm font-medium mb-1">당첨 방식 설정</h3>
-    <div class="flex space-x-2">
-      <button class="px-3 py-1 border rounded bg-blue-100 text-blue-800">꽝/당첨</button>
-      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 입력</button>
-    </div>
-  </div>  <div class="w-full max-w-xl">
-    <h3 class="text-sm font-medium mb-1">당첨 위치 설정</h3>
-    <div class="flex space-x-2">
-      <button class="px-3 py-1 border rounded bg-blue-100 text-blue-800">랜덤 설정</button>
-      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 위치 설정</button>
-    </div>
-  </div>  <div class="w-full max-w-xl">
-    <h3 class="text-sm font-medium mb-1">카드 디자인 설정</h3>
-    <div class="flex space-x-2">
-      <button class="px-3 py-1 border rounded bg-white text-gray-800">기본</button>
-      <button class="px-3 py-1 border rounded bg-white text-gray-800">직접 입력</button>
-      <button class="px-3 py-1 border rounded bg-white text-gray-800">이미지 설정</button>
-    </div>
-  </div>  <div class="border-t border-gray-300 w-full max-w-xl mt-4"></div>  <div class="flex justify-center space-x-4 mt-4 w-full max-w-xl">
-    <button class="bg-green-300 text-white px-6 py-2 rounded w-1/2">저장하기</button>
-    <button class="bg-gray-200 text-gray-800 px-6 py-2 rounded w-1/2">초기화</button>
-  </div><button class="bg-blue-500 text-white px-12 py-2 rounded mt-2">시작하기</button>
-
-  <div class="text-xs text-gray-400 mt-4">v.1.8.4</div>
-</div><!-- v.1.8.4 -->
+</body>
+</html>
