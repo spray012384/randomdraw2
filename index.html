@@ -1,153 +1,126 @@
-<!-- v 1.9.4 --><!DOCTYPE html><html lang="ko">
+<!-- v.1.9.5 --><!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>랜덤 뽑기</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f2f2f2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: #f4f4f4;
+      text-align: center;
     }
     header {
-      width: 100%;
-      background-color: white;
-      padding: 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      background: white;
+      padding: 1rem 0 0.5rem;
+      border-bottom: 1px solid #ccc;
     }
     header h1 {
+      font-size: 1.8rem;
       margin: 0;
-      font-size: 24px;
+    }
+    header .version {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.2rem;
+    }
+    main {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 1rem;
+    }
+    section {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.3rem;
+    }
+    label {
       display: inline-block;
-    }
-    header span.version {
-      margin-left: 10px;
-      font-size: 14px;
-      color: #888;
-    }
-    .container {
-      max-width: 600px;
-      width: 100%;
-      background-color: #fff;
-      margin-top: 24px;
-      padding: 24px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-    .form-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .form-group label {
       width: 120px;
-      margin-right: 8px;
       font-weight: bold;
     }
-    .form-group input[type="text"],
-    .form-group input[type="number"] {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    input[type="text"],
+    input[type="number"] {
+      padding: 0.3rem;
+      width: calc(100% - 130px);
+      max-width: 250px;
     }
-    .form-group select {
-      flex: 1;
-      padding: 8px;
+    .row {
+      margin: 0.5rem 0;
     }
-    .buttons {
+    .button-group {
       display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 24px;
+      justify-content: space-between;
+      margin-top: 2rem;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+    .button-group button {
+      padding: 0.5rem 1.2rem;
       border: none;
-      border-radius: 6px;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
-      min-width: 120px;
+      flex: 1;
+      margin: 0 0.3rem;
+      border-radius: 6px;
     }
-    .start-btn {
+    .button-group button:nth-child(1) {
       background-color: #007bff;
-      color: white;
     }
-    .save-btn {
+    .button-group button:nth-child(2) {
       background-color: #28a745;
-      color: white;
     }
-    .reset-btn {
+    .button-group button:nth-child(3) {
       background-color: #6c757d;
-      color: white;
     }
     footer {
-      margin-top: 40px;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #999;
       text-align: center;
-      font-size: 13px;
-      color: #aaa;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>랜덤 뽑기</h1><span class="version">v 1.9.4</span>
-  </header>  <div class="container">
-    <div class="form-group">
-      <label for="main-title">메인 타이틀</label>
-      <input type="text" id="main-title" placeholder="예: 우리 조 추첨기" />
-    </div><div class="section-title">뽑기 설정</div>
-
-<div class="form-group">
-  <label for="rows">가로 (최대 10)</label>
-  <input type="number" id="rows" min="1" max="10" />
-</div>
-
-<div class="form-group">
-  <label for="columns">세로 (최대 10)</label>
-  <input type="number" id="columns" min="1" max="10" />
-</div>
-
-<div class="form-group">
-  <label for="winners">당첨 개수</label>
-  <input type="number" id="winners" min="1" />
-</div>
-
-<div class="form-group">
-  <label for="win-type">당첨 방식</label>
-  <select id="win-type">
-    <option value="basic">꽝/당첨</option>
-    <option value="custom">텍스트 직접 입력</option>
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="cell-ui">셀 UI</label>
-  <select id="cell-ui">
-    <option value="default">기본</option>
-    <option value="text">텍스트 직접 입력</option>
-    <option value="image">이미지 업로드</option>
-  </select>
-</div>
-
-<div class="buttons">
-  <button class="start-btn">시작하기</button>
-  <button class="save-btn">저장하기</button>
-  <button class="reset-btn">초기화</button>
-</div>
-
-  </div>  <footer>
-    v 1.9.4
-  </footer></body>
+    <h1>랜덤 뽑기</h1>
+    <div class="version">v 1.9.5</div>
+  </header>
+  <main>
+    <section>
+      <h2>뽑기 설정</h2>
+      <div class="row">
+        <label for="main-title">메인 타이틀</label>
+        <input type="text" id="main-title" placeholder="예: 럭키드로우" />
+      </div>
+      <div class="row">
+        <label for="cols">가로(열)</label>
+        <input type="number" id="cols" min="1" max="10" />
+      </div>
+      <div class="row">
+        <label for="rows">세로(행)</label>
+        <input type="number" id="rows" min="1" max="10" />
+      </div>
+      <div class="row">
+        <label for="winners">당첨 개수</label>
+        <input type="number" id="winners" min="1" />
+      </div>
+    </section>
+    <div class="button-group">
+      <button>시작하기</button>
+      <button>저장하기</button>
+      <button>초기화</button>
+    </div>
+  </main>
+  <footer>
+    v 1.9.5
+  </footer>
+</body>
 </html>
-<!-- v 1.9.4 -->
+<!-- v.1.9.5 -->
