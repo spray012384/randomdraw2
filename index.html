@@ -1,8 +1,6 @@
-<!-- 버전: 1.7.4 --><!DOCTYPE html><html lang="ko">
-<head>
-  <meta charset="UTF-8">
+<!-- 버전: 1.7.5 --><!DOCTYPE html><html lang="ko"><head>  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>뽑기판 설정</title>
+  <title>랜덤 뽑기 - 버전 1.7.5</title>
   <style>
     body {
       font-family: sans-serif;
@@ -17,11 +15,6 @@
       font-weight: bold;
       margin-bottom: 30px;
       text-align: center;
-    }
-    .main-title span {
-      font-size: 14px;
-      color: #999;
-      margin-left: 10px;
     }
     .title {
       font-size: 24px;
@@ -48,22 +41,45 @@
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
     }
+    .option-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .option-buttons button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: white;
+      cursor: pointer;
+    }
+    .option-buttons button.active {
+      background-color: #e0e0e0;
+      font-weight: bold;
+    }
     .buttons {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 10px;
       margin-top: 30px;
     }
-    button {
+    .top-buttons,
+    .bottom-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    button.action {
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
       color: white;
       font-size: 16px;
       cursor: pointer;
-      width: 100px;
+      width: 120px;
     }
     .start-btn { background-color: #007bff; }
-    .save-btn { background-color: #28a745; }
+    .save-btn { background-color: #6c757d; }
     .reset-btn { background-color: #6c757d; }
     .version-text {
       margin-top: 40px;
@@ -79,7 +95,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="main-title">랜덤 뽑기 <span>(v1.7.4)</span></div>
+    <div class="main-title">랜덤 뽑기 - 버전 1.7.5</div>
     <div class="title">뽑기판 설정</div><div class="row">
   <label>메인 타이틀</label>
   <input type="text" placeholder="예: 행운의 룰렛!">
@@ -107,43 +123,38 @@
   <input type="number" min="1" value="2">
 </div>
 
-<div class="section-title">당첨 내용 설정</div>
-<div class="row">
-  <label>방식 선택</label>
-  <select>
-    <option value="basic">기본 (당첨/꽝)</option>
-    <option value="custom">직접 텍스트 입력</option>
-  </select>
+<div class="section-title">당첨방식 선택</div>
+<div class="option-buttons">
+  <button class="active">기본 (당첨/꽝)</button>
+  <button>직접 텍스트 입력</button>
 </div>
 
-<div class="section-title">당첨 위치 선택</div>
-<div class="row">
-  <label>위치 방식</label>
-  <select>
-    <option value="random">랜덤</option>
-    <option value="manual">직접 선택</option>
-  </select>
+<div class="section-title">당첨위치 선택</div>
+<div class="option-buttons">
+  <button class="active">랜덤 당첨</button>
+  <button>직접 위치 지정</button>
 </div>
 
-<div class="section-title">셀 UI 설정</div>
-<div class="row">
-  <label>UI 선택</label>
-  <select>
-    <option value="default">기본</option>
-    <option value="text">텍스트 입력</option>
-    <option value="image">이미지 업로드</option>
-  </select>
+<div class="section-title">카드디자인 선택</div>
+<div class="option-buttons">
+  <button class="active">기본</button>
+  <button>텍스트 입력</button>
+  <button>이미지 지정</button>
 </div>
 
 <div class="buttons">
-  <button class="start-btn">시작하기</button>
-  <button class="save-btn">저장하기</button>
-  <button class="reset-btn">초기화</button>
+  <div class="top-buttons">
+    <button class="action start-btn">시작하기</button>
+  </div>
+  <div class="bottom-buttons">
+    <button class="action save-btn">저장하기</button>
+    <button class="action reset-btn">초기화</button>
+  </div>
 </div>
 
-<div class="version-text">버전: 1.7.4</div>
+<div class="version-text">버전: 1.7.5</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.4 -->
+<!-- 버전: 1.7.5 -->
