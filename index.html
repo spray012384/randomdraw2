@@ -1,5 +1,4 @@
-<!-- 버전: 1.7.2 --><!DOCTYPE html><html lang="ko">
-<head>
+<!-- 버전: 1.7.1 --><!DOCTYPE html><html lang="ko"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>뽑기판 설정</title>
@@ -12,11 +11,11 @@
       max-width: 800px;
       margin: auto;
     }
-    .main-header {
-      font-size: 32px;
+    .main-title {
+      font-size: 28px;
       font-weight: bold;
-      text-align: center;
       margin-bottom: 30px;
+      text-align: center;
     }
     .title {
       font-size: 24px;
@@ -43,10 +42,6 @@
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
     }
-    .line {
-      border-bottom: 1px solid #ccc;
-      margin: 10px 0 20px 0;
-    }
     .buttons {
       display: flex;
       justify-content: space-between;
@@ -70,11 +65,15 @@
       font-size: 12px;
       color: #999;
     }
+    .divider {
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="main-header">랜덤 뽑기</div>
+    <div class="main-title">랜덤 뽑기</div>
     <div class="title">뽑기판 설정</div><div class="row">
   <label>메인 타이틀</label>
   <input type="text" placeholder="예: 행운의 룰렛!">
@@ -82,9 +81,10 @@
 
 <div class="row">
   <label>상품 안내</label>
-  <input type="text" placeholder="예: 치킨, 커피, 꽝 등">
+  <input type="text" value="세팅에 따라 자동으로 입력됩니다." disabled>
 </div>
-<div class="line"></div>
+
+<div class="divider"></div>
 
 <div class="row">
   <label>가로 칸 수</label>
@@ -102,7 +102,6 @@
 </div>
 
 <div class="section-title">당첨 방식</div>
-<div class="line"></div>
 <div class="row">
   <label>방식 선택</label>
   <select>
@@ -110,6 +109,8 @@
     <option value="custom">직접 텍스트 입력</option>
   </select>
 </div>
+
+<div class="divider"></div>
 
 <div class="section-title">셀 UI 설정</div>
 <div class="row">
@@ -127,9 +128,9 @@
   <button class="reset-btn">초기화</button>
 </div>
 
-<div class="version-text">버전: 1.7.2</div>
+<div class="version-text">버전: 1.7.1</div>
 
   </div>
 </body>
 </html>
-<!-- 버전: 1.7.2 -->
+<!-- 버전: 1.7.1 -->
