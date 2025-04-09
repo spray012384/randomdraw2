@@ -4,218 +4,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>랜덤 뽑기 설정 v.1.9.2</title>
+  <title>뽑기판 설정</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 40px 0;
-      background-color: #f4f4f4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      width: 420px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    h1 {
-      font-size: 28px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 5px;
-      text-align: center;
-      width: 100%;
-    }
-
-    .version-text-top {
-      font-size: 12px;
-      color: #aaa;
-      margin-bottom: 20px;
-      width: 100%;
-      text-align: center;
-    }
-
-    h2 {
-      margin-top: 20px;
-      margin-bottom: 5px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-      width: 100%;
-      text-align: left;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .input-group label {
-      font-weight: bold;
-      width: 40%;
-      color: #333;
-    }
-
-    .input-group input,
-    .input-group select {
-      width: 55%;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .separator {
-      border-top: 1px solid #ddd;
-      margin: 20px 0;
-      width: 100%;
-    }
-
-    .button-group {
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+    }
+    .container {
       width: 100%;
-      gap: 10px;
-      flex-wrap: wrap;
+      max-width: 500px;
+      background-color: white;
+      padding: 20px;
+      box-sizing: border-box;
     }
-
-    .button-group button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
+    h1 {
       text-align: center;
-      width: 45%;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      font-size: 24px;
     }
-
-    .button-group button[type="submit"] {
+    .section {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 20px;
+    }
+    .section:last-of-type {
+      border-bottom: none;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .button-group button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .blue-button {
+      background-color: #007bff;
+    }
+    .green-button {
       background-color: #28a745;
-      color: white;
     }
-
-    .button-group button[type="reset"] {
+    .gray-button {
       background-color: #6c757d;
-      color: white;
     }
-
-    .button-group button[type="button"] {
-      background-color: #007BFF;
-      color: white;
-    }
-
-    .card-design-buttons {
+    .bottom-buttons {
       display: flex;
       justify-content: space-between;
-      width: 100%;
-      gap: 10px;
-      margin-bottom: 20px;
+      margin-top: 30px;
     }
-
-    .card-design-buttons button {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      background-color: #007BFF;
-      color: white;
-    }
-
     .start-button {
+      margin-top: 10px;
       width: 100%;
-      padding: 12px;
-      background-color: #007BFF;
+      background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 4px;
-      margin-top: 20px;
+      padding: 14px;
       font-size: 16px;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
     }
-
-    .version-text-bottom {
+    .version {
+      text-align: center;
       margin-top: 10px;
       font-size: 12px;
-      color: #aaa;
-      text-align: center;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>랜덤 뽑기</h1>
-  <div class="version-text-top">v.1.9.2</div>
-
   <div class="container">
-    <h2>뽑기 설정</h2>
-    <div class="input-group">
-      <label for="main-title">메인 타이틀</label>
-      <input type="text" id="main-title" placeholder="메인 타이틀 입력" />
-    </div>
-    <div class="input-group">
-      <label for="product-info">상품 안내</label>
-      <input type="text" id="product-info" placeholder="상품 안내 입력" />
-    </div>
+    <h1>뽑기판 설정 <span style="font-size: 12px; color: #aaa;">v.1.9.2</span></h1>
 
-    <div class="separator"></div>
+    <div class="section">
+      <label for="guide">상품 안내</label>
+      <input type="text" id="guide" placeholder="상품 안내 입력" />
+      
+      <label for="cols">가로</label>
+      <input type="number" id="cols" placeholder="가로 입력" min="1" max="10" />
 
-    <div class="input-group">
-      <label for="width">가로</label>
-      <input type="number" id="width" placeholder="가로 입력" />
-    </div>
-    <div class="input-group">
-      <label for="height">세로</label>
-      <input type="number" id="height" placeholder="세로 입력" />
-    </div>
-    <div class="input-group">
-      <label for="winning-count">당첨 개수</label>
-      <input type="number" id="winning-count" placeholder="당첨 개수 입력" />
+      <label for="rows">세로</label>
+      <input type="number" id="rows" placeholder="세로 입력" min="1" max="10" />
+
+      <label for="winners">당첨 개수</label>
+      <input type="number" id="winners" placeholder="당첨 개수 입력" min="1" />
     </div>
 
-    <div class="separator"></div>
-
-    <h2>당첨 방식 설정</h2>
-    <div class="button-group">
-      <button type="button" id="winning-method-random">꽝/당첨</button>
-      <button type="button" id="winning-method-manual">직접 입력</button>
+    <div class="section">
+      <label>당첨 방식 설정</label>
+      <div class="button-group">
+        <button class="blue-button">꽝/당첨</button>
+        <button class="blue-button">직접 입력</button>
+      </div>
     </div>
 
-    <h2>당첨 위치 설정</h2>
-    <div class="button-group">
-      <button type="button" id="location-method-random">랜덤 설정</button>
-      <button type="button" id="location-method-manual">직접 위치 설정</button>
+    <div class="section">
+      <label>당첨 위치 설정</label>
+      <div class="button-group">
+        <button class="blue-button">랜덤 설정</button>
+        <button class="blue-button">직접 위치 설정</button>
+      </div>
     </div>
 
-    <h2>카드 디자인 설정</h2>
-    <div class="card-design-buttons">
-      <button type="button" id="card-design-default">기본</button>
-      <button type="button" id="card-design-text">직접 입력</button>
-      <button type="button" id="card-design-image">이미지 설정</button>
+    <div class="section">
+      <label>셀 디자인 설정</label>
+      <div class="button-group">
+        <button class="blue-button">기본</button>
+        <button class="blue-button">직접 입력</button>
+        <button class="blue-button">이미지 설정</button>
+      </div>
     </div>
 
-    <div class="separator"></div>
-
-    <div class="button-group">
-      <button type="submit">저장하기</button>
-      <button type="reset">초기화</button>
+    <div class="bottom-buttons">
+      <button class="green-button">저장하기</button>
+      <button class="gray-button">초기화</button>
     </div>
 
-    <button type="button" class="start-button">시작하기</button>
-    <div class="version-text-bottom">v.1.9.2</div>
+    <button class="start-button">시작하기</button>
+
+    <div class="version">v.1.9.2</div>
   </div>
 </body>
 </html>
