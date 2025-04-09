@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>랜덤 뽑기 설정 v.1.9.1</title>
   <style>
     body {
@@ -14,30 +14,32 @@
       height: 100vh;
       margin: 0;
       background-color: #f4f4f4;
+      position: relative;
     }
     .container {
       background-color: white;
       padding: 20px;
       border-radius: 8px;
-      width: 400px;
+      width: 420px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
     }
     h1 {
       margin-bottom: 5px;
       font-size: 28px;
       font-weight: bold;
       color: #333;
+      width: 100%;
       text-align: center;
     }
-    .version-text {
+    .version-text-top {
       font-size: 12px;
       color: #aaa;
       margin-bottom: 20px;
-      text-align: center;
       width: 100%;
+      text-align: center;
     }
     h2 {
       margin-top: 20px;
@@ -76,7 +78,6 @@
     .button-group {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       width: 100%;
       gap: 10px;
     }
@@ -98,53 +99,57 @@
       color: white;
     }
     .button-group button[type="button"] {
-      background-color: #007bff;
+      background-color: #007BFF;
       color: white;
     }
     .card-design-buttons {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       width: 100%;
       gap: 10px;
-      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
     .card-design-buttons button {
-      width: 30%;
-      padding: 10px 20px;
+      flex: 1;
+      padding: 10px 0;
       border: none;
       border-radius: 4px;
       font-size: 14px;
       cursor: pointer;
-      text-align: center;
-      background-color: #007bff;
+      background-color: #007BFF;
       color: white;
     }
     .start-button {
       width: 100%;
       padding: 12px;
-      background-color: #007bff;
+      background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 4px;
       margin-top: 20px;
-      font-size: 15px;
+      font-size: 16px;
       cursor: pointer;
+    }
+    .version-text-bottom {
+      position: absolute;
+      bottom: 10px;
+      font-size: 12px;
+      color: #aaa;
+      text-align: center;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>랜덤 뽑기</h1>
-    <div class="version-text">
-      <p>v.1.9.1</p>
-    </div>
+    <div class="version-text-top">v.1.9.1</div>
 
     <h2>뽑기 설정</h2>
     <div class="input-group">
       <label for="main-title">메인 타이틀</label>
       <input type="text" id="main-title" placeholder="메인 타이틀 입력" />
     </div>
-
     <div class="input-group">
       <label for="product-info">상품 안내</label>
       <input type="text" id="product-info" placeholder="상품 안내 입력" />
@@ -156,12 +161,10 @@
       <label for="width">가로</label>
       <input type="number" id="width" placeholder="가로 입력" />
     </div>
-
     <div class="input-group">
       <label for="height">세로</label>
       <input type="number" id="height" placeholder="세로 입력" />
     </div>
-
     <div class="input-group">
       <label for="winning-count">당첨 개수</label>
       <input type="number" id="winning-count" placeholder="당첨 개수 입력" />
@@ -197,6 +200,8 @@
 
     <button type="button" class="start-button">시작하기</button>
   </div>
+
+  <div class="version-text-bottom">v.1.9.1</div>
 </body>
 </html>
 <!-- v.1.9.1 -->
