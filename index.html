@@ -1,218 +1,153 @@
-<!-- v 1.9.3 --><!DOCTYPE html><html lang="ko">
+<!-- v 1.9.4 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>랜덤 뽑기 설정 v 1.9.3</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>랜덤 뽑기</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #f2f2f2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-    }header {
-  background-color: white;
-  width: 100%;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-}
-
-.container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-h2 {
-  margin-top: 20px;
-  margin-bottom: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  width: 100%;
-  text-align: left;
-}
-
-.input-group {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.input-group label {
-  font-weight: bold;
-  width: 40%;
-  color: #333;
-}
-
-.input-group input,
-.input-group select {
-  width: 55%;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.separator {
-  border-top: 1px solid #ddd;
-  margin: 20px 0;
-  width: 100%;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 10px;
-}
-
-.button-group button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  text-align: center;
-  width: 45%;
-}
-
-.button-group button[type="submit"] {
-  background-color: #28a745;
-  color: white;
-}
-
-.button-group button[type="reset"] {
-  background-color: #6c757d;
-  color: white;
-}
-
-.button-group button[type="button"] {
-  background-color: #007BFF;
-  color: white;
-}
-
-.card-design-buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.card-design-buttons button {
-  flex: 1;
-  padding: 10px 0;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: #007BFF;
-  color: white;
-  cursor: pointer;
-}
-
-.start-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  margin-top: 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.version-bottom {
-  text-align: center;
-  font-size: 12px;
-  color: #999;
-  margin: 20px 0 10px 0;
-}
-
+    }
+    header {
+      width: 100%;
+      background-color: white;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      display: inline-block;
+    }
+    header span.version {
+      margin-left: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #fff;
+      margin-top: 24px;
+      padding: 24px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      width: 120px;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-group select {
+      flex: 1;
+      padding: 8px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      min-width: 120px;
+    }
+    .start-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    .save-btn {
+      background-color: #28a745;
+      color: white;
+    }
+    .reset-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>랜덤 뽑기</h1>
+    <h1>랜덤 뽑기</h1><span class="version">v 1.9.4</span>
   </header>  <div class="container">
-    <div class="input-group">
+    <div class="form-group">
       <label for="main-title">메인 타이틀</label>
-      <input type="text" id="main-title" placeholder="메인 타이틀 입력">
-    </div><div class="input-group">
-  <label for="product-info">상품 안내</label>
-  <input type="text" id="product-info" placeholder="상품 안내 입력">
+      <input type="text" id="main-title" placeholder="예: 우리 조 추첨기" />
+    </div><div class="section-title">뽑기 설정</div>
+
+<div class="form-group">
+  <label for="rows">가로 (최대 10)</label>
+  <input type="number" id="rows" min="1" max="10" />
 </div>
 
-<div class="separator"></div>
-
-<div class="input-group">
-  <label for="width">가로</label>
-  <input type="number" id="width" placeholder="가로 입력">
+<div class="form-group">
+  <label for="columns">세로 (최대 10)</label>
+  <input type="number" id="columns" min="1" max="10" />
 </div>
 
-<div class="input-group">
-  <label for="height">세로</label>
-  <input type="number" id="height" placeholder="세로 입력">
+<div class="form-group">
+  <label for="winners">당첨 개수</label>
+  <input type="number" id="winners" min="1" />
 </div>
 
-<div class="input-group">
-  <label for="winning-count">당첨 개수</label>
-  <input type="number" id="winning-count" placeholder="당첨 개수 입력">
+<div class="form-group">
+  <label for="win-type">당첨 방식</label>
+  <select id="win-type">
+    <option value="basic">꽝/당첨</option>
+    <option value="custom">텍스트 직접 입력</option>
+  </select>
 </div>
 
-<div class="separator"></div>
-
-<h2>당첨 방식 설정</h2>
-<div class="button-group">
-  <button type="button" id="winning-method-random">꽝/당첨</button>
-  <button type="button" id="winning-method-manual">직접 입력</button>
+<div class="form-group">
+  <label for="cell-ui">셀 UI</label>
+  <select id="cell-ui">
+    <option value="default">기본</option>
+    <option value="text">텍스트 직접 입력</option>
+    <option value="image">이미지 업로드</option>
+  </select>
 </div>
 
-<h2>당첨 위치 설정</h2>
-<div class="button-group">
-  <button type="button" id="location-method-random">랜덤 설정</button>
-  <button type="button" id="location-method-manual">직접 위치 설정</button>
+<div class="buttons">
+  <button class="start-btn">시작하기</button>
+  <button class="save-btn">저장하기</button>
+  <button class="reset-btn">초기화</button>
 </div>
 
-<h2>카드 디자인 설정</h2>
-<div class="card-design-buttons">
-  <button type="button" id="card-design-default">기본</button>
-  <button type="button" id="card-design-text">직접 입력</button>
-  <button type="button" id="card-design-image">이미지 설정</button>
-</div>
-
-<div class="separator"></div>
-
-<div class="button-group">
-  <button type="submit">저장하기</button>
-  <button type="reset">초기화</button>
-</div>
-
-<button class="start-button" type="button">시작하기</button>
-
-  </div>  <div class="version-bottom">v 1.9.3</div>
-</body>
+  </div>  <footer>
+    v 1.9.4
+  </footer></body>
 </html>
-<!-- v 1.9.3 -->
+<!-- v 1.9.4 -->
