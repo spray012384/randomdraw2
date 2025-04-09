@@ -1,10 +1,10 @@
-<!-- v.1.8.7 -->
+<!-- v.1.8.8 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.8.7</title>
+    <title>랜덤 뽑기 설정 v.1.8.8</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,13 +22,19 @@
             width: 400px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
-            flex-direction: column; /* 내용이 세로로 쌓이게 */
+            flex-direction: column;
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 24px;
-            color: #333; /* 제목 색상 설정 */
+            font-size: 28px;
+            color: #333;
+        }
+        .version-text {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #888;
         }
         .input-group {
             margin-bottom: 20px;
@@ -39,7 +45,7 @@
         .input-group label {
             font-weight: bold;
             width: 40%;
-            color: #333; /* 라벨 색상 설정 */
+            color: #333;
         }
         .input-group input, .input-group select {
             width: 55%;
@@ -54,10 +60,10 @@
         }
         .button-group {
             display: flex;
-            justify-content: center; /* 버튼들을 가운데 정렬 */
+            justify-content: center;
             flex-wrap: wrap;
             width: 100%;
-            gap: 10px; /* 버튼들 간의 간격 */
+            gap: 10px;
         }
         .button-group button {
             padding: 10px 20px;
@@ -65,38 +71,37 @@
             border-radius: 4px;
             font-size: 14px;
             cursor: pointer;
-            text-align: center; /* 텍스트 가운데 정렬 */
-            width: 45%; /* 버튼 너비 */
+            text-align: center;
+            width: 45%;
         }
         .button-group button[type="submit"] {
-            background-color: #28a745; /* 녹색 */
+            background-color: #28a745;
             color: white;
         }
         .button-group button[type="reset"] {
-            background-color: #6c757d; /* 회색 */
+            background-color: #6c757d;
             color: white;
         }
         .button-group button[type="button"] {
-            background-color: #007BFF; /* 파란색 */
+            background-color: #007BFF;
             color: white;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888;
-        }
-
-        /* 카드 디자인 버튼을 한 줄에 배치 */
         .card-design-buttons {
             display: flex;
-            justify-content: center; /* 버튼들을 가운데 정렬 */
+            justify-content: center;
             width: 100%;
-            gap: 10px; /* 버튼들 간의 간격 */
+            gap: 10px;
         }
         .card-design-buttons button {
-            width: 30%; /* 버튼 너비 조정 */
-            margin: 5px; /* 버튼 간격 */
+            width: 45%; /* 버튼 너비 조정 */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            background-color: #007BFF; /* 버튼 색상 통일 */
+            color: white;
         }
     </style>
 </head>
@@ -104,6 +109,11 @@
     <div class="container">
         <h1>랜덤 뽑기</h1>
         
+        <!-- 버전 텍스트 -->
+        <div class="version-text">
+            <p>v.1.8.8</p>
+        </div>
+
         <!-- 뽑기 설정 -->
         <h2>뽑기 설정</h2>
         
@@ -168,10 +178,6 @@
         
         <button type="button" style="width: 100%; padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 4px; margin-top: 20px;">시작하기</button>
     </div>
-
-    <div class="footer">
-        <p>v.1.8.7</p>
-    </div>
 </body>
 </html>
-<!-- v.1.8.7 -->
+<!-- v.1.8.8 -->
