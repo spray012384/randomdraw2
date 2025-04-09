@@ -1,10 +1,10 @@
-<!-- 버전: v.1.8.6 -->
+<!-- 버전: v.1.8.7 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 뽑기 설정 v.1.8.6</title>
+    <title>랜덤 뽑기 설정 v.1.8.7</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,18 +77,24 @@
             font-size: 12px;
             color: #888;
         }
-        .guide-text {
-            font-size: 12px;
-            color: #555;
+        .settings-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>랜덤 뽑기</h1>
+        <h1>랜덤 뽑기</h1> <!-- 메인 제목 다시 추가 -->
         
         <div class="footer">
-            <p>버전: v.1.8.6</p>
+            <p>버전: v.1.8.7</p>
         </div>
         
         <!-- 뽑기 설정 -->
@@ -97,13 +103,11 @@
         <div class="input-group">
             <label for="main-title">메인 타이틀</label>
             <input type="text" id="main-title" placeholder="메인 타이틀 입력">
-            <div class="guide-text">사용할 뽑기판의 메인 제목을 입력해주세요.</div>
         </div>
         
         <div class="input-group">
             <label for="product-info">상품 안내</label>
             <input type="text" id="product-info" placeholder="상품 안내 입력">
-            <div class="guide-text">당첨 상품에 대한 안내를 입력하세요.</div>
         </div>
         
         <div class="separator"></div>
@@ -111,56 +115,31 @@
         <div class="input-group">
             <label for="width">가로</label>
             <input type="number" id="width" placeholder="가로 입력">
-            <div class="guide-text">뽑기판의 가로 칸 수를 입력하세요.</div>
         </div>
         
         <div class="input-group">
             <label for="height">세로</label>
             <input type="number" id="height" placeholder="세로 입력">
-            <div class="guide-text">뽑기판의 세로 칸 수를 입력하세요.</div>
         </div>
         
         <div class="input-group">
             <label for="winning-count">당첨 개수</label>
             <input type="number" id="winning-count" placeholder="당첨 개수 입력">
-            <div class="guide-text">당첨될 항목의 개수를 입력하세요.</div>
         </div>
         
         <div class="separator"></div>
         
         <!-- 당첨 방식 설정 -->
         <h2>당첨 방식 설정</h2>
-        <div class="input-group">
-            <label for="winning-method">당첨 방식</label>
-            <select id="winning-method">
-                <option value="random">꽝/당첨</option>
-                <option value="manual">직접 입력</option>
-            </select>
-            <div class="guide-text">당첨 방식 선택 (기본 또는 수동 입력)</div>
-        </div>
+        <button class="settings-button" onclick="toggleSetting('winning-method')">당첨 방식 설정</button>
 
         <!-- 당첨 위치 설정 -->
         <h2>당첨 위치 설정</h2>
-        <div class="input-group">
-            <label for="location-method">위치 설정</label>
-            <select id="location-method">
-                <option value="random">랜덤 설정</option>
-                <option value="manual">직접 위치 설정</option>
-            </select>
-            <div class="guide-text">당첨 항목의 위치 설정 방식을 선택하세요.</div>
-        </div>
+        <button class="settings-button" onclick="toggleSetting('location-method')">위치 설정</button>
 
         <!-- 카드 디자인 설정 -->
         <h2>카드 디자인 설정</h2>
-        <div class="input-group">
-            <label for="card-design">디자인 설정</label>
-            <select id="card-design">
-                <option value="default">기본</option>
-                <option value="text">직접 입력</option>
-                <option value="image">이미지 설정</option>
-            </select>
-            <div class="guide-text">카드의 디자인을 선택하세요.</div>
-        </div>
+        <button class="settings-button" onclick="toggleSetting('card-design')">디자인 설정</button>
 
         <div class="separator"></div>
 
@@ -174,6 +153,11 @@
     </div>
 
     <script>
+        function toggleSetting(setting) {
+            alert(setting + " 설정 버튼 클릭됨!");
+            // 추가적인 설정을 처리하는 로직을 여기에 구현
+        }
+
         function validateForm() {
             const title = document.getElementById("main-title").value;
             const width = document.getElementById("width").value;
@@ -203,4 +187,4 @@
 
 </body>
 </html>
-<!-- 버전: v.1.8.6 -->
+<!-- 버전: v.1.8.7 -->
