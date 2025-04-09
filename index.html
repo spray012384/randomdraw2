@@ -1,7 +1,7 @@
-<!-- v 1.9.9. --><!DOCTYPE html><html lang="ko">
+<!-- v.2.0.0 --><!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>랜덤 뽑기</title>
   <style>
     body {
@@ -9,122 +9,115 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
-    .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
+    h1 {
+      text-align: center;
+      margin-bottom: 5px;
     }
     .version {
-      font-size: 1rem;
-      font-weight: normal;
+      font-size: 0.8rem;
+      color: gray;
+      margin-bottom: 20px;
     }
-    .notice {
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-      text-align: center;
-    }
-    .line {
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #ccc;
       width: 100%;
       max-width: 400px;
-      border-bottom: 1px solid #ccc;
-      margin: 1rem 0;
     }
     .form-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
       width: 100%;
       max-width: 400px;
-      margin-bottom: 0.5rem;
     }
     .form-row label {
       flex: 1;
     }
-    .form-row input,
-    .form-row select,
-    .form-row button {
-      flex: 1;
-      padding: 0.3rem;
+    .form-row input[type="text"],
+    .form-row input[type="number"] {
+      flex: 2;
+      padding: 4px;
     }
-    .buttons {
+    .button-group {
       display: flex;
-      gap: 10px;
-      margin-top: 1.5rem;
+      justify-content: space-between;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 400px;
     }
-    .buttons button {
-      padding: 0.5rem 1rem;
-      width: 100px;
+    .button-group button {
+      flex: 1;
+      padding: 10px;
+      margin: 0 5px;
       font-weight: bold;
+      color: white;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 4px;
     }
-    .start-btn { background-color: #007bff; color: white; }
-    .save-btn { background-color: #28a745; color: white; }
-    .reset-btn { background-color: #6c757d; color: white; }
-    .bottom-version {
-      position: fixed;
-      bottom: 8px;
-      right: 12px;
-      font-size: 0.8rem;
-      color: #888;
+    .start-btn { background-color: #007bff; }
+    .save-btn { background-color: #28a745; }
+    .reset-btn { background-color: #6c757d; }
+    .btn-option {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    .btn-option button {
+      padding: 6px 10px;
+      border: 1px solid #aaa;
+      background: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="title">
-    <div>랜덤 뽑기</div>
-    <div class="version">v 1.9.9.</div>
+  <h1>랜덤 뽑기</h1>
+  <div class="version">v.2.0.0</div>  <div class="section-title">뽑기 설정</div>  <div class="form-row">
+    <label for="mainTitle">메인 타이틀</label>
+    <input type="text" id="mainTitle" placeholder="예: 나만의 뽑기판">
+  </div>  <div class="form-row">
+    <label for="itemInfo">상품 안내</label>
+    <input type="text" id="itemInfo" placeholder="예: 당첨 상품 입력">
+  </div>  <div class="form-row">
+    <label for="cols">가로</label>
+    <input type="number" id="cols" min="1" max="10">
+  </div>  <div class="form-row">
+    <label for="rows">세로</label>
+    <input type="number" id="rows" min="1" max="10">
+  </div>  <div class="form-row">
+    <label for="winCount">당첨 개수</label>
+    <input type="number" id="winCount" min="1">
+  </div>  <div class="form-row">
+    <label>당첨 방식</label>
   </div>
-  <div class="notice">상품 안내가 여기에 표시됩니다.</div>  <div class="line"></div>
-  <div class="form-row">
-    <label for="cols">가로 개수</label>
-    <input type="number" id="cols" min="1" max="10" />
-  </div>
-  <div class="form-row">
-    <label for="rows">세로 개수</label>
-    <input type="number" id="rows" min="1" max="10" />
-  </div>  <div class="line"></div>
-  <div class="form-row">
-    <label for="winners">당첨 개수</label>
-    <input type="number" id="winners" min="1" />
-  </div>  <div class="line"></div>
-  <div class="form-row">
-    <label for="prize-mode">당첨 방식</label>
-    <select id="prize-mode">
-      <option value="default">기본 (꽝/당첨)</option>
-      <option value="custom">직접 입력</option>
-    </select>
-  </div>  <div class="line"></div>
-  <div class="form-row">
-    <label for="cell-mode">셀 UI</label>
-    <select id="cell-mode">
-      <option value="default">기본</option>
-      <option value="text">텍스트 입력</option>
-      <option value="image">이미지 업로드</option>
-    </select>
-  </div>  <div class="line"></div>
-  <div class="form-row">
+  <div class="btn-option">
+    <button>꽝/당첨</button>
+    <button>직접 텍스트 입력</button>
+  </div>  <div class="form-row">
     <label>당첨 위치 설정</label>
-    <button>선택 시작</button>
   </div>
-  <div class="form-row">
-    <label>당첨 위치 초기화</label>
-    <button>초기화</button>
-  </div>  <div class="line"></div>
-  <div class="buttons">
+  <div class="btn-option">
+    <button>랜덤 위치</button>
+    <button>직접 지정</button>
+  </div>  <div class="form-row">
+    <label>셀 UI 설정</label>
+  </div>
+  <div class="btn-option">
+    <button>기본</button>
+    <button>텍스트 입력</button>
+    <button>이미지 업로드</button>
+  </div>  <div class="button-group">
     <button class="start-btn">시작하기</button>
     <button class="save-btn">저장하기</button>
-    <button class="reset-btn">초기화하기</button>
-  </div>  <div class="bottom-version">v 1.9.9.</div>
+    <button class="reset-btn">초기화</button>
+  </div>  <div class="version" style="margin-top: 40px;">v.2.0.0</div>
 </body>
 </html>
-<!-- v 1.9.9. -->
+<!-- v.2.0.0 -->
