@@ -1,50 +1,41 @@
-<!-- v.1.7.4 --><div class="p-4 space-y-6 max-w-4xl mx-auto">
-  <div class="flex items-baseline justify-between">
-    <h1 class="text-3xl font-bold">뽑기판 설정</h1>
-    <span class="text-sm text-gray-400">v.1.7.4</span>
-  </div>  <!-- 메인 타이틀 -->  <div>
-    <label class="font-semibold">메인 타이틀</label>
-    <input type="text" class="w-full p-2 border rounded" placeholder="타이틀을 입력하세요" />
-  </div>  <!-- 상품 안내 -->  <div>
-    <label class="font-semibold">상품 안내</label>
-    <input type="text" class="w-full p-2 border rounded" placeholder="상품 정보를 입력하세요" />
-  </div>  <!-- 가로 세로 당첨 개수 입력 -->  <div class="grid grid-cols-3 gap-4">
+<!-- v.1.7.0 --><div class="max-w-3xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-4 flex items-center justify-between">
+    뽑기판 설정 <span class="text-gray-400 text-sm">v.1.7.0</span>
+  </h1>  <!-- 메인 타이틀 입력 -->  <div class="mb-4">
+    <label class="block font-semibold mb-1">메인 타이틀</label>
+    <input type="text" class="border rounded w-full py-2 px-3" placeholder="예: 행운의 뽑기판" />
+  </div>  <!-- 상품 안내 입력 -->  <div class="mb-6">
+    <label class="block font-semibold mb-1">상품 안내</label>
+    <input type="text" class="border rounded w-full py-2 px-3" placeholder="예: 스타벅스 기프티콘, 문화상품권 등" />
+  </div>  <!-- 가로, 세로, 당첨 개수 설정 -->  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
     <div>
-      <label class="font-semibold">가로</label>
-      <input type="number" class="w-full p-2 border rounded" min="1" max="10" />
-    </div>
-    <div>
-      <label class="font-semibold">세로</label>
-      <input type="number" class="w-full p-2 border rounded" min="1" max="10" />
+      <label class="block font-semibold mb-1">가로 칸 수</label>
+      <input type="number" class="border rounded w-full py-2 px-3" min="1" max="10" />
     </div>
     <div>
-      <label class="font-semibold">당첨 개수</label>
-      <input type="number" class="w-full p-2 border rounded" min="1" />
+      <label class="block font-semibold mb-1">세로 칸 수</label>
+      <input type="number" class="border rounded w-full py-2 px-3" min="1" max="10" />
     </div>
-  </div>  <!-- 당첨 방식 선택 -->  <div>
-    <label class="font-semibold">당첨 방식 선택</label>
-    <div class="flex space-x-2 mt-2">
-      <button class="border rounded px-4 py-2 bg-gray-200 text-white">꽝/당첨</button>
-      <button class="border rounded px-4 py-2">직접 입력</button>
+    <div>
+      <label class="block font-semibold mb-1">당첨 개수</label>
+      <input type="number" class="border rounded w-full py-2 px-3" min="1" />
     </div>
-  </div>  <!-- 당첨 위치 선택 -->  <div>
-    <label class="font-semibold">당첨 위치 선택</label>
-    <div class="flex space-x-2 mt-2">
-      <button class="border rounded px-4 py-2 bg-gray-200 text-white">랜덤</button>
-      <button class="border rounded px-4 py-2">직접 설정</button>
-    </div>
-  </div>  <!-- 카드 디자인 선택 -->  <div>
-    <label class="font-semibold">카드 디자인 선택</label>
-    <div class="flex space-x-2 mt-2">
-      <button class="border rounded px-4 py-2 bg-gray-200 text-white">기본</button>
-      <button class="border rounded px-4 py-2">텍스트 입력</button>
-      <button class="border rounded px-4 py-2">이미지 지정</button>
-    </div>
-  </div>  <!-- 버튼 섹션 -->  <div class="flex space-x-2">
-    <button class="bg-blue-500 text-white px-6 py-2 rounded">시작하기</button>
-  </div>
-  <div class="flex space-x-2 mt-2">
-    <button class="bg-green-500 text-white px-6 py-2 rounded">저장하기</button>
-    <button class="bg-gray-500 text-white px-6 py-2 rounded">초기화</button>
-  </div>  <!-- 하단 버전 정보 -->  <p class="text-center text-xs text-gray-400 mt-4">v.1.7.4</p>
-</div><!-- v.1.7.4 -->
+  </div>  <!-- 당첨 방식 선택 -->  <div class="mb-6">
+    <label class="block font-semibold mb-1">당첨 방식</label>
+    <select class="border rounded w-full py-2 px-3">
+      <option>꽝/당첨 방식</option>
+      <option>직접 텍스트 입력</option>
+    </select>
+  </div>  <!-- 셀 UI 설정 -->  <div class="mb-6">
+    <label class="block font-semibold mb-1">셀 UI 설정</label>
+    <select class="border rounded w-full py-2 px-3">
+      <option>기본</option>
+      <option>셀에 직접 텍스트 입력</option>
+      <option>셀에 직접 이미지 업로드</option>
+    </select>
+  </div>  <!-- 버튼들 -->  <div class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full">시작하기</button>
+    <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded w-full">저장하기</button>
+    <button class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded w-full">초기화</button>
+  </div>  <p class="text-xs text-right text-gray-400 mt-4">v.1.7.0</p>
+</div><!-- v.1.7.0 -->
