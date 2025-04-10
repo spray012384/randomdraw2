@@ -32,16 +32,17 @@
         .input-group {
             display: flex;
             justify-content: center;
-            margin-bottom: 15px;
-            align-items: flex-start; /* 전체 input-group 기준 왼쪽 정렬 */
-            flex-direction: column; /* 내부 요소 세로 배치 */
+            margin-bottom: 20px; /* 입력창 그룹 하단 간격 증가 */
+            align-items: flex-start;
+            flex-direction: column;
         }
 
         .input-row {
             display: flex;
-            align-items: center; /* 텍스트와 입력창 세로 중앙 정렬 */
-            width: 100%; /* 부모 너비에 맞춤 */
-            justify-content: center; /* 가운데 정렬 */
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 10px; /* 입력창 하단 간격 증가 */
         }
 
         .input-row label {
@@ -57,10 +58,10 @@
 
         .checkbox-row {
             display: flex;
-            align-items: center; /* 체크박스와 텍스트 세로 중앙 정렬 */
-            justify-content: center; /* 가운데 정렬 */
-            width: 100%; /* 부모 너비에 맞춤 */
-            margin-top: 5px; /* 이전 input-row 와의 간격 */
+            align-items: center;
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            width: 100%;
+            margin-top: 10px; /* 체크박스 상단 간격 증가 */
         }
 
         .checkbox-row .checkbox-wrapper {
@@ -183,11 +184,15 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.4.3.</div>
+        <div id="version-text">v 0.4.4.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
         <div class="input-group">
+            <div class="input-row">
+                <label for="main-title">메인 타이틀</label>
+                <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
+            </div>
             <div class="input-row">
                 <label for="item-description">상품안내</label>
                 <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
@@ -201,10 +206,6 @@
         </div>
 
         <div class="input-group">
-            <div class="input-row">
-                <label for="main-title">메인 타이틀</label>
-                <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
-            </div>
             <div class="input-row">
                 <label for="horizontal">가로</label>
                 <input type="number" id="horizontal" placeholder="가로 개수">
@@ -251,7 +252,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.4.3.</div>
+        <div class="footer" id="version-text-bottom">v 0.4.4.</div>
     </div>
 </body>
 </html>
