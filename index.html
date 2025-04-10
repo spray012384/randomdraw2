@@ -156,12 +156,12 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            background-color: #a9a9a9;
+            /* 공통 스타일에서 배경색 제거 */
             color: white;
         }
 
         #save-button {
-            background-color: #4CAF50; /* 저장하기 버튼 색상 복원 */
+            background-color: #4CAF50; /* 저장하기 버튼 색상 명시적으로 초록색 지정 */
             color: white;
         }
 
@@ -202,7 +202,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.5.6.</div>
+        <div id="version-text">v 0.5.8.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -270,7 +270,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.5.6.</div>
+        <div class="footer" id="version-text-bottom">v 0.5.8.</div>
     </div>
 </body>
 </html>
