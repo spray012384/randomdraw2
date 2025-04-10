@@ -31,40 +31,32 @@
 
         .input-group {
             display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-            align-items: flex-start;
             flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
 
         .input-row {
             display: flex;
             align-items: center;
-            width: 100%;
-            justify-content: center;
             margin-bottom: 8px;
-        }
-
-        .input-row.left-align {
-            justify-content: flex-start;
+            width: 100%;
         }
 
         .input-row label {
+            width: 120px;
             margin-right: 10px;
             text-align: left;
-            width: 120px;
         }
 
         .input-row input {
+            flex-grow: 1;
             padding: 8px;
-            width: 200px;
         }
 
         .checkbox-row {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
             margin-top: 8px;
         }
 
@@ -156,12 +148,11 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            /* 공통 스타일에서 배경색 제거 */
             color: white;
         }
 
         #save-button {
-            background-color: #4CAF50; /* 저장하기 버튼 색상 명시적으로 초록색 지정 */
+            background-color: #4CAF50;
             color: white;
         }
 
@@ -197,12 +188,40 @@
             font-size: 0.8rem;
             text-align: center;
         }
+
+        /* 가로 화면에 대한 스타일 */
+        @media (min-width: 600px) {
+            .input-group {
+                flex-direction: row;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .input-row {
+                width: auto;
+                margin-right: 20px;
+                margin-bottom: 0;
+            }
+
+            .input-row label {
+                width: auto;
+            }
+
+            .checkbox-row {
+                margin-top: 0;
+                margin-left: 0;
+            }
+
+            .checkbox-row .checkbox-wrapper {
+                margin-left: 130px; /* '상품안내' 레이블과 간격 맞춤 (추가 조정 필요할 수 있음) */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.5.8.</div>
+        <div id="version-text">v 0.5.9.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -270,7 +289,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.5.8.</div>
+        <div class="footer" id="version-text-bottom">v 0.5.9.</div>
     </div>
 </body>
 </html>
