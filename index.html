@@ -228,7 +228,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.7.2.</div>
+        <div id="version-text">v 0.7.3.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -296,29 +296,27 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.7.2.</div>
+        <div class="footer" id="version-text-bottom">v 0.7.3.</div>
     </div>
 
     <script>
         const itemUseCheckbox = document.getElementById('item-use');
         const itemDescriptionInput = document.getElementById('item-description');
-        const default 안내없음Text = "[상품 안내를 하지 않습니다.]";
+        const default안내없음Text = "[상품 안내를 하지 않습니다.]";
         const auto입력Text = "[자동으로 입력됩니다.]";
 
-        itemUseCheckbox.addEventListener('change', function() {
-            if (this.checked) {
+        function updateItemDescription() {
+            if (itemUseCheckbox.checked) {
                 itemDescriptionInput.value = auto입력Text;
             } else {
-                itemDescriptionInput.value = default 안내없음Text;
+                itemDescriptionInput.value = default안내없음Text;
             }
-        });
+        }
+
+        itemUseCheckbox.addEventListener('change', updateItemDescription);
 
         // 페이지 로드시 초기 텍스트 설정
-        if (!itemUseCheckbox.checked) {
-            itemDescriptionInput.value = default 안내없음Text;
-        } else {
-            itemDescriptionInput.value = auto입력Text;
-        }
+        updateItemDescription();
     </script>
 </body>
 </html>
