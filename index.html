@@ -62,12 +62,27 @@
         }
 
         .input-group.checkbox-row .checkbox-wrapper input[type="checkbox"] {
-            margin-right: 0;
+            margin-right: 5px;
         }
 
         .input-group.checkbox-row .checkbox-wrapper label {
             margin-left: 5px;
             width: auto;
+        }
+
+        /* 상품안내 input-group에 추가 스타일 */
+        .input-group.item-description-row {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .input-group.item-description-row label {
+            margin-bottom: 5px;
+        }
+
+        .input-group.item-description-row .checkbox-row {
+            margin-top: 5px;
+            margin-left: 120px;
         }
 
         .section-title {
@@ -95,18 +110,25 @@
             border: none;
             border-radius: 5px;
             white-space: nowrap;
-            flex-grow: 1; /* 모든 버튼 동일 비율로 확장 */
+            flex-grow: 1; /* 이전 flex-grow 유지 */
             justify-content: center;
             display: flex;
             align-items: center;
         }
 
-        .button-group button:not(:last-child) {
-            margin-right: 10px;
+        /* 카드 디자인 설정 버튼 그룹에 추가 스타일 */
+        .button-group#card-design-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3개 컬럼 동일 비율 */
+            gap: 5px; /* 버튼 사이 간격 */
         }
 
-        button:hover {
-            opacity: 0.9;
+        .button-group#card-design-buttons button {
+            flex-grow: 0; /* 개별 버튼의 flex-grow 비활성화 */
+        }
+
+        .button-group#card-design-buttons button:not(:last-child) {
+            margin-right: 0; /* 개별 버튼 오른쪽 margin 제거 */
         }
 
         #button-container {
@@ -180,7 +202,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.4.0.</div>
+        <div id="version-text">v 0.4.2.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -189,14 +211,14 @@
             <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
         </div>
 
-        <div class="input-group">
+        <div class="input-group item-description-row">
             <label for="item-description">상품안내</label>
             <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
-        </div>
-        <div class="input-group checkbox-row">
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="item-use">
-                <label for="item-use">상품안내 사용</label>
+            <div class="checkbox-row">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="item-use">
+                    <label for="item-use">상품안내 사용</label>
+                </div>
             </div>
         </div>
 
@@ -231,10 +253,10 @@
 
         <hr>
         <div class="section-title">카드 디자인 설정</div>
-        <div class="button-group">
-            <button id="default-design" style="flex-grow: 2;">기본</button>
-            <button id="text-input-design" style="flex-grow: 1;">텍스트 입력</button>
-            <button id="image-design" style="flex-grow: 1;">이미지 설정</button>
+        <div class="button-group" id="card-design-buttons">
+            <button id="default-design">기본</button>
+            <button id="text-input-design">텍스트 입력</button>
+            <button id="image-design">이미지 설정</button>
         </div>
 
         <hr>
@@ -247,7 +269,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.4.0.</div>
+        <div class="footer" id="version-text-bottom">v 0.4.2.</div>
     </div>
 </body>
 </html>
