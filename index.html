@@ -33,8 +33,8 @@
             display: flex;
             justify-content: center;
             margin-bottom: 15px;
-            align-items: center; /* 1. 텍스트와 입력창 같은 라인 */
-            flex-direction: row; /* 1. 텍스트와 입력창 같은 라인 */
+            align-items: center;
+            flex-direction: row;
         }
 
         .input-group label {
@@ -50,19 +50,24 @@
 
         .input-group.checkbox-row {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            margin-bottom: 15px; /* 간격 추가 */
+            margin-bottom: 15px;
         }
 
         .input-group.checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 120px; /* 체크박스 왼쪽 이격 */
+            margin-left: 120px;
         }
 
         .input-group.checkbox-row .checkbox-wrapper input[type="checkbox"] {
-            margin-right: 5px;
+            margin-right: 0;
+        }
+
+        .input-group.checkbox-row .checkbox-wrapper label {
+            margin-left: 5px;
+            width: auto;
         }
 
         .section-title {
@@ -90,7 +95,7 @@
             border: none;
             border-radius: 5px;
             white-space: nowrap;
-            flex-grow: 1; /* 3. 버튼 가로 길이 동일하게 */
+            flex-grow: 1; /* 모든 버튼 동일 비율로 확장 */
             justify-content: center;
             display: flex;
             align-items: center;
@@ -175,7 +180,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.3.8.</div>
+        <div id="version-text">v 0.4.0.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -227,9 +232,9 @@
         <hr>
         <div class="section-title">카드 디자인 설정</div>
         <div class="button-group">
-            <button id="default-design">기본</button>
-            <button id="text-input-design">텍스트 입력</button>
-            <button id="image-design">이미지 설정</button>
+            <button id="default-design" style="flex-grow: 2;">기본</button>
+            <button id="text-input-design" style="flex-grow: 1;">텍스트 입력</button>
+            <button id="image-design" style="flex-grow: 1;">이미지 설정</button>
         </div>
 
         <hr>
@@ -242,7 +247,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.3.8.</div>
+        <div class="footer" id="version-text-bottom">v 0.4.0.</div>
     </div>
 </body>
 </html>
