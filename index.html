@@ -122,6 +122,8 @@
         .button-group button.selected {
             background-color: #2196F3 !important;
             color: white !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #2196F3;
         }
 
         .button-group#card-design-buttons {
@@ -249,7 +251,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.5.</div>
+        <div id="version-text">v 0.8.7.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -320,7 +322,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.5.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.7.</div>
     </div>
 
     <script>
@@ -334,6 +336,7 @@
         const manualInputFieldsContainer = document.getElementById('manual-input-fields');
 
         let selectedWinType = 'win-fail'; // 초기 선택 값 설정
+        let manualInputValues = []; // 입력된 당첨 텍스트 저장 배열
 
         function updateItemDescriptionText() {
             if (itemUseCheckbox.checked) {
@@ -342,7 +345,7 @@
                     itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
                 } else if (selectedWinType === 'manual-entry') {
                     const manualInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
-                    const prizeList = Array.from(manualInputs).map(input => input.value).filter(value => value.trim() !== '').join(', ');
+                    const prizeList = Array.from(manualInputs).map((input, index) => manualInputValues[index] || '').filter(value => value.trim() !== '').join(', ');
                     itemDescriptionInput.value = prizeList ? `[당첨 : ${prizeList}]` : "[설정에 따라 자동으로 입력됩니다.]";
                 } else {
                     itemDescriptionInput.value = "[설정에 따라 자동으로 입력됩니다.]";
@@ -368,7 +371,7 @@
                 verticalInput.value = 10;
             } else if (total >= maxTotal && maxTotal > 0) {
                 errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
-                totalInput.value = maxTotal > 0 ? maxTotal -1 : 0;
+                totalInput.value = maxTotal > 0 ? maxTotal - 1 : 0;
             }
 
             if (errorMessage) {
@@ -389,6 +392,10 @@
         }
 
         function updateWinSettings(winCount) {
+            const previousInputValues = [...manualInputValues]; // 이전 입력 값 복사
+            const currentInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
+            manualInputValues = Array.from(currentInputs).map(input => input.value); // 현재 입력 값 저장
+
             manualInputFieldsContainer.innerHTML = '';
             if (selectedWinType === 'manual-entry' && winCount > 0) {
                 for (let i = 1; i <= winCount; i++) {
@@ -399,7 +406,10 @@
                     const inputField = document.createElement('input');
                     inputField.type = 'text';
                     inputField.placeholder = `당첨 ${i} 내용 입력`;
-                    inputField.addEventListener('input', updateItemDescriptionText); // 입력 시 상품 안내 업데이트
+                    if (previousInputValues[i - 1]) {
+                        inputField.value = previousInputValues[i - 1]; // 이전 값 유지
+                    }
+                    inputField.addEventListener('input', updateManualInputValue);
                     inputRow.appendChild(label);
                     inputRow.appendChild(inputField);
                     manualInputFieldsContainer.appendChild(inputRow);
@@ -422,18 +432,17 @@
             updateItemDescriptionText();
         }
 
+        function updateManualInputValue(event) {
+            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+            if (index !== -1) {
+                manualInputValues[index] = event.target.value;
+                updateItemDescriptionText();
+            }
+        }
+
         itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
         horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
         verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
         totalInput.addEventListener('input', () => updateWinningCountMax('total'));
 
         winTypeGroup.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', handleWinTypeButtonClick);
-        });
-
-        // 초기 상태 설정
-        updateWinningCountMax();
-        updateItemDescriptionText();
-    </script>
-</body>
-</html>
