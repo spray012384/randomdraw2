@@ -33,31 +33,35 @@
             display: flex;
             justify-content: center;
             margin-bottom: 15px;
-            align-items: flex-start; /* 상단 기준 정렬 */
-            flex-direction: column; /* 내부 요소 세로 배치 */
+            align-items: center; /* 1. 텍스트와 입력창 같은 라인 */
+            flex-direction: row; /* 1. 텍스트와 입력창 같은 라인 */
         }
 
         .input-group label {
             margin-right: 10px;
             text-align: left;
             width: 120px;
-            margin-bottom: 5px; /* 입력창과의 간격 */
         }
 
         .input-group input {
             padding: 8px;
             width: 200px;
-            margin-left: 120px; /* 레이블과 간격 맞춤 */
-            margin-bottom: 10px; /* 다음 요소와의 간격 */
         }
 
-        .input-group .checkbox-row {
+        .input-group.checkbox-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px; /* 간격 추가 */
+        }
+
+        .input-group.checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 140px; /* 체크박스 왼쪽 이격 (레이블 + 약간의 간격) */
+            margin-left: 120px; /* 체크박스 왼쪽 이격 */
         }
 
-        .input-group .checkbox-row input[type="checkbox"] {
+        .input-group.checkbox-row .checkbox-wrapper input[type="checkbox"] {
             margin-right: 5px;
         }
 
@@ -86,7 +90,7 @@
             border: none;
             border-radius: 5px;
             white-space: nowrap;
-            flex-grow: 1; /* 버튼 가로 길이 동일하게 */
+            flex-grow: 1; /* 3. 버튼 가로 길이 동일하게 */
             justify-content: center;
             display: flex;
             align-items: center;
@@ -171,7 +175,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.3.7.</div>
+        <div id="version-text">v 0.3.8.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -183,7 +187,9 @@
         <div class="input-group">
             <label for="item-description">상품안내</label>
             <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
-            <div class="checkbox-row">
+        </div>
+        <div class="input-group checkbox-row">
+            <div class="checkbox-wrapper">
                 <input type="checkbox" id="item-use">
                 <label for="item-use">상품안내 사용</label>
             </div>
@@ -236,7 +242,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.3.7.</div>
+        <div class="footer" id="version-text-bottom">v 0.3.8.</div>
     </div>
 </body>
 </html>
