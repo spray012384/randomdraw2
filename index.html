@@ -34,25 +34,25 @@
             flex-direction: column;
             align-items: flex-start;
             margin-bottom: 15px;
-            width: 100%; /* 가로 화면에서도 전체 너비 사용 */
+            width: 100%;
         }
 
         .input-row {
             display: flex;
-            flex-direction: column; /* 세로로 배치 */
-            align-items: flex-start; /* 왼쪽 정렬 */
+            flex-direction: column;
+            align-items: flex-start;
             margin-bottom: 8px;
             width: 100%;
         }
 
         .input-row label {
-            width: 100%; /* 레이블이 한 줄 전체 차지 */
-            margin-bottom: 5px; /* 레이블과 입력창 사이 간격 */
+            width: 100%;
+            margin-bottom: 5px;
             text-align: left;
         }
 
         .input-row input {
-            width: 100%; /* 입력창이 한 줄 전체 차지 */
+            width: 100%;
             padding: 8px;
         }
 
@@ -60,13 +60,13 @@
             display: flex;
             align-items: center;
             margin-top: 8px;
-            width: 100%; /* 가로 화면에서도 전체 너비 사용 */
+            width: 100%;
         }
 
         .checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 0; /* 왼쪽 정렬 */
+            margin-left: 0;
         }
 
         .checkbox-row .checkbox-wrapper input[type="checkbox"] {
@@ -156,7 +156,7 @@
         }
 
         #save-button {
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* "저장하기" 버튼 색상 초록색으로 명시적 설정 */
             color: white;
         }
 
@@ -196,15 +196,15 @@
         /* 가로 화면에 대한 스타일 (세로 화면과 동일하게 유지) */
         @media (min-width: 600px) {
             .input-group {
-                flex-direction: column; /* 세로로 유지 */
-                align-items: flex-start; /* 왼쪽 정렬 유지 */
+                flex-direction: column;
+                align-items: flex-start;
                 margin-bottom: 15px;
                 width: 100%;
             }
 
             .input-row {
-                flex-direction: column; /* 세로로 유지 */
-                align-items: flex-start; /* 왼쪽 정렬 유지 */
+                flex-direction: column;
+                align-items: flex-start;
                 margin-bottom: 8px;
                 width: 100%;
             }
@@ -226,7 +226,7 @@
             }
 
             .checkbox-row .checkbox-wrapper {
-                margin-left: 0; /* 왼쪽 정렬 유지 */
+                margin-left: 0;
             }
         }
     </style>
@@ -234,7 +234,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.6.0.</div>
+        <div id="version-text">v 0.6.1.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -302,7 +302,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.6.0.</div>
+        <div class="footer" id="version-text-bottom">v 0.6.1.</div>
     </div>
 </body>
 </html>
