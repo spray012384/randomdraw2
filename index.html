@@ -1,129 +1,456 @@
-<!-- v 0.8.13 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤 뽑기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-<div class="title-with-version">
-  <h1>🎯 뽑기판 설정</h1>
-  <span class="version-label">v 0.8.13</span>
-</div>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-<div class="main-setting-container">
-  <!-- 상품 안내 비활성화 (자동 처리됨) -->
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-  <div class="row">
-    <label for="horizontal">가로</label>
-    <input type="number" id="horizontal" min="1" max="10" value="3">
-  </div>
+        #version-text {
+            color: grey;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-  <div class="row">
-    <label for="vertical">세로</label>
-    <input type="number" id="vertical" min="1" max="10" value="3">
-  </div>
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            width: 100%;
+        }
 
-  <div class="row">
-    <label for="total">당첨 개수</label>
-    <input type="number" id="total" min="1" value="1">
-    <span class="error-text" id="total-error"></span>
-  </div>
+        .input-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            width: 100%;
+        }
 
-  <div class="row">
-    <label>당첨 위치 설정</label>
-    <div class="button-group" id="position-type-group">
-      <button type="button" id="random-position" class="selected">랜덤 지정</button>
-      <button type="button" id="manual-position">직접 지정</button>
+        .input-row label {
+            width: 120px;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .input-row input {
+            width: 99.5%;
+            max-width: 800px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .checkbox-row .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: 0;
+        }
+
+        .checkbox-row .checkbox-wrapper input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: none;
+        }
+
+        .section-title:first-of-type {
+            padding-top: 0;
+            margin-top: 10px;
+        }
+
+        .button-group {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .button-group button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            white-space: nowrap;
+            flex-grow: 0;
+            background-color: #a9a9a9;
+            color: white;
+            margin: 5px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .button-group button:active {
+            background-color: #1976D2 !important;
+            transform: scale(0.95);
+        }
+
+        .button-group button.selected {
+            background-color: #2196F3 !important;
+            color: white !important;
+        }
+
+        .button-group#card-design-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+        }
+
+        .button-group#card-design-buttons button {
+            flex-grow: 0;
+        }
+
+        .button-group#card-design-buttons button:not(:last-child) {
+            margin-right: 0;
+        }
+
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #save-reset-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        #save-reset-container button {
+            margin: 0 5px;
+            height: 40px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            color: white;
+            background-color: #a9a9a9;
+        }
+
+        #save-button {
+            background-color: #4CAF50 !important;
+            color: white !important;
+        }
+
+        #reset-button {
+            background-color: #a9a9a9;
+            color: white;
+        }
+
+        #preview-button {
+            background-color: #ff9800;
+            color: white;
+            height: 40px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        #start-button {
+            background-color: #2196F3;
+            color: white;
+            height: 80px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .footer {
+            margin-top: 15px;
+            color: grey;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .input-error-text {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .input-default-text {
+            color: #777; /* 회색 */
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .manual-input-container {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .manual-input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .manual-input-row label {
+            margin-right: 10px;
+            width: 80px;
+        }
+
+        .manual-input-row input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>랜덤 뽑기</h1>
+        <div id="version-text">v 0.8.12.</div>
+
+        <hr>
+        <div class="section-title">뽑기 설정</div>
+        <div class="input-group">
+            <div class="input-row">
+                <label for="main-title">메인 타이틀</label>
+                <input type="text" id="main-title" placeholder="예) 시그 뽑기, 댄스 뽑기, 랜덤 뽑기...">
+            </div>
+            <div class="input-row left-align">
+                <label for="item-description">상품안내</label>
+                <input type="text" id="item-description" value="[상품 안내를 하지 않습니다.]" disabled>
+            </div>
+            <div class="checkbox-row">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="item-use">
+                    <label for="item-use">상품안내 사용</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-row">
+                <label for="horizontal">가로</label>
+                <input type="number" id="horizontal" placeholder="10 이하로 입력하세요." min="1" max="10">
+            </div>
+            <div class="input-row">
+                <label for="vertical">세로</label>
+                <input type="number" id="vertical" placeholder="10 이하로 입력하세요." min="1" max="10">
+            </div>
+            <div class="input-row">
+                <label for="total">당첨 개수</label>
+                <input type="number" id="total" placeholder="전체 카드 수 보다 작게 입력하세요." min="1">
+                <div id="total-error-text" class="input-default-text">[가로, 세로, 당첨개수를 입력해주세요.]</div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="section-title">당첨 방식 설정</div>
+        <div class="button-group" id="win-type-group">
+            <button type="button" id="win-fail" data-win-type="win-fail" class="selected">당첨/꽝 방식</button>
+            <button type="button" id="manual-entry" data-win-type="manual-entry">직접 입력 방식</button>
+        </div>
+        <div id="manual-input-fields" class="manual-input-container">
+        </div>
+
+        <hr>
+        <div class="section-title">당첨 위치 설정</div>
+        <div class="button-group" id="position-type-group">
+            <button type="button" id="random-position">랜덤 생성</button>
+            <button type="button" id="manual-position">직접 지정</button>
+        </div>
+
+        <hr>
+        <div class="section-title">카드 디자인 설정</div>
+        <div class="button-group" id="design-type-group">
+            <button type="button" id="default-design">기본</button>
+            <button type="button" id="text-input-design">텍스트 입력</button>
+            <button type="button" id="image-design">이미지 설정</button>
+        </div>
+
+        <hr>
+        <div id="button-container">
+            <div id="save-reset-container">
+                <button id="save-button">저장하기</button>
+                <button id="reset-button">초기화</button>
+            </div>
+            <button id="preview-button">미리보기</button>
+            <button id="start-button">시작하기</button>
+        </div>
+
+        <div class="footer" id="version-text-bottom">v 0.8.12.</div>
     </div>
-  </div>
 
-  <div id="manual-input-fields"></div>
+    <script>
+        const horizontalInput = document.getElementById('horizontal');
+        const verticalInput = document.getElementById('vertical');
+        const totalInput = document.getElementById('total');
+        const totalErrorText = document.getElementById('total-error-text');
+        const itemUseCheckbox = document.getElementById('item-use');
+        const itemDescriptionInput = document.getElementById('item-description');
+        const winTypeGroup = document.getElementById('win-type-group');
+        const manualInputFieldsContainer = document.getElementById('manual-input-fields');
 
-  <div class="row">
-    <button class="start-button">시작하기</button>
-    <button class="save-button">저장하기</button>
-    <button class="reset-button">초기화</button>
-  </div>
-</div>
+        let selectedWinType = 'win-fail'; // 초기 선택 값 설정
+        let manualInputValues = []; // 입력된 당첨 텍스트 저장 배열
 
-<div class="footer-version">v 0.8.13</div>
+        function updateItemDescriptionText() {
+            if (itemUseCheckbox.checked) {
+                const winCount = parseInt(totalInput.value) || 0;
+                if (selectedWinType === 'win-fail') {
+                    itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
+                } else if (selectedWinType === 'manual-entry') {
+                    const manualInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
+                    const prizeList = Array.from(manualInputs).map((input, index) => manualInputValues[index] || '').filter(value => value.trim() !== '').join(', ');
+                    itemDescriptionInput.value = prizeList ? `[당첨 : ${prizeList}]` : "[설정에 따라 자동으로 입력됩니다.]";
+                } else {
+                    itemDescriptionInput.value = "[설정에 따라 자동으로 입력됩니다.]";
+                }
+            } else {
+                itemDescriptionInput.value = "[상품 안내를 하지 않습니다.]";
+            }
+        }
 
-<script>
-const horizontalInput = document.getElementById('horizontal');
-const verticalInput = document.getElementById('vertical');
-const totalInput = document.getElementById('total');
-const totalErrorText = document.getElementById('total-error');
+        function updateWinningCountMax(source) {
+            const horizontal = parseInt(horizontalInput.value) || 0;
+            const vertical = parseInt(verticalInput.value) || 0;
+            let total = parseInt(totalInput.value) || 0;
+            const maxTotal = (horizontal * vertical);
 
-const positionTypeGroup = document.getElementById('position-type-group');
-const manualInputFields = document.getElementById('manual-input-fields');
+            let errorMessage = "";
 
-const manualPositionButton = document.getElementById('manual-position');
-const randomPositionButton = document.getElementById('random-position');
+            if (horizontal > 10) {
+                errorMessage = "[가로 값은 10을 넘어갈 수 없어요.]";
+                horizontalInput.value = 10;
+            } else if (vertical > 10) {
+                errorMessage = "[세로 값은 10을 넘어갈 수 없어요.]";
+                verticalInput.value = 10;
+            } else if (total >= maxTotal && maxTotal > 0) {
+                errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
+                totalInput.value = maxTotal > 0 ? maxTotal - 1 : 0;
+            }
 
-let isManualPosition = false;
+            if (errorMessage) {
+                totalErrorText.textContent = errorMessage;
+                totalErrorText.className = "input-error-text";
+            } else {
+                totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해주세요.]";
+                totalErrorText.className = "input-default-text";
+            }
 
-manualPositionButton.addEventListener('click', () => {
-  isManualPosition = true;
-  manualPositionButton.classList.add('selected');
-  randomPositionButton.classList.remove('selected');
-  renderManualPositionInputs();
-});
+            totalInput.max = maxTotal - 1;
+            if (total > totalInput.max && totalInput.max >= 0) {
+                totalInput.value = totalInput.max;
+            }
 
-randomPositionButton.addEventListener('click', () => {
-  isManualPosition = false;
-  randomPositionButton.classList.add('selected');
-  manualPositionButton.classList.remove('selected');
-  manualInputFields.innerHTML = '';
-});
+            updateWinSettings(parseInt(totalInput.value) || 0);
+            updateItemDescriptionText();
+        }
 
-function validateTotalInput() {
-  const h = parseInt(horizontalInput.value);
-  const v = parseInt(verticalInput.value);
-  const total = parseInt(totalInput.value);
+        function updateWinSettings(winCount) {
+            const previousInputValues = [...manualInputValues];
+            manualInputValues = [];
+            manualInputFieldsContainer.innerHTML = '';
+            if (selectedWinType === 'manual-entry' && winCount > 0) {
+                for (let i = 1; i <= winCount; i++) {
+                    const inputRow = document.createElement('div');
+                    inputRow.className = 'manual-input-row';
+                    const label = document.createElement('label');
+                    label.textContent = `당첨 ${i}`;
+                    const inputField = document.createElement('input');
+                    inputField.type = 'text';
+                    inputField.placeholder = `당첨 ${i} 내용 입력`;
+                    if (previousInputValues[i - 1]) {
+                        inputField.value = previousInputValues[i - 1];
+                        manualInputValues.push(previousInputValues[i - 1]);
+                    } else {
+                        manualInputValues.push('');
+                    }
+                    inputField.addEventListener('input', updateManualInputValue);
+                    inputRow.appendChild(label);
+                    inputRow.appendChild(inputField);
+                    manualInputFieldsContainer.appendChild(inputRow);
+                }
+            }
+            updateItemDescriptionText();
+        }
 
-  if (!h || !v || !total) {
-    totalErrorText.textContent = '[가로, 세로, 당첨개수를 입력해주세요.]';
-    return false;
-  }
+        function handleWinTypeButtonClick(event) {
+            const clickedButton = event.target;
 
-  const maxAllowed = h * v - 1;
-  if (total > maxAllowed) {
-    totalErrorText.textContent = `[당첨 개수는 최대 ${maxAllowed}개까지 가능합니다.]`;
-    return false;
-  }
+            winTypeGroup.querySelectorAll('button').forEach(button => {
+                button.classList.remove('selected');
+            });
+            clickedButton.classList.add('selected');
+            selectedWinType = clickedButton.dataset.winType;
 
-  totalErrorText.textContent = '';
-  return true;
-}
+            const currentWinCount = parseInt(totalInput.value) || 0;
+            updateWinSettings(currentWinCount);
+            updateItemDescriptionText();
+        }
 
-[horizontalInput, verticalInput, totalInput].forEach(input => {
-  input.addEventListener('input', validateTotalInput);
-});
+        function updateManualInputValue(event) {
+            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+            if (index !== -1) {
+                manualInputValues[index] = event.target.value;
+                updateItemDescriptionText();
+            }
+        }
 
-function renderManualPositionInputs() {
-  if (!validateTotalInput()) return;
+        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
+        horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
+        verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
+        totalInput.addEventListener('input', () => updateWinningCountMax('total'));
 
-  const h = parseInt(horizontalInput.value);
-  const v = parseInt(verticalInput.value);
-  const total = parseInt(totalInput.value);
+        winTypeGroup.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', handleWinTypeButtonClick);
+        });
 
-  manualInputFields.innerHTML = '';
-  const title = document.createElement('div');
-  title.innerHTML = '<strong>[직접 당첨 위치를 입력하세요]</strong>';
-  manualInputFields.appendChild(title);
-
-  for (let i = 0; i < total; i++) {
-    const row = document.createElement('div');
-    row.className = 'manual-input-row';
-
-    const label = document.createElement('label');
-    label.textContent = `${i + 1}번 위치`;
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = '예: 1,2 (가로1, 세로2)';
-    input.name = `manual-position-${i}`;
-
-    row.appendChild(label);
-    row.appendChild(input);
-    manualInputFields.appendChild(row);
-  }
-}
-</script>
-
-<!-- v 0.8.13 -->
+        // 초기 상태 설정
+        updateWinningCountMax();
+        updateItemDescriptionText();
+    </script>
+</body>
+</html>
