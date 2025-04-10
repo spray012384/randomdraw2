@@ -288,7 +288,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.13.</div>
+        <div id="version-text">v 0.0.0. 25.04.10.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -368,7 +368,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.13.</div>
+        <div class="footer" id="version-text-bottom">v 0.0.0. 25.04.10.</div>
     </div>
 
     <script>
@@ -381,6 +381,13 @@
         const itemDescriptionInput = document.getElementById('item-description');
         const winTypeGroup = document.getElementById('win-type-group');
         const manualInputFieldsContainer = document.getElementById('manual-input-fields');
+        const winFailButton = document.getElementById('win-fail');
+        const manualEntryButton = document.getElementById('manual-entry');
+        const randomPositionButton = document.getElementById('random-position');
+        const manualPositionButton = document.getElementById('manual-position');
+        const defaultDesignButton = document.getElementById('default-design');
+        const textInputDesignButton = document.getElementById('text-input-design');
+        const imageDesignButton = document.getElementById('image-design');
 
         let selectedWinType = 'win-fail'; // 초기 선택 값 설정
         let manualInputValues = []; // 입력된 당첨 텍스트 저장 배열
@@ -422,12 +429,4 @@
             if (currentHorizontal > 10) {
                 errorMessage = "[가로 값은 10을 넘어갈 수 없어요.]";
                 horizontalInput.value = 10;
-            } else if (currentVertical > 10) {
-                errorMessage = "[세로 값은 10을 넘어갈 수 없어요.]";
-                verticalInput.value = 10;
-            } else if (currentTotal >= currentMaxTotal && currentMaxTotal > 0) {
-                errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
-                totalInput.value = currentMaxTotal > 0 ? currentMaxTotal - 1 : 0;
-                if (totalInput.value < 1 && currentMaxTotal === 1) {
-                    totalInput.value = 0;
-                    errorMessage = "[1x1 카드에는 당첨을 설정할 수 없습니다
+            } else if (current
