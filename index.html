@@ -1,5 +1,3 @@
-<!-- v 0.0.3. -->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,14 +19,14 @@
         h1 {
             font-size: 2rem;
             text-align: center;
-            margin-bottom: 10px; /* 버전 텍스트와의 간격 조정 */
+            margin-bottom: 10px;
         }
 
-        #version {
+        #version-text {
             color: grey;
             font-size: 0.8rem;
             text-align: center;
-            margin-bottom: 20px; /* 다음 섹션과의 간격 확보 */
+            margin-bottom: 20px;
         }
 
         .input-group {
@@ -70,7 +68,7 @@
         .button-group button {
             width: 150px;
             padding: 10px 20px;
-            margin: 10px;
+            margin: 5px; /* 버튼 사이 여백 조정 */
             font-size: 1rem;
             cursor: pointer;
             border: none;
@@ -78,7 +76,28 @@
         }
 
         button:hover {
-            background-color: #f0f0f0;
+            opacity: 0.9; /* 호버 시 약간 어둡게 */
+        }
+
+        #save-button {
+            background-color: #4CAF50; /* 초록색 계열 */
+            color: white;
+        }
+
+        #reset-button {
+            background-color: #cccccc; /* 연회색 */
+            color: #333;
+        }
+
+        #preview-button {
+            background-color: #ff9800; /* 추천색 (주황색 계열) */
+            color: white;
+        }
+
+        #start-button {
+            background-color: #2196F3; /* 파란색 */
+            color: white;
+            margin-top: 20px; /* 한 줄 띄우기 */
         }
 
         .footer {
@@ -94,16 +113,32 @@
         }
 
         .section-title:first-of-type {
-            margin-top: 10px; /* 첫 번째 섹션 제목 상단 margin 조정 */
+            margin-top: 10px;
             padding-top: 10px;
-            border-top: none; /* 첫 번째 섹션 제목 상단 구분선 제거 */
+            border-top: none;
+        }
+
+        #button-container {
+            display: flex;
+            flex-direction: column; /* 세로로 배치 */
+            align-items: center; /* 가운데 정렬 */
+            margin-top: 30px; /* 다른 요소와의 간격 */
+        }
+
+        #button-container button {
+            margin: 10px 0; /* 버튼 위아래 여백 */
+            width: 200px; /* 버튼 너비 조정 (선택 사항) */
+        }
+
+        #button-container button:first-child {
+            margin-top: 0; /* 첫 번째 버튼 상단 여백 제거 */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version">v 0.0.3</div>
+        <div id="version-text">v 0.0.8</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -161,18 +196,16 @@
         </div>
 
         <hr>
-        <div class="button-group">
+        <div id="button-container">
             <button id="save-button">저장하기</button>
             <button id="reset-button">초기화</button>
             <button id="preview-button">미리보기</button>
             <button id="start-button">시작하기</button>
         </div>
 
-        <div id="version" class="footer">
-            v 0.0.3
+        <div class="footer" id="version-text-bottom">
+            v 0.0.8
         </div>
     </div>
 </body>
 </html>
-
-<!-- v 0.0.3. -->
