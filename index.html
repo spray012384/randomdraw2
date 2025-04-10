@@ -49,18 +49,13 @@
         }
 
         .input-group.checkbox-row {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .input-group.checkbox-row label {
-            margin-bottom: 5px;
+            align-items: center; /* 1. 세로 중앙 정렬 */
         }
 
         .input-group.checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 120px;
+            margin-left: auto; /* 체크박스를 오른쪽 끝으로 이동 */
         }
 
         .input-group.checkbox-row .checkbox-wrapper label {
@@ -93,7 +88,7 @@
             border: none;
             border-radius: 5px;
             white-space: nowrap;
-            flex-grow: 1;
+            flex-grow: 1; /* 2. 가로 길이 동일하게 */
             justify-content: center;
             display: flex;
             align-items: center;
@@ -112,14 +107,16 @@
             flex-direction: column;
             align-items: center;
             margin-top: 30px;
-            width: 100%;
+            width: 60%; /* 하단 버튼 그룹 너비 조정 */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #save-reset-container {
             display: flex;
             justify-content: center;
             margin-bottom: 10px;
-            width: 60%; /* 하단 버튼 그룹 너비 조정 */
+            width: 100%;
         }
 
         #save-reset-container button {
@@ -131,31 +128,45 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-grow: 1; /* "저장하기", "초기화" 버튼 너비 균등 분할 */
+            flex-grow: 1;
+        }
+
+        #save-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #reset-button {
+            background-color: #cccccc;
+            color: #333;
         }
 
         #preview-button {
+            background-color: #ff9800;
+            color: white;
             height: 40px;
             font-size: 1rem;
             border: none;
             border-radius: 5px;
-            width: 60%; /* 하단 버튼 그룹 너비 조정 */
+            width: 100%;
             margin-bottom: 10px;
         }
 
         #start-button {
+            background-color: #2196F3;
+            color: white;
             height: 80px;
             font-size: 1rem;
             border: none;
             border-radius: 5px;
-            width: 60%; /* 하단 버튼 그룹 너비 조정 */
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.3.4.</div>
+        <div id="version-text">v 0.3.5.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -165,8 +176,8 @@
         </div>
 
         <div class="input-group checkbox-row">
-            <label for="item-description" style="align-self: flex-start;">상품안내</label>
-            <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
+            <label for="item-description" style="width: auto;">상품안내</label>
+            <input type="text" id="item-description" placeholder="상품안내를 입력하세요" style="margin-left: 10px; width: 200px;">
             <div class="checkbox-wrapper">
                 <input type="checkbox" id="item-use">
                 <label for="item-use">상품안내 사용</label>
@@ -220,7 +231,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.3.4.</div>
+        <div class="footer" id="version-text-bottom">v 0.3.5.</div>
     </div>
 </body>
 </html>
