@@ -254,7 +254,7 @@
 <body>
     <div class="container">
         <h1 id="main-title-display">랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.22.</div>
+        <div id="version-text">v 0.8.23.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -325,7 +325,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.22.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.23.</div>
     </div>
 
     <script>
@@ -416,21 +416,23 @@
             manualInputValues = [];
             manualInputFieldsContainer.innerHTML = '';
             if (selectedWinType === 'manual-entry' && winCount > 0) {
-                for (let i = 1; i <= winCount; i++) {
+                for (let i = 0; i < winCount; i++) {
                     const inputRow = document.createElement('div');
                     inputRow.className = 'manual-input-row';
                     const label = document.createElement('label');
-                    label.textContent = `당첨 ${i}`;
+                    label.textContent = `당첨 ${i + 1}`;
                     const inputField = document.createElement('input');
                     inputField.type = 'text';
-                    inputField.placeholder = `당첨 ${i} 내용 입력`;
-                    if (previousInputValues[i - 1]) {
-                        inputField.value = previousInputValues[i - 1];
-                        manualInputValues.push(previousInputValues[i - 1]);
+                    inputField.placeholder = `당첨 ${i + 1} 내용 입력`;
+                    if (previousInputValues[i]) {
+                        inputField.value = previousInputValues[i];
+                        manualInputValues[i] = previousInputValues[i];
                     } else {
-                        manualInputValues.push('');
+                        manualInputValues[i] = '';
                     }
-                    inputField.addEventListener('input', updateManualInputValue);
+                    inputField.addEventListener('input', (event) => {
+                        updateManualInputValue(i, event.target.value);
+                    });
                     inputRow.appendChild(label);
                     inputRow.appendChild(inputField);
                     manualInputFieldsContainer.appendChild(inputRow);
@@ -448,11 +450,63 @@
             });
         }
 
+        const winTypeModule = {
+            state: {
+                selectedWinType: 'win-fail',
+                manualPrizes: []
+            },
+            init() {
+                winTypeGroup.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'BUTTON') {
+                        this.setWinType(event.target.id);
+                    }
+                });
+
+                manualInputFieldsContainer.addEventListener('input', (event) => {
+                    if (event.target.type === 'text') {
+                        const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+                        this.updateManualPrize(index, event.target.value);
+                    }
+                });
+            },
+            setWinType(type) {
+                this.state.selectedWinType = type;
+                updateButtonSelection(winTypeGroup, type);
+                updateWinSettings(parseInt(totalInput.value) || 0);
+                updateItemDescriptionText();
+            },
+            updateManualPrize(index, value) {
+                this.state.manualPrizes[index] = value;
+                updateItemDescriptionText();
+            },
+            renderManualPrizeInputs() {
+                manualInputFieldsContainer.innerHTML = '';
+                if (this.state.selectedWinType === 'manual-entry' && parseInt(totalInput.value) > 0) {
+                    for (let i = 0; i < parseInt(totalInput.value); i++) {
+                        const inputRow = document.createElement('div');
+                        inputRow.className = 'manual-input-row';
+                        const label = document.createElement('label');
+                        label.textContent = `당첨 ${i + 1}`;
+                        const inputField = document.createElement('input');
+                        inputField.type = 'text';
+                        inputField.placeholder = `당첨 ${i + 1} 내용 입력`;
+                        inputField.value = this.state.manualPrizes[i] || '';
+                        manualInputFieldsContainer.appendChild(inputRow);
+                        inputRow.appendChild(label);
+                        inputRow.appendChild(inputField);
+                    }
+                }
+            },
+            updateWinTypeUI() {
+                updateButtonSelection(winTypeGroup, this.state.selectedWinType);
+                this.renderManualPrizeInputs();
+            }
+        };
+
+        winTypeModule.init();
+
         function handleWinTypeButtonClick(event) {
-            selectedWinTypeId = event.target.id;
-            updateButtonSelection(winTypeGroup, selectedWinTypeId);
-            updateWinSettings(parseInt(totalInput.value) || 0);
-            updateItemDescriptionText();
+            // 사용하지 않음
         }
 
         function handlePositionTypeButtonClick(event) {
@@ -467,12 +521,9 @@
             // ... (나머지 로직)
         }
 
-        function updateManualInputValue(event) {
-            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
-            if (index !== -1) {
-                manualInputValues[index] = event.target.value;
-                updateItemDescriptionText();
-            }
+        function updateManualInputValue(index, value) {
+            manualInputValues[index] = value;
+            updateItemDescriptionText();
         }
 
         function updateAllUI() {
@@ -480,21 +531,15 @@
             updateItemDescriptionText();
             updateWinningCountMax();
             updateWinSettings(parseInt(totalInput.value) || 0);
+            winTypeModule.updateWinTypeUI();
         }
 
         function handleManualInputFieldsContainerInput(event) {
-            if (event.target.type === 'text') {
-                const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
-                if (index !== -1) {
-                    manualInputValues[index] = event.target.value;
-                    updateItemDescriptionText();
-                }
-            }
+            // 사용하지 않음
         }
 
         // 초기 UI 업데이트
         updateAllUI();
-        updateButtonSelection(winTypeGroup, selectedWinTypeId);
         updateButtonSelection(positionTypeGroup, selectedPositionTypeId);
         updateButtonSelection(designTypeGroup, selectedDesignTypeId);
 
@@ -503,10 +548,8 @@
         horizontalInput.addEventListener('input', updateAllUI);
         verticalInput.addEventListener('input', updateAllUI);
         totalInput.addEventListener('input', updateAllUI);
-        winTypeGroup.addEventListener('click', handleWinTypeButtonClick);
         positionTypeGroup.addEventListener('click', handlePositionTypeButtonClick);
         designTypeGroup.addEventListener('click', handleDesignTypeButtonClick);
-        manualInputFieldsContainer.addEventListener('input', handleManualInputFieldsContainerInput);
     </script>
 </body>
 
