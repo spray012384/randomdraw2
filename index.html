@@ -111,6 +111,12 @@
             background-color: #a9a9a9;
             color: white;
             margin: 5px;
+            transition: background-color 0.2s ease, transform 0.1s ease; /* 부드러운 효과를 위한 transition */
+        }
+
+        .button-group button:active {
+            background-color: #1976D2 !important; /* 조금 더 어두운 파란색 */
+            transform: scale(0.95); /* 살짝 작아지는 효과 */
         }
 
         .button-group button.selected {
@@ -233,7 +239,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.7.4.</div>
+        <div id="version-text">v 0.7.5.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -301,7 +307,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.7.4.</div>
+        <div class="footer" id="version-text-bottom">v 0.7.5.</div>
     </div>
 
     <script>
@@ -315,18 +321,14 @@
             const parentGroup = clickedButton.parentNode;
 
             if (parentGroup && parentGroup.classList.contains('button-group')) {
-                // 같은 그룹 내의 다른 버튼들의 'selected' 클래스 제거
                 const buttonsInGroup = parentGroup.querySelectorAll('button');
                 buttonsInGroup.forEach(button => {
                     button.classList.remove('selected');
                 });
-
-                // 클릭된 버튼에 'selected' 클래스 추가
                 clickedButton.classList.add('selected');
             }
         }
 
-        // 각 버튼 그룹에 이벤트 리스너 추가
         buttonGroups.forEach(group => {
             const buttons = group.querySelectorAll('button');
             buttons.forEach(button => {
