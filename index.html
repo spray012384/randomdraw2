@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>랜덤 뽑기</title>
     <style>
-        /* v 0.8.10 버전의 스타일 (디자인 복원) */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -250,7 +249,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.13.</div>
+        <div id="version-text">v 0.8.12.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -321,7 +320,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.13.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.12.</div>
     </div>
 
     <script>
@@ -405,4 +404,53 @@
                     inputField.placeholder = `당첨 ${i} 내용 입력`;
                     if (previousInputValues[i - 1]) {
                         inputField.value = previousInputValues[i - 1];
-                        manualInputValues[i - 1] = previousInputValues[i - 1
+                        manualInputValues.push(previousInputValues[i - 1]);
+                    } else {
+                        manualInputValues.push('');
+                    }
+                    inputField.addEventListener('input', updateManualInputValue);
+                    inputRow.appendChild(label);
+                    inputRow.appendChild(inputField);
+                    manualInputFieldsContainer.appendChild(inputRow);
+                }
+            }
+            updateItemDescriptionText();
+        }
+
+        function handleWinTypeButtonClick(event) {
+            const clickedButton = event.target;
+
+            winTypeGroup.querySelectorAll('button').forEach(button => {
+                button.classList.remove('selected');
+            });
+            clickedButton.classList.add('selected');
+            selectedWinType = clickedButton.dataset.winType;
+
+            const currentWinCount = parseInt(totalInput.value) || 0;
+            updateWinSettings(currentWinCount);
+            updateItemDescriptionText();
+        }
+
+        function updateManualInputValue(event) {
+            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+            if (index !== -1) {
+                manualInputValues[index] = event.target.value;
+                updateItemDescriptionText();
+            }
+        }
+
+        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
+        horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
+        verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
+        totalInput.addEventListener('input', () => updateWinningCountMax('total'));
+
+        winTypeGroup.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', handleWinTypeButtonClick);
+        });
+
+        // 초기 상태 설정
+        updateWinningCountMax();
+        updateItemDescriptionText();
+    </script>
+</body>
+</html>
