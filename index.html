@@ -45,6 +45,10 @@
             margin-bottom: 10px;
         }
 
+        .input-row.left-align {
+            justify-content: flex-start;
+        }
+
         .input-row label {
             margin-right: 10px;
             text-align: left;
@@ -91,20 +95,18 @@
             margin: 0 auto;
         }
 
-        /* 당첨 방식 설정 버튼 스타일 복원 */
-        .button-group#win-lose-buttons button {
-            padding: 8px 12px; /* 버튼 패딩 조정 */
-            font-size: 1rem; /* 텍스트 크기 유지 */
-            margin: 5px; /* 버튼 간 간격 유지 */
-            border: 1px solid #cccccc; /* 얇은 회색 테두리 추가 */
+        .button-group button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
             border-radius: 5px;
-            background-color: #f9f9f9; /* 밝은 회색 배경 */
-            color: #333; /* 검정색 텍스트 */
             white-space: nowrap;
-            flex-grow: 0; /* 내용에 맞게 크기 조정 */
+            flex-grow: 0;
+            background-color: #e0e0e0;
+            color: #333;
+            margin: 5px;
         }
 
-        /* 카드 디자인 설정 버튼 그룹 (가로 길이 동일 유지) */
         .button-group#card-design-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -112,14 +114,11 @@
         }
 
         .button-group#card-design-buttons button {
-            padding: 10px 15px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 5px;
-            white-space: nowrap;
             flex-grow: 0;
-            background-color: #e0e0e0; /* 연한 회색 배경 */
-            color: #333;
+        }
+
+        .button-group#card-design-buttons button:not(:last-child) {
+            margin-right: 0;
         }
 
         #button-container {
@@ -130,6 +129,13 @@
             width: 60%;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        #save-reset-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
         }
 
         #save-reset-container button {
@@ -186,7 +192,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.4.7.</div>
+        <div id="version-text">v 0.5.0.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -195,7 +201,7 @@
                 <label for="main-title">메인 타이틀</label>
                 <input type="text" id="main-title" placeholder="메인 타이틀을 입력하세요">
             </div>
-            <div class="input-row">
+            <div class="input-row left-align">
                 <label for="item-description">상품안내</label>
                 <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
             </div>
@@ -224,7 +230,7 @@
 
         <hr>
         <div class="section-title">당첨 방식 설정</div>
-        <div class="button-group" id="win-lose-buttons">
+        <div class="button-group">
             <button id="win-fail">당첨/꽝 방식</button>
             <button id="manual-entry">직접 입력 방식</button>
         </div>
@@ -254,7 +260,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.4.7.</div>
+        <div class="footer" id="version-text-bottom">v 0.5.0.</div>
     </div>
 </body>
 </html>
