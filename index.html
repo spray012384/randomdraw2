@@ -248,15 +248,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>랜덤 뽑기</h1>
+        <h1 id="main-title-display">랜덤 뽑기</h1>
         <div id="version-text">v 0.8.12.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
         <div class="input-group">
             <div class="input-row">
-                <label for="main-title">메인 타이틀</label>
-                <input type="text" id="main-title" placeholder="예) 시그 뽑기, 댄스 뽑기, 랜덤 뽑기...">
+                <label for="main-title-input">메인 타이틀</label>
+                <input type="text" id="main-title-input" placeholder="예) 시그 뽑기, 댄스 뽑기, 랜덤 뽑기...">
             </div>
             <div class="input-row left-align">
                 <label for="item-description">상품안내</label>
@@ -324,6 +324,26 @@
     </div>
 
     <script>
+        const mainTitleDisplay = document.getElementById('main-title-display');
+        const mainTitleInput = document.getElementById('main-title-input');
+
+        let mainTitleData = "랜덤 뽑기"; // 메인 타이틀 데이터
+
+        function updateMainTitleDisplay() {
+            mainTitleDisplay.textContent = mainTitleData;
+        }
+
+        function handleMainTitleInputChange() {
+            mainTitleData = mainTitleInput.value;
+            updateMainTitleDisplay();
+        }
+
+        // 초기 로딩 시 메인 타이틀 표시
+        updateMainTitleDisplay();
+
+        // 입력 필드의 변경 이벤트 감지
+        mainTitleInput.addEventListener('input', handleMainTitleInputChange);
+
         const horizontalInput = document.getElementById('horizontal');
         const verticalInput = document.getElementById('vertical');
         const totalInput = document.getElementById('total');
@@ -432,25 +452,4 @@
         }
 
         function updateManualInputValue(event) {
-            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
-            if (index !== -1) {
-                manualInputValues[index] = event.target.value;
-                updateItemDescriptionText();
-            }
-        }
-
-        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
-        horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
-        verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
-        totalInput.addEventListener('input', () => updateWinningCountMax('total'));
-
-        winTypeGroup.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', handleWinTypeButtonClick);
-        });
-
-        // 초기 상태 설정
-        updateWinningCountMax();
-        updateItemDescriptionText();
-    </script>
-</body>
-</html>
+            const index =
