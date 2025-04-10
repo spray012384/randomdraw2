@@ -32,7 +32,7 @@
         .input-group {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px; /* 소제목과 항목 간 간격 증가 */
             align-items: flex-start;
             flex-direction: column;
         }
@@ -78,7 +78,7 @@
             font-size: 1.2rem;
             text-align: left;
             font-weight: bold;
-            margin-top: 20px;
+            margin-top: 30px; /* 소제목 상단 간격 증가 */
             padding-top: 20px;
         }
 
@@ -91,11 +91,11 @@
             margin: 0 auto;
         }
 
-        /* 카드 디자인 설정 버튼 그룹에 Grid 레이아웃 적용 */
+        /* 카드 디자인 설정 버튼 그룹에 Grid 레이아웃 적용 (가로 길이 동일하게) */
         .button-group#card-design-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr; /* 3개 컬럼 동일 비율 */
-            gap: 5px; /* 버튼 사이 간격 */
+            gap: 5px; /* 버튼 사이 간격 유지 */
         }
 
         .button-group#card-design-buttons button {
@@ -177,7 +177,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.4.5.</div>
+        <div id="version-text">v 0.4.6.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -245,7 +245,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.4.5.</div>
+        <div class="footer" id="version-text-bottom">v 0.4.6.</div>
     </div>
 </body>
 </html>
