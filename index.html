@@ -122,6 +122,7 @@
         .button-group button.selected {
             background-color: #2196F3 !important;
             color: white !important;
+            /* 선택 상태 강조 스타일 추가 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             border: 1px solid #2196F3;
         }
@@ -251,7 +252,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.7.</div>
+        <div id="version-text">v 0.8.6.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -322,7 +323,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.7.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.6.</div>
     </div>
 
     <script>
@@ -407,42 +408,4 @@
                     inputField.type = 'text';
                     inputField.placeholder = `당첨 ${i} 내용 입력`;
                     if (previousInputValues[i - 1]) {
-                        inputField.value = previousInputValues[i - 1]; // 이전 값 유지
-                    }
-                    inputField.addEventListener('input', updateManualInputValue);
-                    inputRow.appendChild(label);
-                    inputRow.appendChild(inputField);
-                    manualInputFieldsContainer.appendChild(inputRow);
-                }
-            }
-            updateItemDescriptionText();
-        }
-
-        function handleWinTypeButtonClick(event) {
-            const clickedButton = event.target;
-
-            winTypeGroup.querySelectorAll('button').forEach(button => {
-                button.classList.remove('selected');
-            });
-            clickedButton.classList.add('selected');
-            selectedWinType = clickedButton.dataset.winType;
-
-            const currentWinCount = parseInt(totalInput.value) || 0;
-            updateWinSettings(currentWinCount);
-            updateItemDescriptionText();
-        }
-
-        function updateManualInputValue(event) {
-            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
-            if (index !== -1) {
-                manualInputValues[index] = event.target.value;
-                updateItemDescriptionText();
-            }
-        }
-
-        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
-        horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
-        verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
-        totalInput.addEventListener('input', () => updateWinningCountMax('total'));
-
-        winTypeGroup.querySelectorAll('button').forEach(button => {
+                        inputField.value = previousInputValues[i - 1];
