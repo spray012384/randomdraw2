@@ -249,7 +249,7 @@
 <body>
     <div class="container">
         <h1 id="main-title-display">랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.12.</div>
+        <div id="version-text">v 0.8.13.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -320,14 +320,24 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.12.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.13.</div>
     </div>
 
     <script>
         const mainTitleDisplay = document.getElementById('main-title-display');
         const mainTitleInput = document.getElementById('main-title-input');
+        const horizontalInput = document.getElementById('horizontal');
+        const verticalInput = document.getElementById('vertical');
+        const totalInput = document.getElementById('total');
+        const totalErrorText = document.getElementById('total-error-text');
+        const itemUseCheckbox = document.getElementById('item-use');
+        const itemDescriptionInput = document.getElementById('item-description');
+        const winTypeGroup = document.getElementById('win-type-group');
+        const manualInputFieldsContainer = document.getElementById('manual-input-fields');
 
-        let mainTitleData = "랜덤 뽑기"; // 메인 타이틀 데이터
+        let mainTitleData = "랜덤 뽑기";
+        let selectedWinType = 'win-fail';
+        let manualInputValues = [];
 
         function updateMainTitleDisplay() {
             mainTitleDisplay.textContent = mainTitleData;
@@ -338,29 +348,13 @@
             updateMainTitleDisplay();
         }
 
-        // 초기 로딩 시 메인 타이틀 표시
-        updateMainTitleDisplay();
-
-        // 입력 필드의 변경 이벤트 감지
-        mainTitleInput.addEventListener('input', handleMainTitleInputChange);
-
-        const horizontalInput = document.getElementById('horizontal');
-        const verticalInput = document.getElementById('vertical');
-        const totalInput = document.getElementById('total');
-        const totalErrorText = document.getElementById('total-error-text');
-        const itemUseCheckbox = document.getElementById('item-use');
-        const itemDescriptionInput = document.getElementById('item-description');
-        const winTypeGroup = document.getElementById('win-type-group');
-        const manualInputFieldsContainer = document.getElementById('manual-input-fields');
-
-        let selectedWinType = 'win-fail'; // 초기 선택 값 설정
-        let manualInputValues = []; // 입력된 당첨 텍스트 저장 배열
-
         function updateItemDescriptionText() {
             if (itemUseCheckbox.checked) {
                 const winCount = parseInt(totalInput.value) || 0;
-                if (selectedWinType === 'win-fail') {
-                    itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
+                if (winCount === 0) { // 추가: 당첨 개수가 0일 경우 기본 안내 메시지 표시
+                    itemDescriptionInput.value = "[설정에 따라 자동으로 입력됩니다.]";
+                } else if (selectedWinType === 'win-fail') {
+                    itemDescriptionInput.value = `[당첨 ${winCount}개]`;
                 } else if (selectedWinType === 'manual-entry') {
                     const manualInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
                     const prizeList = Array.from(manualInputs).map((input, index) => manualInputValues[index] || '').filter(value => value.trim() !== '').join(', ');
@@ -378,7 +372,6 @@
             const vertical = parseInt(verticalInput.value) || 0;
             let total = parseInt(totalInput.value) || 0;
             const maxTotal = (horizontal * vertical);
-
             let errorMessage = "";
 
             if (horizontal > 10) {
@@ -406,7 +399,7 @@
             }
 
             updateWinSettings(parseInt(totalInput.value) || 0);
-            updateItemDescriptionText();
+            updateItemDescriptionText(); // 추가: 당첨 개수 변경 시 상품 안내 업데이트
         }
 
         function updateWinSettings(winCount) {
@@ -448,8 +441,8 @@
 
             const currentWinCount = parseInt(totalInput.value) || 0;
             updateWinSettings(currentWinCount);
-            updateItemDescriptionText();
+            updateItemDescriptionText(); // 추가: 당첨 방식 변경 시 상품 안내 업데이트
         }
 
         function updateManualInputValue(event) {
-            const index =
+            const index
