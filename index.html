@@ -52,7 +52,8 @@
         }
 
         .input-row input {
-            width: 95%;
+            width: 98%;
+            max-width: 600px; /* 최대 너비 설정 */
             padding: 8px;
             box-sizing: border-box;
         }
@@ -62,13 +63,13 @@
             align-items: center;
             margin-top: 8px;
             width: 100%;
-            justify-content: flex-start; /* 왼쪽 정렬 */
+            justify-content: flex-start;
         }
 
         .checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 0; /* 왼쪽 들여쓰기 제거 */
+            margin-left: 0;
         }
 
         .checkbox-row .checkbox-wrapper input[type="checkbox"] {
@@ -218,18 +219,8 @@
             }
 
             .input-row input {
-                width: 95%;
-            }
-
-            .checkbox-row {
-                justify-content: flex-start; /* 왼쪽 정렬 */
-                align-items: center;
-                margin-top: 8px;
-                width: 100%;
-            }
-
-            .checkbox-row .checkbox-wrapper {
-                margin-left: 0; /* 왼쪽 들여쓰기 제거 */
+                width: 98%;
+                max-width: 600px; /* 최대 너비 설정 */
             }
         }
     </style>
@@ -237,7 +228,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.6.5.</div>
+        <div id="version-text">v 0.6.7.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -305,7 +296,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.6.5.</div>
+        <div class="footer" id="version-text-bottom">v 0.6.7.</div>
     </div>
 </body>
 </html>
