@@ -249,7 +249,7 @@
 <body>
     <div class="container">
         <h1 id="main-title-display">랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.13.</div>
+        <div id="version-text">v 0.8.14.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -320,7 +320,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.13.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.14.</div>
     </div>
 
     <script>
@@ -367,7 +367,7 @@
             }
         }
 
-        function updateWinningCountMax(source) {
+        function updateWinningCountMax() { // 인자 제거
             const horizontal = parseInt(horizontalInput.value) || 0;
             const vertical = parseInt(verticalInput.value) || 0;
             let total = parseInt(totalInput.value) || 0;
@@ -445,4 +445,40 @@
         }
 
         function updateManualInputValue(event) {
-            const index
+            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+            if (index !== -1) {
+                manualInputValues[index] = event.target.value;
+                updateItemDescriptionText();
+            }
+        }
+
+        function updateAllUI() {
+            updateMainTitleDisplay();
+            updateItemDescriptionText();
+            updateWinningCountMax(); // 인자 없이 호출
+            updateWinSettings(parseInt(totalInput.value) || 0);
+        }
+
+        function handleManualInputFieldsContainerInput(event) {
+            if (event.target.type === 'text') {
+                const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
+                if (index !== -1) {
+                    manualInputValues[index] = event.target.value;
+                    updateItemDescriptionText();
+                }
+            }
+        }
+
+        // 초기 로딩 시 모든 UI 업데이트
+        updateAllUI();
+
+        itemUseCheckbox.addEventListener('change', updateAllUI);
+        mainTitleInput.addEventListener('input', handleMainTitleInputChange);
+        horizontalInput.addEventListener('input', updateAllUI); // 인자 없이 호출
+        verticalInput.addEventListener('input', updateAllUI); // 인자 없이 호출
+        totalInput.addEventListener('input', updateAllUI);
+        winTypeGroup.addEventListener('click', handleWinTypeButtonClick);
+        manualInputFieldsContainer.addEventListener('input', handleManualInputFieldsContainerInput);
+    </script>
+</body>
+</html>
