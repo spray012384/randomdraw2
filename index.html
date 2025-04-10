@@ -85,10 +85,9 @@
             margin-top: 20px;
             margin-bottom: 15px;
             padding-top: 15px;
-            border-top: none; /* 모든 소제목의 상단 구분선 제거 */
+            border-top: none;
         }
 
-        /* 첫 번째 소제목 상단 패딩 제거 (구분선 제거로 인한 공백 보정) */
         .section-title:first-of-type {
             padding-top: 0;
             margin-top: 10px;
@@ -203,7 +202,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.5.5.</div>
+        <div id="version-text">v 0.5.6.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -221,6 +220,21 @@
                     <input type="checkbox" id="item-use">
                     <label for="item-use">상품안내 사용</label>
                 </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-row">
+                <label for="horizontal">가로</label>
+                <input type="number" id="horizontal" placeholder="가로 개수">
+            </div>
+            <div class="input-row">
+                <label for="vertical">세로</label>
+                <input type="number" id="vertical" placeholder="세로 개수">
+            </div>
+            <div class="input-row">
+                <label for="total">당첨 개수</label>
+                <input type="number" id="total" placeholder="당첨 개수">
             </div>
         </div>
 
@@ -256,7 +270,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.5.5.</div>
+        <div class="footer" id="version-text-bottom">v 0.5.6.</div>
     </div>
 </body>
 </html>
