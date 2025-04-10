@@ -46,14 +46,19 @@
         }
 
         .input-row label {
-            width: 100%;
+            width: 120px;
             margin-bottom: 5px;
             text-align: left;
         }
 
         .input-row input {
-            width: 100%;
+            width: calc(100% - 130px); /* 레이블 너비 + 간격 제외 */
             padding: 8px;
+            box-sizing: border-box; /* padding, border가 width에 포함되도록 */
+        }
+
+        .input-row.left-align input {
+            width: calc(100% - 120px); /* 상품안내 레이블 너비 제외 */
         }
 
         .checkbox-row {
@@ -66,7 +71,7 @@
         .checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 0;
+            margin-left: 120px; /* 레이블 위치 맞춤 */
         }
 
         .checkbox-row .checkbox-wrapper input[type="checkbox"] {
@@ -152,11 +157,11 @@
             align-items: center;
             flex-grow: 1;
             color: white;
-            background-color: #a9a9a9; /* 초기화 버튼 색상 유지 */
+            background-color: #a9a9a9;
         }
 
         #save-button {
-            background-color: #4CAF50 !important; /* "저장하기" 버튼 색상 초록색으로 강제 적용 */
+            background-color: #4CAF50 !important;
             color: white !important;
         }
 
@@ -210,13 +215,17 @@
             }
 
             .input-row label {
-                width: 100%;
+                width: 120px;
                 margin-bottom: 5px;
                 text-align: left;
             }
 
             .input-row input {
-                width: 100%;
+                width: calc(100% - 130px); /* 레이블 너비 + 간격 제외 */
+            }
+
+            .input-row.left-align input {
+                width: calc(100% - 120px); /* 상품안내 레이블 너비 제외 */
             }
 
             .checkbox-row {
@@ -226,7 +235,7 @@
             }
 
             .checkbox-row .checkbox-wrapper {
-                margin-left: 0;
+                margin-left: 120px;
             }
         }
     </style>
@@ -234,7 +243,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.6.2.</div>
+        <div id="version-text">v 0.6.3.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -302,7 +311,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.6.2.</div>
+        <div class="footer" id="version-text-bottom">v 0.6.3.</div>
     </div>
 </body>
 </html>
