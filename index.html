@@ -32,7 +32,7 @@
         .input-group {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px; /* 입력창 그룹 하단 간격 증가 */
+            margin-bottom: 20px;
             align-items: flex-start;
             flex-direction: column;
         }
@@ -42,7 +42,7 @@
             align-items: center;
             width: 100%;
             justify-content: center;
-            margin-bottom: 10px; /* 입력창 하단 간격 증가 */
+            margin-bottom: 10px;
         }
 
         .input-row label {
@@ -59,15 +59,15 @@
         .checkbox-row {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* 왼쪽 정렬 */
+            justify-content: flex-start;
             width: 100%;
-            margin-top: 10px; /* 체크박스 상단 간격 증가 */
+            margin-top: 10px;
         }
 
         .checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 120px; /* 라벨 위치 맞춤 */
+            margin-left: 120px;
         }
 
         .checkbox-row .checkbox-wrapper input[type="checkbox"] {
@@ -91,26 +91,19 @@
             margin: 0 auto;
         }
 
-        .button-group button {
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            white-space: nowrap;
-            flex-grow: 1;
-            justify-content: center;
-            display: flex;
-            align-items: center;
+        /* 카드 디자인 설정 버튼 그룹에 Grid 레이아웃 적용 */
+        .button-group#card-design-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3개 컬럼 동일 비율 */
+            gap: 5px; /* 버튼 사이 간격 */
         }
 
-        .button-group button:not(:last-child) {
-            margin-right: 10px;
+        .button-group#card-design-buttons button {
+            flex-grow: 0; /* 개별 버튼의 flex-grow 비활성화 */
         }
 
-        button:hover {
-            opacity: 0.9;
+        .button-group#card-design-buttons button:not(:last-child) {
+            margin-right: 0; /* 개별 버튼 오른쪽 margin 제거 */
         }
 
         #button-container {
@@ -184,7 +177,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.4.4.</div>
+        <div id="version-text">v 0.4.5.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -252,7 +245,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.4.4.</div>
+        <div class="footer" id="version-text-bottom">v 0.4.5.</div>
     </div>
 </body>
 </html>
