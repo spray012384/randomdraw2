@@ -215,7 +215,7 @@
         }
 
         .input-default-text {
-            color: blue;
+            color: #777; /* 회색 */
             font-size: 0.9rem;
             margin-top: 5px;
             text-align: left;
@@ -253,7 +253,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.7.7.</div>
+        <div id="version-text">v 0.7.9.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -286,7 +286,7 @@
             <div class="input-row">
                 <label for="total">당첨 개수</label>
                 <input type="number" id="total" placeholder="당첨 개수" min="1">
-                <div id="total-error-text" class="input-default-text">[가로, 세로, 당첨개수를 입력해 주세요.]</div>
+                <div id="total-error-text" class="input-default-text">[가로, 세로, 당첨개수를 입력해주세요.]</div>
             </div>
         </div>
 
@@ -322,7 +322,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.7.7.</div>
+        <div class="footer" id="version-text-bottom">v 0.7.9.</div>
     </div>
 
     <script>
@@ -337,28 +337,36 @@
             const total = parseInt(totalInput.value) || 0;
             const maxTotal = (horizontal * vertical);
 
+            let isError = false;
+
             if (horizontal > 10) {
                 totalErrorText.textContent = "[가로 값은 10을 넘어갈 수 없어요.]";
                 totalErrorText.className = "input-error-text";
+                horizontalInput.value = "";
+                isError = true;
             } else if (vertical > 10) {
                 totalErrorText.textContent = "[세로 값은 10을 넘어갈 수 없어요.]";
                 totalErrorText.className = "input-error-text";
-            } else if (total >= maxTotal) {
+                verticalInput.value = "";
+                isError = true;
+            } else if (total >= maxTotal && maxTotal > 0) {
                 totalErrorText.textContent = "[당첨 개수가 카드 개수를 초과합니다.]";
                 totalErrorText.className = "input-error-text";
+                totalInput.value = "";
+                isError = true;
             } else if (horizontal > 0 && vertical > 0 && total >= 0) {
-                totalErrorText.textContent = ""; // 에러 메시지 초기화
+                totalErrorText.textContent = ""; // 유효한 입력 시 메시지 초기화
                 totalErrorText.className = "input-default-text";
-                if (horizontal === 0 || vertical === 0 || total === 0) {
-                    totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해 주세요.]";
-                }
-            } else {
-                totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해 주세요.]";
+            } else if (horizontal === 0 && vertical === 0 && total === 0) {
+                totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해주세요.]";
+                totalErrorText.className = "input-default-text";
+            } else if (horizontal === 0 || vertical === 0 || total === 0) {
+                totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해주세요.]";
                 totalErrorText.className = "input-default-text";
             }
 
-            totalInput.max = maxTotal -1;
-            if (totalInput.value > totalInput.max && totalInput.max >= 0) {
+            totalInput.max = maxTotal - 1;
+            if (!isError && totalInput.value > totalInput.max && totalInput.max >= 0) {
                 totalInput.value = totalInput.max;
             }
         }
