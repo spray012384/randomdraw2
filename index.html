@@ -34,23 +34,25 @@
             flex-direction: column;
             align-items: flex-start;
             margin-bottom: 15px;
+            width: 100%; /* 가로 화면에서도 전체 너비 사용 */
         }
 
         .input-row {
             display: flex;
-            align-items: center;
+            flex-direction: column; /* 세로로 배치 */
+            align-items: flex-start; /* 왼쪽 정렬 */
             margin-bottom: 8px;
             width: 100%;
         }
 
         .input-row label {
-            width: 120px;
-            margin-right: 10px;
+            width: 100%; /* 레이블이 한 줄 전체 차지 */
+            margin-bottom: 5px; /* 레이블과 입력창 사이 간격 */
             text-align: left;
         }
 
         .input-row input {
-            flex-grow: 1;
+            width: 100%; /* 입력창이 한 줄 전체 차지 */
             padding: 8px;
         }
 
@@ -58,12 +60,13 @@
             display: flex;
             align-items: center;
             margin-top: 8px;
+            width: 100%; /* 가로 화면에서도 전체 너비 사용 */
         }
 
         .checkbox-row .checkbox-wrapper {
             display: flex;
             align-items: center;
-            margin-left: 120px;
+            margin-left: 0; /* 왼쪽 정렬 */
         }
 
         .checkbox-row .checkbox-wrapper input[type="checkbox"] {
@@ -149,6 +152,7 @@
             align-items: center;
             flex-grow: 1;
             color: white;
+            background-color: #a9a9a9; /* 초기화 버튼 색상 유지 */
         }
 
         #save-button {
@@ -189,31 +193,40 @@
             text-align: center;
         }
 
-        /* 가로 화면에 대한 스타일 */
+        /* 가로 화면에 대한 스타일 (세로 화면과 동일하게 유지) */
         @media (min-width: 600px) {
             .input-group {
-                flex-direction: row;
-                align-items: center;
-                margin-bottom: 10px;
+                flex-direction: column; /* 세로로 유지 */
+                align-items: flex-start; /* 왼쪽 정렬 유지 */
+                margin-bottom: 15px;
+                width: 100%;
             }
 
             .input-row {
-                width: auto;
-                margin-right: 20px;
-                margin-bottom: 0;
+                flex-direction: column; /* 세로로 유지 */
+                align-items: flex-start; /* 왼쪽 정렬 유지 */
+                margin-bottom: 8px;
+                width: 100%;
             }
 
             .input-row label {
-                width: auto;
+                width: 100%;
+                margin-bottom: 5px;
+                text-align: left;
+            }
+
+            .input-row input {
+                width: 100%;
             }
 
             .checkbox-row {
-                margin-top: 0;
-                margin-left: 0;
+                align-items: center;
+                margin-top: 8px;
+                width: 100%;
             }
 
             .checkbox-row .checkbox-wrapper {
-                margin-left: 130px; /* '상품안내' 레이블과 간격 맞춤 (추가 조정 필요할 수 있음) */
+                margin-left: 0; /* 왼쪽 정렬 유지 */
             }
         }
     </style>
@@ -221,7 +234,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.5.9.</div>
+        <div id="version-text">v 0.6.0.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -289,7 +302,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.5.9.</div>
+        <div class="footer" id="version-text-bottom">v 0.6.0.</div>
     </div>
 </body>
 </html>
