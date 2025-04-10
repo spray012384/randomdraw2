@@ -8,7 +8,7 @@ const initializeTitleManager = () => {
   updateMainTitleDisplay(getState().mainTitle);
 
   // 상태 변화 감지 및 UI 업데이트
-  subscribe('mainTitle', updateMainTitleDisplay);
+  subscribe('mainTitle', handleMainTitleDisplayChange); // 변경
 
   // 입력 이벤트 핸들러
   const mainTitleInput = document.getElementById('main-title-input');
@@ -17,6 +17,10 @@ const initializeTitleManager = () => {
 
 const handleMainTitleInputChange = (event) => {
   setState({ mainTitle: event.target.value });
+};
+
+const handleMainTitleDisplayChange = (newTitle) => { // 변경
+  updateMainTitleDisplay(newTitle);
 };
 
 export { initializeTitleManager };
