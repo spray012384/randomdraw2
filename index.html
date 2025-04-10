@@ -32,7 +32,7 @@
         .input-group {
             display: flex;
             justify-content: center;
-            margin-bottom: 15px; /* input-group 하단 간격 줄임 */
+            margin-bottom: 15px;
             align-items: flex-start;
             flex-direction: column;
         }
@@ -42,7 +42,7 @@
             align-items: center;
             width: 100%;
             justify-content: center;
-            margin-bottom: 8px; /* input-row 하단 간격 줄임 */
+            margin-bottom: 8px;
         }
 
         .input-row.left-align {
@@ -65,7 +65,7 @@
             align-items: center;
             justify-content: flex-start;
             width: 100%;
-            margin-top: 8px; /* checkbox-row 상단 간격 줄임 */
+            margin-top: 8px;
         }
 
         .checkbox-row .checkbox-wrapper {
@@ -82,22 +82,21 @@
             font-size: 1.2rem;
             text-align: left;
             font-weight: bold;
-            margin-top: 20px; /* 소제목 상단 간격 줄임 */
-            margin-bottom: 15px; /* 소제목 하단 간격 늘림 */
-            padding-top: 15px; /* 소제목 내부 상단 padding 줄임 */
-            border-top: 1px solid #ccc; /* 구분선 유지 */
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: none; /* 모든 소제목의 상단 구분선 제거 */
         }
 
-        /* 첫 번째 소제목 상단 구분선 제거 */
+        /* 첫 번째 소제목 상단 패딩 제거 (구분선 제거로 인한 공백 보정) */
         .section-title:first-of-type {
-            border-top: none;
             padding-top: 0;
             margin-top: 10px;
         }
 
         .button-group {
-            margin-top: 15px; /* button-group 상단 간격 줄임 */
-            margin-bottom: 15px; /* button-group 하단 간격 유지 */
+            margin-top: 15px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -135,7 +134,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px; /* button-container 상단 간격 줄임 */
+            margin-top: 20px;
             width: 60%;
             margin-left: auto;
             margin-right: auto;
@@ -163,7 +162,7 @@
         }
 
         #save-button {
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* 저장하기 버튼 색상 복원 */
             color: white;
         }
 
@@ -194,7 +193,7 @@
         }
 
         .footer {
-            margin-top: 15px; /* footer 상단 간격 줄임 */
+            margin-top: 15px;
             color: grey;
             font-size: 0.8rem;
             text-align: center;
@@ -204,7 +203,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.5.4.</div>
+        <div id="version-text">v 0.5.5.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -257,7 +256,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.5.4.</div>
+        <div class="footer" id="version-text-bottom">v 0.5.5.</div>
     </div>
 </body>
 </html>
