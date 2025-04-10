@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>랜덤 뽑기</title>
     <style>
+        /* 기존 스타일 유지 */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -95,10 +96,9 @@
             margin-top: 15px;
             margin-bottom: 15px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
         }
 
         .button-group button {
@@ -111,7 +111,13 @@
             background-color: #a9a9a9;
             color: white;
             margin: 5px;
+            margin-left: 0;
+            margin-right: 10px;
             transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .button-group button:last-child {
+            margin-right: 0;
         }
 
         .button-group button:active {
@@ -124,18 +130,15 @@
             color: white !important;
         }
 
-        .button-group#card-design-buttons {
+        .button-group#design-type-group {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 5px;
+            grid-template-columns: auto auto auto 1fr;
+            gap: 10px;
+            justify-content: flex-start;
         }
 
-        .button-group#card-design-buttons button {
-            flex-grow: 0;
-        }
-
-        .button-group#card-design-buttons button:not(:last-child) {
-            margin-right: 0;
+        .button-group#design-type-group button {
+            margin: 0;
         }
 
         #button-container {
@@ -215,7 +218,7 @@
         }
 
         .input-default-text {
-            color: #777; /* 회색 */
+            color: #777;
             font-size: 0.9rem;
             margin-top: 10px;
             text-align: left;
@@ -244,12 +247,31 @@
             width: 200px;
             box-sizing: border-box;
         }
+
+        .setting-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .setting-line .button-group {
+            margin-right: 15px;
+            margin-bottom: 0;
+        }
+
+        .setting-line .setting-description {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: left;
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.12.</div>
+        <div id="version-text">v 0.0.0. 250411</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -265,7 +287,7 @@
             <div class="checkbox-row">
                 <div class="checkbox-wrapper">
                     <input type="checkbox" id="item-use">
-                    <label for="item-use">상품안내 사용</label>
+                    <label for="item-use">상품 안내 사용 (체크 시, 메인 타이틀 밑에 당첨 항목이 표기됩니다.)</label>
                 </div>
             </div>
         </div>
@@ -288,26 +310,35 @@
 
         <hr>
         <div class="section-title">당첨 방식 설정</div>
-        <div class="button-group" id="win-type-group">
-            <button type="button" id="win-fail" data-win-type="win-fail" class="selected">당첨/꽝 방식</button>
-            <button type="button" id="manual-entry" data-win-type="manual-entry">직접 입력 방식</button>
+        <div class="setting-line">
+            <div class="button-group" id="win-type-group">
+                <button type="button" id="win-fail" data-win-type="win-fail" class="selected">당첨/꽝 방식</button>
+                <button type="button" id="manual-entry" data-win-type="manual-entry">직접 입력 방식</button>
+            </div>
+            <div class="setting-description">원하는 당첨 결과 방식을 선택하세요.</div>
         </div>
         <div id="manual-input-fields" class="manual-input-container">
         </div>
 
         <hr>
         <div class="section-title">당첨 위치 설정</div>
-        <div class="button-group" id="position-type-group">
-            <button type="button" id="random-position">랜덤 생성</button>
-            <button type="button" id="manual-position">직접 지정</button>
+        <div class="setting-line">
+            <div class="button-group" id="position-type-group">
+                <button type="button" id="random-position" data-position-type="random-position" class="selected">랜덤 생성</button>
+                <button type="button" id="manual-position" data-position-type="manual-position">직접 지정</button>
+            </div>
+            <div class="setting-description">당첨 카드의 위치를 설정하는 방식입니다.</div>
         </div>
 
         <hr>
         <div class="section-title">카드 디자인 설정</div>
-        <div class="button-group" id="design-type-group">
-            <button type="button" id="default-design">기본</button>
-            <button type="button" id="text-input-design">텍스트 입력</button>
-            <button type="button" id="image-design">이미지 설정</button>
+        <div class="setting-line">
+            <div class="button-group" id="design-type-group">
+                <button type="button" id="default-design" data-design-type="default-design" class="selected">기본</button>
+                <button type="button" id="text-input-design" data-design-type="text-input-design">텍스트 입력</button>
+                <button type="button" id="image-design" data-design-type="image-design">이미지 설정</button>
+            </div>
+            <div class="setting-description">카드의 외형 및 내용을 설정합니다.</div>
         </div>
 
         <hr>
@@ -320,10 +351,11 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.12.</div>
+        <div class="footer" id="version-text-bottom">v 0.0.0. 250411</div>
     </div>
 
     <script>
+        // DOM 요소 참조를 전역 변수로 관리
         const horizontalInput = document.getElementById('horizontal');
         const verticalInput = document.getElementById('vertical');
         const totalInput = document.getElementById('total');
@@ -332,125 +364,20 @@
         const itemDescriptionInput = document.getElementById('item-description');
         const winTypeGroup = document.getElementById('win-type-group');
         const manualInputFieldsContainer = document.getElementById('manual-input-fields');
+        const positionTypeGroup = document.getElementById('position-type-group');
+        const designTypeGroup = document.getElementById('design-type-group');
+        const winFailButton = document.getElementById('win-fail');
+        const manualEntryButton = document.getElementById('manual-entry');
+        const randomPositionButton = document.getElementById('random-position');
+        const manualPositionButton = document.getElementById('manual-position');
+        const defaultDesignButton = document.getElementById('default-design');
+        const textInputDesignButton = document.getElementById('text-input-design');
+        const imageDesignButton = document.getElementById('image-design');
 
-        let selectedWinType = 'win-fail'; // 초기 선택 값 설정
-        let manualInputValues = []; // 입력된 당첨 텍스트 저장 배열
-
-        function updateItemDescriptionText() {
-            if (itemUseCheckbox.checked) {
-                const winCount = parseInt(totalInput.value) || 0;
-                if (selectedWinType === 'win-fail') {
-                    itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
-                } else if (selectedWinType === 'manual-entry') {
-                    const manualInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
-                    const prizeList = Array.from(manualInputs).map((input, index) => manualInputValues[index] || '').filter(value => value.trim() !== '').join(', ');
-                    itemDescriptionInput.value = prizeList ? `[당첨 : ${prizeList}]` : "[설정에 따라 자동으로 입력됩니다.]";
-                } else {
-                    itemDescriptionInput.value = "[설정에 따라 자동으로 입력됩니다.]";
-                }
-            } else {
-                itemDescriptionInput.value = "[상품 안내를 하지 않습니다.]";
-            }
-        }
-
-        function updateWinningCountMax(source) {
-            const horizontal = parseInt(horizontalInput.value) || 0;
-            const vertical = parseInt(verticalInput.value) || 0;
-            let total = parseInt(totalInput.value) || 0;
-            const maxTotal = (horizontal * vertical);
-
-            let errorMessage = "";
-
-            if (horizontal > 10) {
-                errorMessage = "[가로 값은 10을 넘어갈 수 없어요.]";
-                horizontalInput.value = 10;
-            } else if (vertical > 10) {
-                errorMessage = "[세로 값은 10을 넘어갈 수 없어요.]";
-                verticalInput.value = 10;
-            } else if (total >= maxTotal && maxTotal > 0) {
-                errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
-                totalInput.value = maxTotal > 0 ? maxTotal - 1 : 0;
-            }
-
-            if (errorMessage) {
-                totalErrorText.textContent = errorMessage;
-                totalErrorText.className = "input-error-text";
-            } else {
-                totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해주세요.]";
-                totalErrorText.className = "input-default-text";
-            }
-
-            totalInput.max = maxTotal - 1;
-            if (total > totalInput.max && totalInput.max >= 0) {
-                totalInput.value = totalInput.max;
-            }
-
-            updateWinSettings(parseInt(totalInput.value) || 0);
-            updateItemDescriptionText();
-        }
-
-        function updateWinSettings(winCount) {
-            const previousInputValues = [...manualInputValues];
-            manualInputValues = [];
-            manualInputFieldsContainer.innerHTML = '';
-            if (selectedWinType === 'manual-entry' && winCount > 0) {
-                for (let i = 1; i <= winCount; i++) {
-                    const inputRow = document.createElement('div');
-                    inputRow.className = 'manual-input-row';
-                    const label = document.createElement('label');
-                    label.textContent = `당첨 ${i}`;
-                    const inputField = document.createElement('input');
-                    inputField.type = 'text';
-                    inputField.placeholder = `당첨 ${i} 내용 입력`;
-                    if (previousInputValues[i - 1]) {
-                        inputField.value = previousInputValues[i - 1];
-                        manualInputValues.push(previousInputValues[i - 1]);
-                    } else {
-                        manualInputValues.push('');
-                    }
-                    inputField.addEventListener('input', updateManualInputValue);
-                    inputRow.appendChild(label);
-                    inputRow.appendChild(inputField);
-                    manualInputFieldsContainer.appendChild(inputRow);
-                }
-            }
-            updateItemDescriptionText();
-        }
-
-        function handleWinTypeButtonClick(event) {
-            const clickedButton = event.target;
-
-            winTypeGroup.querySelectorAll('button').forEach(button => {
-                button.classList.remove('selected');
-            });
-            clickedButton.classList.add('selected');
-            selectedWinType = clickedButton.dataset.winType;
-
-            const currentWinCount = parseInt(totalInput.value) || 0;
-            updateWinSettings(currentWinCount);
-            updateItemDescriptionText();
-        }
-
-        function updateManualInputValue(event) {
-            const index = Array.from(manualInputFieldsContainer.querySelectorAll('input[type="text"]')).indexOf(event.target);
-            if (index !== -1) {
-                manualInputValues[index] = event.target.value;
-                updateItemDescriptionText();
-            }
-        }
-
-        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
-        horizontalInput.addEventListener('input', () => updateWinningCountMax('horizontal'));
-        verticalInput.addEventListener('input', () => updateWinningCountMax('vertical'));
-        totalInput.addEventListener('input', () => updateWinningCountMax('total'));
-
-        winTypeGroup.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', handleWinTypeButtonClick);
-        });
-
-        // 초기 상태 설정
-        updateWinningCountMax();
-        updateItemDescriptionText();
-    </script>
-</body>
-</html>
+        // 상태 관리 객체 (현재 설정 값들을 저장)
+        const appState = {
+            mainTitle: '',
+            useItemDescription: false,
+            itemDescription: '',
+            horizontal: 1,
+            vertical: 1,
