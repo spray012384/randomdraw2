@@ -244,35 +244,12 @@
             width: 200px;
             box-sizing: border-box;
         }
-
-        .input-animation {
-            animation: input-error 3s ease-in-out;
-        }
-
-        @keyframes input-error {
-            0% {
-                background-color: white;
-                border-color: #ccc;
-            }
-            25% {
-                background-color: #fff3cd; /* 연한 노란색 */
-                border-color: #ff9800; /* 주황색 */
-            }
-            75% {
-                background-color: #fff3cd;
-                border-color: #ff9800;
-            }
-            100% {
-                background-color: white;
-                border-color: #ccc;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="main-title-display">랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.18.</div>
+        <div id="version-text">v 0.8.20.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -343,7 +320,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.18.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.20.</div>
     </div>
 
     <script>
@@ -400,21 +377,12 @@
             if (horizontal > 10) {
                 errorMessage = "[가로 값은 10을 넘어갈 수 없어요.]";
                 horizontalInput.value = 10;
-                if (horizontalInput.value === "10") { // 조건 추가
-                    applyInputAnimation(horizontalInput);
-                }
             } else if (vertical > 10) {
                 errorMessage = "[세로 값은 10을 넘어갈 수 없어요.]";
                 verticalInput.value = 10;
-                if (verticalInput.value === "10") { // 조건 추가
-                    applyInputAnimation(verticalInput);
-                }
             } else if (total >= maxTotal && maxTotal > 0) {
                 errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
                 totalInput.value = maxTotal > 0 ? maxTotal - 1 : 0;
-                if (totalInput.value === String(maxTotal > 0 ? maxTotal - 1 : 0)) { // 조건 추가
-                    applyInputAnimation(totalInput);
-                }
             }
 
             if (errorMessage) {
@@ -501,18 +469,11 @@
             }
         }
 
-        function applyInputAnimation(inputElement) {
-            inputElement.classList.add('input-animation');
-            setTimeout(() => {
-                inputElement.classList.remove('input-animation');
-            }, 3000); // 3초 동안 애니메이션 지속
-        }
-
         // 초기 로딩 시 모든 UI 업데이트
         updateAllUI();
 
         itemUseCheckbox.addEventListener('change', updateAllUI);
-        mainTitleInput.addEventListener('input', handleMainTitleInputChange);
+        // mainTitleInput.addEventListener('input', handleMainTitleInputChange); // 이 줄을 제거
         horizontalInput.addEventListener('input', updateAllUI);
         verticalInput.addEventListener('input', updateAllUI);
         totalInput.addEventListener('input', updateAllUI);
