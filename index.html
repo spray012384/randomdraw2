@@ -52,8 +52,8 @@
         }
 
         .input-row input {
-            width: 99.5%; /* 가로 길이 99.5%로 조정 */
-            max-width: 800px; /* 최대 너비 유지 */
+            width: 99.5%;
+            max-width: 800px;
             padding: 8px;
             box-sizing: border-box;
         }
@@ -219,8 +219,8 @@
             }
 
             .input-row input {
-                width: 99.5%; /* 가로 길이 99.5%로 조정 */
-                max-width: 800px; /* 최대 너비 유지 */
+                width: 99.5%;
+                max-width: 800px;
             }
         }
     </style>
@@ -228,7 +228,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.7.0.</div>
+        <div id="version-text">v 0.7.2.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -239,7 +239,7 @@
             </div>
             <div class="input-row left-align">
                 <label for="item-description">상품안내</label>
-                <input type="text" id="item-description" placeholder="상품안내를 입력하세요">
+                <input type="text" id="item-description" value="[상품 안내를 하지 않습니다.]" disabled>
             </div>
             <div class="checkbox-row">
                 <div class="checkbox-wrapper">
@@ -296,7 +296,29 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.7.0.</div>
+        <div class="footer" id="version-text-bottom">v 0.7.2.</div>
     </div>
+
+    <script>
+        const itemUseCheckbox = document.getElementById('item-use');
+        const itemDescriptionInput = document.getElementById('item-description');
+        const default 안내없음Text = "[상품 안내를 하지 않습니다.]";
+        const auto입력Text = "[자동으로 입력됩니다.]";
+
+        itemUseCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                itemDescriptionInput.value = auto입력Text;
+            } else {
+                itemDescriptionInput.value = default 안내없음Text;
+            }
+        });
+
+        // 페이지 로드시 초기 텍스트 설정
+        if (!itemUseCheckbox.checked) {
+            itemDescriptionInput.value = default 안내없음Text;
+        } else {
+            itemDescriptionInput.value = auto입력Text;
+        }
+    </script>
 </body>
 </html>
