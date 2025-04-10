@@ -249,7 +249,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.2.</div>
+        <div id="version-text">v 0.8.3.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -289,11 +289,11 @@
         <hr>
         <div class="section-title">당첨 방식 설정</div>
         <div class="button-group" id="win-type-group">
-            <button type="button" id="win-fail" data-win-type="win-fail">당첨/꽝 방식</button>
+            <button type="button" id="win-fail" data-win-type="win-fail" class="selected">당첨/꽝 방식</button>
             <button type="button" id="manual-entry" data-win-type="manual-entry">직접 입력 방식</button>
         </div>
         <div id="manual-input-fields" class="manual-input-container">
-            </div>
+        </div>
 
         <hr>
         <div class="section-title">당첨 위치 설정</div>
@@ -320,7 +320,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.2.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.3.</div>
     </div>
 
     <script>
@@ -328,6 +328,7 @@
         const verticalInput = document.getElementById('vertical');
         const totalInput = document.getElementById('total');
         const totalErrorText = document.getElementById('total-error-text');
+        const itemUseCheckbox = document.getElementById('item-use');
         const itemDescriptionInput = document.getElementById('item-description');
         const winTypeGroup = document.getElementById('win-type-group');
         const manualInputFieldsContainer = document.getElementById('manual-input-fields');
@@ -336,31 +337,43 @@
 
         let selectedWinType = 'win-fail'; // 초기 선택 값 설정
 
+        function updateItemDescriptionText() {
+            if (itemUseCheckbox.checked) {
+                const winCount = parseInt(totalInput.value) || 0;
+                if (selectedWinType === 'win-fail') {
+                    itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
+                } else if (selectedWinType === 'manual-entry') {
+                    const manualInputs = manualInputFieldsContainer.querySelectorAll('input[type="text"]');
+                    const prizeList = Array.from(manualInputs).map(input => input.value).join(', ');
+                    itemDescriptionInput.value = prizeList ? `[당첨 : ${prizeList}]` : "[설정에 따라 자동으로 입력됩니다.]";
+                } else {
+                    itemDescriptionInput.value = "[설정에 따라 자동으로 입력됩니다.]";
+                }
+            } else {
+                itemDescriptionInput.value = "[상품 안내를 하지 않습니다.]";
+            }
+        }
+
         function updateWinningCountMax() {
             const horizontal = parseInt(horizontalInput.value) || 0;
             const vertical = parseInt(verticalInput.value) || 0;
             const total = parseInt(totalInput.value) || 0;
             const maxTotal = (horizontal * vertical);
 
-            let isError = false;
-
             if (horizontal > 10) {
                 totalErrorText.textContent = "[가로 값은 10을 넘어갈 수 없어요.]";
                 totalErrorText.className = "input-error-text";
                 horizontalInput.value = "";
-                isError = true;
             } else if (vertical > 10) {
                 totalErrorText.textContent = "[세로 값은 10을 넘어갈 수 없어요.]";
                 totalErrorText.className = "input-error-text";
                 verticalInput.value = "";
-                isError = true;
             } else if (total >= maxTotal && maxTotal > 0) {
                 totalErrorText.textContent = "[당첨 개수가 카드 개수를 초과합니다.]";
                 totalErrorText.className = "input-error-text";
                 totalInput.value = "";
-                isError = true;
             } else if (horizontal > 0 && vertical > 0 && total >= 0) {
-                totalErrorText.textContent = ""; // 유효한 입력 시 메시지 초기화
+                totalErrorText.textContent = "";
                 totalErrorText.className = "input-default-text";
             } else if (horizontal === 0 && vertical === 0 && total === 0) {
                 totalErrorText.textContent = "[가로, 세로, 당첨개수를 입력해주세요.]";
@@ -371,21 +384,17 @@
             }
 
             totalInput.max = maxTotal - 1;
-            if (!isError && totalInput.value > totalInput.max && totalInput.max >= 0) {
+            if (totalInput.value > totalInput.max && totalInput.max >= 0) {
                 totalInput.value = totalInput.max;
             }
 
-            // 당첨 개수 변경 시 상품 안내 텍스트 업데이트 및 입력 필드 생성/제거
             updateWinSettings(total);
+            updateItemDescriptionText();
         }
 
         function updateWinSettings(winCount) {
-            if (selectedWinType === 'win-fail') {
-                itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[상품 안내를 하지 않습니다.]";
-            } else if (selectedWinType === 'manual-entry') {
-                // 기존 입력 필드 제거
-                manualInputFieldsContainer.innerHTML = '';
-                // 새로운 입력 필드 생성
+            manualInputFieldsContainer.innerHTML = '';
+            if (selectedWinType === 'manual-entry' && winCount > 0) {
                 for (let i = 1; i <= winCount; i++) {
                     const inputRow = document.createElement('div');
                     inputRow.className = 'manual-input-row';
@@ -393,51 +402,40 @@
                     label.textContent = `당첨 ${i}`;
                     const inputField = document.createElement('input');
                     inputField.type = 'text';
-                    inputField.placeholder = '당첨 내용을 입력하세요.';
+                    inputField.placeholder = `당첨 ${i} 내용 입력`;
                     inputRow.appendChild(label);
                     inputRow.appendChild(inputField);
                     manualInputFieldsContainer.appendChild(inputRow);
                 }
             }
+            updateItemDescriptionText();
         }
 
         function handleWinTypeButtonClick(event) {
             const clickedButton = event.target;
 
-            // 선택된 버튼 업데이트 및 스타일 변경
             winTypeGroup.querySelectorAll('button').forEach(button => {
                 button.classList.remove('selected');
             });
             clickedButton.classList.add('selected');
             selectedWinType = clickedButton.dataset.winType;
 
-            // 당첨 설정 업데이트 (개수가 이미 입력되었을 경우)
             const currentWinCount = parseInt(totalInput.value) || 0;
             updateWinSettings(currentWinCount);
+            updateItemDescriptionText();
         }
 
+        itemUseCheckbox.addEventListener('change', updateItemDescriptionText);
         horizontalInput.addEventListener('input', updateWinningCountMax);
         verticalInput.addEventListener('input', updateWinningCountMax);
         totalInput.addEventListener('input', updateWinningCountMax);
 
-        // 당첨 방식 버튼 클릭 이벤트 리스너
         winTypeGroup.querySelectorAll('button').forEach(button => {
             button.addEventListener('click', handleWinTypeButtonClick);
         });
 
-        // 초기 텍스트 설정
+        // 초기 상태 설정
         updateWinningCountMax();
-
-        // 버튼 그룹 선택 효과 (이전 코드 유지)
-        const positionTypeGroup = document.getElementById('position-type-group');
-        const designTypeGroup = document.getElementById('design-type-group');
-        const buttonGroups = [positionTypeGroup, designTypeGroup];
-
-        function handleButtonClick(event) {
-            const clickedButton = event.target;
-            const parentGroup = clickedButton.parentNode;
-
-            if (parentGroup && parentGroup.classList.contains('button-group') && parentGroup.id !== 'win-type-group') {
-                const buttonsInGroup = parentGroup.querySelectorAll('button');
-                buttonsInGroup.forEach(button => {
-                    button.classList
+    </script>
+</body>
+</html>
