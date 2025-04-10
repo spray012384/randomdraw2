@@ -33,12 +33,13 @@
             display: flex;
             justify-content: center;
             margin-bottom: 15px;
+            align-items: center; /* 체크박스 중앙 정렬 */
         }
 
         .input-group label {
             margin-right: 10px;
-            text-align: left; /* 1. 왼쪽 정렬 */
-            width: 120px; /* 레이블 너비 고정 (선택 사항) */
+            text-align: left;
+            width: 120px;
         }
 
         .input-group input {
@@ -48,14 +49,14 @@
         }
 
         .input-group input[type="checkbox"] {
-            width: auto;
+            margin-left: auto; /* 2. 체크박스 오른쪽 이동 */
         }
 
         .section-title {
             font-size: 1.2rem;
             text-align: left;
             font-weight: bold;
-            margin-top: 30px;
+            margin-top: 20px; /* 1. 뽑기설정 소제목 위로 이동 */
             padding-top: 20px;
         }
 
@@ -67,14 +68,20 @@
         }
 
         .button-group button {
-            width: auto; /* 내용에 맞게 너비 조정 */
             padding: 10px 15px;
             margin: 5px;
             font-size: 1rem;
             cursor: pointer;
             border: none;
-            transition: background-color 0.3s ease;
-            white-space: nowrap; /* 2. 텍스트 한 줄로 */
+            border-radius: 5px;
+            white-space: nowrap; /* 4. 텍스트 한 줄 유지 */
+            flex-grow: 1; /* 3. 버튼 가로 길이 맞춤 */
+            justify-content: center; /* 3. 텍스트 가운데 정렬 (선택 사항) */
+            display: flex; /* 3. 내부 요소 가운데 정렬 (선택 사항) */
+        }
+
+        .button-group button:not(:last-child) {
+            margin-right: 10px; /* 버튼 사이 간격 */
         }
 
         button:hover {
@@ -122,16 +129,21 @@
 
         #button-container {
             display: flex;
-            flex-direction: column; /* 3. 세로 배치 */
-            align-items: center; /* 가운데 정렬 */
+            flex-direction: column;
+            align-items: center;
             margin-top: 30px;
         }
 
         #button-container button {
             margin: 10px 0;
-            width: 200px; /* 버튼 너비 유지 */
-            border: none; /* 3. 테두리 제거 */
-            border-radius: 5px; /* 4. 모서리 라운딩 */
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+            height: 60px; /* 기본 높이 2배 */
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #button-container button:first-child {
@@ -139,16 +151,36 @@
         }
 
         #start-button {
-            height: 60px; /* 5. 높이 2배 (기본 높이 30px 가정) */
-            line-height: 40px; /* 텍스트 중앙 정렬 */
-            font-size: 1.2rem; /* 텍스트 크기 약간 확대 (선택 사항) */
+            height: 80px; /* 기존 높이 유지 */
+            font-size: 1.3rem;
+        }
+
+        #save-reset-container {
+            display: flex; /* 5. 저장하기/초기화 같은 라인 */
+            justify-content: center; /* 가운데 정렬 (선택 사항) */
+            margin-bottom: 10px; /* 아래 버튼과의 간격 */
+        }
+
+        #save-reset-container button {
+            margin: 0 5px; /* 버튼 사이 간격 */
+            width: 150px; /* 버튼 너비 조정 (선택 사항) */
+            height: 60px; /* 6. 높이 2배 */
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #preview-button {
+            height: 60px; /* 6. 높이 2배 */
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.2.0</div>
+        <div id="version-text">v 0.3.0</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -207,14 +239,16 @@
 
         <hr>
         <div id="button-container">
-            <button id="save-button">저장하기</button>
-            <button id="reset-button">초기화</button>
+            <div id="save-reset-container">
+                <button id="save-button">저장하기</button>
+                <button id="reset-button">초기화</button>
+            </div>
             <button id="preview-button">미리보기</button>
-            <button id="start-button" style="height: 80px; line-height: 60px; font-size: 1.3rem;">시작하기</button>
+            <button id="start-button" style="height: 80px; font-size: 1.3rem;">시작하기</button>
         </div>
 
         <div class="footer" id="version-text-bottom">
-            v 0.2.0
+            v 0.3.0
         </div>
     </div>
 </body>
