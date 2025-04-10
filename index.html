@@ -254,7 +254,7 @@
 <body>
     <div class="container">
         <h1>랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.13.</div>
+        <div id="version-text">v 0.8.14.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -325,7 +325,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.13.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.14.</div>
     </div>
 
     <script>
@@ -339,6 +339,9 @@
         const manualInputFieldsContainer = document.getElementById('manual-input-fields');
         const positionTypeGroup = document.getElementById('position-type-group');
         const designTypeGroup = document.getElementById('design-type-group');
+        const winTypeButtons = winTypeGroup.querySelectorAll('.win-type-button');
+        const positionTypeButtons = positionTypeGroup.querySelectorAll('.position-type-button');
+        const designTypeButtons = designTypeGroup.querySelectorAll('.design-type-button');
 
         const appConfig = {
             horizontal: parseInt(horizontalInput.value) || 1,
@@ -370,4 +373,12 @@
         // 초기 버튼 상태 설정
         setSelectedButton(winTypeGroup, 'winType', appConfig.winType);
         setSelectedButton(positionTypeGroup, 'positionType', appConfig.positionType);
-        setSelectedButton(designTypeGroup, 'designType', appConfig.design
+        setSelectedButton(designTypeGroup, 'designType', appConfig.designType);
+
+        function updateItemDescriptionText() {
+            appConfig.useItemDescription = itemUseCheckbox.checked;
+            if (appConfig.useItemDescription) {
+                const winCount = appConfig.total;
+                if (appConfig.winType === 'win-fail') {
+                    itemDescriptionInput.value = winCount > 0 ? `[당첨 ${winCount}개]` : "[설정에 따라 자동으로 입력됩니다.]";
+                } else if (appConfig.winType === '
