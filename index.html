@@ -244,12 +244,35 @@
             width: 200px;
             box-sizing: border-box;
         }
+
+        .input-animation {
+            animation: input-error 0.5s ease-in-out;
+        }
+
+        @keyframes input-error {
+            0% {
+                background-color: white;
+                border-color: #ccc;
+            }
+            25% {
+                background-color: #fff3cd; /* 연한 노란색 */
+                border-color: #ff9800; /* 주황색 */
+            }
+            75% {
+                background-color: #fff3cd;
+                border-color: #ff9800;
+            }
+            100% {
+                background-color: white;
+                border-color: #ccc;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="main-title-display">랜덤 뽑기</h1>
-        <div id="version-text">v 0.8.15.</div>
+        <div id="version-text">v 0.8.16.</div>
 
         <hr>
         <div class="section-title">뽑기 설정</div>
@@ -320,7 +343,7 @@
             <button id="start-button">시작하기</button>
         </div>
 
-        <div class="footer" id="version-text-bottom">v 0.8.15.</div>
+        <div class="footer" id="version-text-bottom">v 0.8.16.</div>
     </div>
 
     <script>
@@ -367,7 +390,7 @@
             }
         }
 
-        function updateWinningCountMax() { // 인자 제거
+        function updateWinningCountMax() {
             const horizontal = parseInt(horizontalInput.value) || 0;
             const vertical = parseInt(verticalInput.value) || 0;
             let total = parseInt(totalInput.value) || 0;
@@ -377,12 +400,15 @@
             if (horizontal > 10) {
                 errorMessage = "[가로 값은 10을 넘어갈 수 없어요.]";
                 horizontalInput.value = 10;
+                applyInputAnimation(horizontalInput); // 애니메이션 적용
             } else if (vertical > 10) {
                 errorMessage = "[세로 값은 10을 넘어갈 수 없어요.]";
                 verticalInput.value = 10;
+                applyInputAnimation(verticalInput); // 애니메이션 적용
             } else if (total >= maxTotal && maxTotal > 0) {
                 errorMessage = "[당첨 개수가 카드 개수를 초과합니다.]";
                 totalInput.value = maxTotal > 0 ? maxTotal - 1 : 0;
+                applyInputAnimation(totalInput); // 애니메이션 적용
             }
 
             if (errorMessage) {
@@ -399,7 +425,7 @@
             }
 
             updateWinSettings(parseInt(totalInput.value) || 0);
-            updateItemDescriptionText(); // 추가: 당첨 개수 변경 시 상품 안내 업데이트
+            updateItemDescriptionText();
         }
 
         function updateWinSettings(winCount) {
@@ -410,7 +436,7 @@
                 for (let i = 1; i <= winCount; i++) {
                     const inputRow = document.createElement('div');
                     inputRow.className = 'manual-input-row';
-                    const label = documentcreateElement('label');
+                    const label = document.createElement('label');
                     label.textContent = `당첨 ${i}`;
                     const inputField = document.createElement('input');
                     inputField.type = 'text';
@@ -441,7 +467,7 @@
 
             const currentWinCount = parseInt(totalInput.value) || 0;
             updateWinSettings(currentWinCount);
-            updateItemDescriptionText(); // 추가: 당첨 방식 변경 시 상품 안내 업데이트
+            updateItemDescriptionText();
         }
 
         function updateManualInputValue(event) {
@@ -455,7 +481,7 @@
         function updateAllUI() {
             updateMainTitleDisplay();
             updateItemDescriptionText();
-            updateWinningCountMax(); // 인자 없이 호출
+            updateWinningCountMax();
             updateWinSettings(parseInt(totalInput.value) || 0);
         }
 
@@ -469,13 +495,20 @@
             }
         }
 
+        function applyInputAnimation(inputElement) {
+            inputElement.classList.add('input-animation');
+            setTimeout(() => {
+                inputElement.classList.remove('input-animation');
+            }, 500); // 0.5초 동안 애니메이션 지속
+        }
+
         // 초기 로딩 시 모든 UI 업데이트
         updateAllUI();
 
         itemUseCheckbox.addEventListener('change', updateAllUI);
         mainTitleInput.addEventListener('input', handleMainTitleInputChange);
-        horizontalInput.addEventListener('input', updateAllUI); // 인자 없이 호출
-        verticalInput.addEventListener('input', updateAllUI); // 인자 없이 호출
+        horizontalInput.addEventListener('input', updateAllUI);
+        verticalInput.addEventListener('input', updateAllUI);
         totalInput.addEventListener('input', updateAllUI);
         winTypeGroup.addEventListener('click', handleWinTypeButtonClick);
         manualInputFieldsContainer.addEventListener('input', handleManualInputFieldsContainerInput);
